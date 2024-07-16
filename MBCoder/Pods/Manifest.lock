@@ -1,0 +1,196 @@
+PODS:
+  - FBAllocationTracker (0.1.5)
+  - FBMemoryProfiler (0.1.3):
+    - FBAllocationTracker (~> 0.1)
+    - FBRetainCycleDetector (~> 0.1)
+  - FBRetainCycleDetector (0.1.4)
+  - FDFullscreenPopGesture (1.1)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/FTS (2.7.5):
+    - FMDB/standard
+  - FMDB/SQLCipher (2.7.5):
+    - SQLCipher
+  - FMDB/standard (2.7.5)
+  - GPUImage (0.1.7)
+  - HybridPageKit (1.4)
+  - Kiwi (3.0.0)
+  - KVOController (1.2.0)
+  - libextobjc (0.6):
+    - libextobjc/EXTADT (= 0.6)
+    - libextobjc/EXTConcreteProtocol (= 0.6)
+    - libextobjc/EXTKeyPathCoding (= 0.6)
+    - libextobjc/EXTNil (= 0.6)
+    - libextobjc/EXTSafeCategory (= 0.6)
+    - libextobjc/EXTScope (= 0.6)
+    - libextobjc/EXTSelectorChecking (= 0.6)
+    - libextobjc/EXTSynthesize (= 0.6)
+    - "libextobjc/NSInvocation+EXT (= 0.6)"
+    - "libextobjc/NSMethodSignature+EXT (= 0.6)"
+    - libextobjc/RuntimeExtensions (= 0.6)
+    - libextobjc/UmbrellaHeader (= 0.6)
+  - libextobjc/EXTADT (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTConcreteProtocol (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTKeyPathCoding (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTNil (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTSafeCategory (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTScope (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTSelectorChecking (0.6):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTSynthesize (0.6):
+    - libextobjc/RuntimeExtensions
+  - "libextobjc/NSInvocation+EXT (0.6)":
+    - libextobjc/RuntimeExtensions
+  - "libextobjc/NSMethodSignature+EXT (0.6)":
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.6)
+  - libextobjc/UmbrellaHeader (0.6)
+  - libwebp (1.3.2):
+    - libwebp/demux (= 1.3.2)
+    - libwebp/mux (= 1.3.2)
+    - libwebp/sharpyuv (= 1.3.2)
+    - libwebp/webp (= 1.3.2)
+  - libwebp/demux (1.3.2):
+    - libwebp/webp
+  - libwebp/mux (1.3.2):
+    - libwebp/demux
+  - libwebp/sharpyuv (1.3.2)
+  - libwebp/webp (1.3.2):
+    - libwebp/sharpyuv
+  - lottie-ios (2.5.3)
+  - MMKV (1.2.13):
+    - MMKVCore (~> 1.2.13)
+  - MMKVCore (1.2.13)
+  - PromiseKit (6.17.1):
+    - PromiseKit/CorePromise (= 6.17.1)
+    - PromiseKit/Foundation (= 6.17.1)
+    - PromiseKit/UIKit (= 6.17.1)
+  - PromiseKit/CorePromise (6.17.1)
+  - PromiseKit/Foundation (6.17.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.17.1):
+    - PromiseKit/CorePromise
+  - Protobuf (3.20.1)
+  - SQLCipher (4.5.1):
+    - SQLCipher/standard (= 4.5.1)
+  - SQLCipher/common (4.5.1)
+  - SQLCipher/standard (4.5.1):
+    - SQLCipher/common
+  - SSZipArchive (2.4.3)
+  - SVGAPlayer (2.3.5):
+    - SVGAPlayer/Core (= 2.3.5)
+    - SVGAPlayer/ProtoFiles (= 2.3.5)
+  - SVGAPlayer/Core (2.3.5):
+    - SSZipArchive (>= 1.8.1)
+    - SVGAPlayer/ProtoFiles
+  - SVGAPlayer/ProtoFiles (2.3.5):
+    - Protobuf (~> 3.4)
+  - TZScrollViewPopGesture (1.0.6)
+  - "UITableView+FDTemplateLayoutCell (1.6)"
+  - VasSonic (3.1.1)
+  - Yoga (1.14.0)
+  - YogaKit (1.18.1):
+    - Yoga (~> 1.14)
+  - YYKit (1.0.9):
+    - libwebp
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9):
+    - libwebp
+
+DEPENDENCIES:
+  - FBMemoryProfiler
+  - FDFullscreenPopGesture
+  - FMDB
+  - FMDB/FTS
+  - FMDB/SQLCipher
+  - GPUImage
+  - HybridPageKit
+  - Kiwi
+  - KVOController
+  - libextobjc
+  - lottie-ios (~> 2.5.3)
+  - MMKV
+  - PromiseKit
+  - PromiseKit/Foundation
+  - PromiseKit/UIKit
+  - Protobuf
+  - SVGAPlayer (~> 2.3.5)
+  - TZScrollViewPopGesture
+  - "UITableView+FDTemplateLayoutCell"
+  - VasSonic
+  - YogaKit
+  - YYKit (from `https://github.com/SAGESSE-CN/YYKit.git`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - FBAllocationTracker
+    - FBMemoryProfiler
+    - FBRetainCycleDetector
+    - FDFullscreenPopGesture
+    - FMDB
+    - GPUImage
+    - HybridPageKit
+    - Kiwi
+    - KVOController
+    - libextobjc
+    - lottie-ios
+    - MMKV
+    - MMKVCore
+    - PromiseKit
+    - Protobuf
+    - SQLCipher
+    - SSZipArchive
+    - SVGAPlayer
+    - TZScrollViewPopGesture
+    - "UITableView+FDTemplateLayoutCell"
+    - VasSonic
+    - Yoga
+    - YogaKit
+  trunk:
+    - libwebp
+
+EXTERNAL SOURCES:
+  YYKit:
+    :git: https://github.com/SAGESSE-CN/YYKit.git
+
+CHECKOUT OPTIONS:
+  YYKit:
+    :commit: 903d9e3c5a20089f152918fe8611fcafd52c2ad1
+    :git: https://github.com/SAGESSE-CN/YYKit.git
+
+SPEC CHECKSUMS:
+  FBAllocationTracker: dfdca3f71aceca6a85e95e3c6ec76a9785eba0f1
+  FBMemoryProfiler: 623fc5f8a61f7d02ec75c87e3b97c90f621d8b02
+  FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
+  FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  HybridPageKit: f02b606ebf9afd42b57ac2e829edb9f77f0db942
+  Kiwi: fbeafef0f00e4d8f7dcb3420a4930afe70af77f7
+  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
+  libextobjc: aed8b7d2b07f511c1a7ecaacb33ea03e327c69b7
+  libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
+  lottie-ios: a50d5c0160425cd4b01b852bb9578963e6d92d31
+  MMKV: aac95d817a100479445633f2b3ed8961b4ac5043
+  MMKVCore: 3388952ded307e41b3ed8a05892736a236ed1b8e
+  PromiseKit: ee485df3d4dc570594d7e7aecae6352697dc6a4c
+  Protobuf: b60ec2f51ad74765f44d0c09d2e0579d7de21745
+  SQLCipher: 712e8416685e8e575b9b0706ffee71678b2fdcf8
+  SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
+  SVGAPlayer: bae4048710c948dc4de98971e35207d3bbed85ad
+  TZScrollViewPopGesture: d36355038259e89372a1f4a2db7e9ca675de2278
+  "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
+  VasSonic: 1b0e5d45602627e8f39ac120a892050a10d42bab
+  Yoga: cff67a400f6b74dc38eb0bad4f156673d9aa980c
+  YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
+  YYKit: 9ac092a14e3d5af709b707479bdb76b96a62fb41
+
+PODFILE CHECKSUM: c9d94105e96525f7e6453b0141b5cd530d3d1778
+
+COCOAPODS: 1.12.1

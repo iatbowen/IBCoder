@@ -266,4 +266,41 @@
  而当用户操作视图，ViewModel也能监听到视图的变化，然后通知数据做改动，这实际上就实现了数据的双向绑定。
  并且MVVM中的View 和 ViewModel可以互相通信
 
+ 四、MVI
+ 强调单一数据流和不可变状态。MVI 的核心思想是通过 Intent 驱动状态变化，并用单一的状态对象来描述整个 UI。
+ 1、Model 职责：处理数据逻辑，包括从网络或数据库获取数据。
+ 2、View 职责：展示 UI 并响应用户交互，渲染单一的状态对象。
+ 3、Intent 职责：用户意图的封装，触发状态变化。
+ 4、State 职责：表示 UI 的单一状态。
+ 
+ MVI 强调数据的单向流动，主要分为以下几步：
+ 1、用户操作以 Intent 的形式通知 Model
+ 2、Model 基于 Intent 更新 State
+ 3、View 接收到 State 变化刷新 UI。
+ 
+ 与MVVM主要区别在 于 Model 与 View 层交互的部分
+ Model 层承载 UI 状态，并暴露出 ViewState 供 View 订阅，ViewState 是个 data class,包含所有页面状态
+ View 层通过 Intent 更新 ViewState，替代 MVVM 通过调用 ViewModel 方法交互的方式
+ 通过 Intent 通信，有利于 View 与 ViewModel 之间的进一步解耦，同时所有调用以 Intent 的形式汇总到一处，也有利于对行为的集中分析和监控
+ 
+ 五、Flux
+ 基本概念
+ View： 应用视图，可展示Store数据，并实时响应Store的更新。
+ Action（动作）：动作消息，包含动作类型与动作描述。
+ Dispatcher（派发器）：接收到Action，并将它们发送给Store
+ Store（数据层）：数据中心，持有应用程序的数据，并会响应Action消息
+ 
+ Flux 的最大特点，就是数据的"单向流动"。
+ 1、视图产生动作消息，将动作传递给调度器
+ 2、调度器将动作消息发送给每一个数据中心
+ 3、数据中心再将数据传递给视图
+
+ 六、Redux
+ Flux的基本原则是“单向数据流”，Redux在此基础上强调三个基本原则：
+ 1、唯一数据源（Single Source of Truth）：整个应用只保持一个Store，所有组件的数据源就是这个Store上的状态。
+ 2、保持状态只读（State is read-only）：不直接修改状态，要修改Store的状态，必须要通过派发一个action对象完成。
+ 3、数据改变只能通过纯函数完成（Changes are made with pure funtions）：这里所说的纯函数是指reducer。reducer函数接受两个参数：reducer(state,action)。
+   第一个参数state是当前的状态，第二个参数action是收受到的action对象，
+   reducer函数要做个事情就是根据state和action的值产生一个新的对象返回（返回的结果必须完全由参数state和action决定，而且不应产生任何副作用）。
+ 
 */

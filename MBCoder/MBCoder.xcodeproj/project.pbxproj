@@ -310,6 +310,16 @@
 		4AF2134E2399F31600EFB85D /* TPExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134C2399F31600EFB85D /* TPExpandIcon.png */; };
 		4AF2134F2399F31600EFB85D /* TPNOExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */; };
 		4AF2B56F24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */; };
+		541E82D12CC1374B00755059 /* cutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82B92CC1374B00755059 /* cutils.c */; };
+		541E82D22CC1374B00755059 /* libbf.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82BB2CC1374B00755059 /* libbf.c */; };
+		541E82D32CC1374B00755059 /* libregexp.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82BE2CC1374B00755059 /* libregexp.c */; };
+		541E82D42CC1374B00755059 /* libunicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82C12CC1374B00755059 /* libunicode.c */; };
+		541E82D82CC1374B00755059 /* quickjs-libc.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82C82CC1374B00755059 /* quickjs-libc.c */; };
+		541E82D92CC1374B00755059 /* quickjs.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82CB2CC1374B00755059 /* quickjs.c */; };
+		542707B62CC63BA200AD59B6 /* IBGroup2Controller30.m in Sources */ = {isa = PBXBuildFile; fileRef = 542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */; };
+		5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2652CC14DBB00AD59B6 /* QJSContext.m */; };
+		5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */; };
+		5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */; };
 		5C9906227B70649FAE25EC59 /* libPods-MBCoderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D3053F7803EC8C4E0C644 /* libPods-MBCoderUITests.a */; };
 		C26D33292B6BF082002062F4 /* MBProducerConsumerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C26D33282B6BF082002062F4 /* MBProducerConsumerQueue.m */; };
 		CFCF52D7F7724B5F9C48246D /* libPods-MBCoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F55995B515EF5A59C8491C /* libPods-MBCoder.a */; };
@@ -970,6 +980,32 @@
 		4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPNOExpandIcon.png; sourceTree = "<group>"; };
 		4AF2B56D24ADB0ED00ADFB12 /* IBFlashChatTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBFlashChatTransitionView.h; sourceTree = "<group>"; };
 		4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBFlashChatTransitionView.m; sourceTree = "<group>"; };
+		541E82B92CC1374B00755059 /* cutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cutils.c; sourceTree = "<group>"; };
+		541E82BA2CC1374B00755059 /* cutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cutils.h; sourceTree = "<group>"; };
+		541E82BB2CC1374B00755059 /* libbf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libbf.c; sourceTree = "<group>"; };
+		541E82BC2CC1374B00755059 /* libbf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libbf.h; sourceTree = "<group>"; };
+		541E82BD2CC1374B00755059 /* libregexp-opcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libregexp-opcode.h"; sourceTree = "<group>"; };
+		541E82BE2CC1374B00755059 /* libregexp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libregexp.c; sourceTree = "<group>"; };
+		541E82BF2CC1374B00755059 /* libregexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libregexp.h; sourceTree = "<group>"; };
+		541E82C02CC1374B00755059 /* libunicode-table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "libunicode-table.h"; sourceTree = "<group>"; };
+		541E82C12CC1374B00755059 /* libunicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libunicode.c; sourceTree = "<group>"; };
+		541E82C22CC1374B00755059 /* libunicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libunicode.h; sourceTree = "<group>"; };
+		541E82C32CC1374B00755059 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		541E82C72CC1374B00755059 /* quickjs-atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "quickjs-atom.h"; sourceTree = "<group>"; };
+		541E82C82CC1374B00755059 /* quickjs-libc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "quickjs-libc.c"; sourceTree = "<group>"; };
+		541E82C92CC1374B00755059 /* quickjs-libc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "quickjs-libc.h"; sourceTree = "<group>"; };
+		541E82CA2CC1374B00755059 /* quickjs-opcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "quickjs-opcode.h"; sourceTree = "<group>"; };
+		541E82CB2CC1374B00755059 /* quickjs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quickjs.c; sourceTree = "<group>"; };
+		541E82CC2CC1374B00755059 /* quickjs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quickjs.h; sourceTree = "<group>"; };
+		541E82CD2CC1374B00755059 /* unicode_gen_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unicode_gen_def.h; sourceTree = "<group>"; };
+		542707B42CC63BA200AD59B6 /* IBGroup2Controller30.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller30.h; sourceTree = "<group>"; };
+		542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller30.m; sourceTree = "<group>"; };
+		5427E2652CC14DBB00AD59B6 /* QJSContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSContext.m; sourceTree = "<group>"; };
+		5427E2662CC14DBC00AD59B6 /* QJSConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSConfiguration.h; sourceTree = "<group>"; };
+		5427E2672CC14DBC00AD59B6 /* QJSRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSRuntime.h; sourceTree = "<group>"; };
+		5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSRuntime.m; sourceTree = "<group>"; };
+		5427E2692CC14DBE00AD59B6 /* QJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSContext.h; sourceTree = "<group>"; };
+		5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSConfiguration.m; sourceTree = "<group>"; };
 		68F55995B515EF5A59C8491C /* libPods-MBCoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MBCoder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D89D083E41EFA39D866CFD /* Pods-MBCoderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.release.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A6E5ED77AC4908741E17981E /* Pods-MBCoderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.debug.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1823,6 +1859,7 @@
 		4ACBB8012341FA0D002D7955 /* IBModule */ = {
 			isa = PBXGroup;
 			children = (
+				541E82D02CC1374B00755059 /* QuickJS */,
 				4AA857DE23B20BED003D610F /* card */,
 				4AF2132F2399F2E800EFB85D /* TimeProfiler */,
 				4AF2132823991DB900EFB85D /* mmap */,
@@ -2000,6 +2037,8 @@
 				F3D01E2124D56B770007DD23 /* IBGroup2Controller28.m */,
 				4A43246A25E8FA5F005AD9A0 /* IBGroup2Controller29.h */,
 				4A43246B25E8FA5F005AD9A0 /* IBGroup2Controller29.m */,
+				542707B42CC63BA200AD59B6 /* IBGroup2Controller30.h */,
+				542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */,
 			);
 			path = vc3;
 			sourceTree = "<group>";
@@ -2063,6 +2102,53 @@
 				4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */,
 			);
 			path = icon;
+			sourceTree = "<group>";
+		};
+		541E82B82CC1374B00755059 /* Bridge */ = {
+			isa = PBXGroup;
+			children = (
+				5427E2662CC14DBC00AD59B6 /* QJSConfiguration.h */,
+				5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */,
+				5427E2692CC14DBE00AD59B6 /* QJSContext.h */,
+				5427E2652CC14DBB00AD59B6 /* QJSContext.m */,
+				5427E2672CC14DBC00AD59B6 /* QJSRuntime.h */,
+				5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */,
+			);
+			path = Bridge;
+			sourceTree = "<group>";
+		};
+		541E82CF2CC1374B00755059 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				541E82B92CC1374B00755059 /* cutils.c */,
+				541E82BA2CC1374B00755059 /* cutils.h */,
+				541E82BB2CC1374B00755059 /* libbf.c */,
+				541E82BC2CC1374B00755059 /* libbf.h */,
+				541E82BD2CC1374B00755059 /* libregexp-opcode.h */,
+				541E82BE2CC1374B00755059 /* libregexp.c */,
+				541E82BF2CC1374B00755059 /* libregexp.h */,
+				541E82C02CC1374B00755059 /* libunicode-table.h */,
+				541E82C12CC1374B00755059 /* libunicode.c */,
+				541E82C22CC1374B00755059 /* libunicode.h */,
+				541E82C32CC1374B00755059 /* list.h */,
+				541E82C72CC1374B00755059 /* quickjs-atom.h */,
+				541E82C82CC1374B00755059 /* quickjs-libc.c */,
+				541E82C92CC1374B00755059 /* quickjs-libc.h */,
+				541E82CA2CC1374B00755059 /* quickjs-opcode.h */,
+				541E82CB2CC1374B00755059 /* quickjs.c */,
+				541E82CC2CC1374B00755059 /* quickjs.h */,
+				541E82CD2CC1374B00755059 /* unicode_gen_def.h */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		541E82D02CC1374B00755059 /* QuickJS */ = {
+			isa = PBXGroup;
+			children = (
+				541E82B82CC1374B00755059 /* Bridge */,
+				541E82CF2CC1374B00755059 /* Core */,
+			);
+			path = QuickJS;
 			sourceTree = "<group>";
 		};
 		E0C3398B810AB45FA06458BC /* Frameworks */ = {
@@ -2301,6 +2387,7 @@
 				4ACBB94C2341FA0D002D7955 /* AppDelegate.m in Sources */,
 				4ACBB8F92341FA0D002D7955 /* AFURLResponseSerialization.m in Sources */,
 				F3A3E330238C441200925ACC /* IBGroup2Controller19.m in Sources */,
+				541E82D82CC1374B00755059 /* quickjs-libc.c in Sources */,
 				F3955B0024179C17009EC505 /* MBRetainCycleLoggerPlugin.m in Sources */,
 				4ACBB85A2341FA0D002D7955 /* IBController30.m in Sources */,
 				4ACBB9132341FA0D002D7955 /* NSData+ImageContentType.m in Sources */,
@@ -2329,6 +2416,7 @@
 				4ACBB9312341FA0D002D7955 /* Son.m in Sources */,
 				4ACBB8BD2341FA0D002D7955 /* RACDynamicSequence.m in Sources */,
 				4ACBB8722341FA0D002D7955 /* IBController5.m in Sources */,
+				541E82D22CC1374B00755059 /* libbf.c in Sources */,
 				4A9D2B632369904C006B9771 /* IBGroup2Controller13.m in Sources */,
 				4ACBB8F62341FA0D002D7955 /* AFOAuthCredential.m in Sources */,
 				4ACBB8C62341FA0D002D7955 /* RACKVOChannel.m in Sources */,
@@ -2343,6 +2431,7 @@
 				4ACBB8912341FA0D002D7955 /* View+MASAdditions.m in Sources */,
 				4ACBB86B2341FA0D002D7955 /* IBController19.m in Sources */,
 				4ACBB90C2341FA0D002D7955 /* SDWebImagePrefetcher.m in Sources */,
+				5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */,
 				4ACBB8F82341FA0D002D7955 /* AFOAuth2Manager.m in Sources */,
 				4ACBB92E2341FA0D002D7955 /* IBAnimation.m in Sources */,
 				4ACBB8FE2341FA0D002D7955 /* AFSecurityPolicy.m in Sources */,
@@ -2392,6 +2481,7 @@
 				4ACBB9122341FA0D002D7955 /* SDWebImageTransition.m in Sources */,
 				4ACBB8E32341FA0D002D7955 /* NSObject+RACDescription.m in Sources */,
 				4ACBB8712341FA0D002D7955 /* IBController25.m in Sources */,
+				5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */,
 				4ACBB8AA2341FA0D002D7955 /* UIRefreshControl+RACCommandSupport.m in Sources */,
 				4ACBB8A52341FA0D002D7955 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				4A64EF842369D14E00431CEA /* VVStack.m in Sources */,
@@ -2410,6 +2500,7 @@
 				4ACBB8C82341FA0D002D7955 /* RACMulticastConnection.m in Sources */,
 				4ACBB9072341FA0D002D7955 /* SDWebImageDownloader.m in Sources */,
 				4ACBB9372341FA0D002D7955 /* IBCAShapeLayer.m in Sources */,
+				541E82D32CC1374B00755059 /* libregexp.c in Sources */,
 				4ACBB86E2341FA0D002D7955 /* IBController26.m in Sources */,
 				4ACBB8F72341FA0D002D7955 /* AFHTTPRequestSerializer+OAuth2.m in Sources */,
 				4ACBB8ED2341FA0D002D7955 /* NSDictionary+RACSequenceAdditions.m in Sources */,
@@ -2421,12 +2512,14 @@
 				4ACBB8772341FA0D002D7955 /* IBController6.m in Sources */,
 				4ACBB86C2341FA0D002D7955 /* IBController17.m in Sources */,
 				4ACBB85C2341FA0D002D7955 /* IBController33.m in Sources */,
+				541E82D92CC1374B00755059 /* quickjs.c in Sources */,
 				4ACBB8E12341FA0D002D7955 /* NSFileHandle+RACSupport.m in Sources */,
 				4ACBB8FA2341FA0D002D7955 /* AFHTTPSessionManager.m in Sources */,
 				4ACBB8F52341FA0D002D7955 /* NSIndexSet+RACSequenceAdditions.m in Sources */,
 				4ACBB8D02341FA0D002D7955 /* RACValueTransformer.m in Sources */,
 				4AF213462399F2E800EFB85D /* TPRecordHierarchyModel.m in Sources */,
 				4ACBB8A12341FA0D002D7955 /* UIImagePickerController+RACSignalSupport.m in Sources */,
+				541E82D42CC1374B00755059 /* libunicode.c in Sources */,
 				4ACBB8742341FA0D002D7955 /* IBController1.m in Sources */,
 				4ACBB8862341FA0D002D7955 /* FMEncryptHelper.m in Sources */,
 				4ACBB8E92341FA0D002D7955 /* NSObject+RACDeallocating.m in Sources */,
@@ -2484,6 +2577,7 @@
 				4ACBB8CD2341FA0D002D7955 /* RACPassthroughSubscriber.m in Sources */,
 				4ACBB8C92341FA0D002D7955 /* RACSignalProvider.d in Sources */,
 				4ACBB8F32341FA0D002D7955 /* NSObject+RACKVOWrapper.m in Sources */,
+				5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */,
 				4ACBB89D2341FA0D002D7955 /* UITableViewCell+RACSignalSupport.m in Sources */,
 				4ACBB8612341FA0D002D7955 /* IBController28.m in Sources */,
 				4ACBB85F2341FA0D002D7955 /* IBController32.m in Sources */,
@@ -2547,6 +2641,8 @@
 				4ACBB88D2341FA0D002D7955 /* MASCompositeConstraint.m in Sources */,
 				4ACBB8E42341FA0D002D7955 /* NSUserDefaults+RACSupport.m in Sources */,
 				4ACBB8A92341FA0D002D7955 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
+				541E82D12CC1374B00755059 /* cutils.c in Sources */,
+				542707B62CC63BA200AD59B6 /* IBGroup2Controller30.m in Sources */,
 				4AF209222397B49200EFB85D /* MBPresentationController.m in Sources */,
 				4A86C074237D953500498C20 /* IBGroup2Controller17.m in Sources */,
 				4ACBB9292341FA0D002D7955 /* BClothesProvider.m in Sources */,
@@ -2860,6 +2956,144 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-fmodule-map-file=\"${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.modulemap\"",
+					"-fmodule-map-file=\"${PODS_CONFIGURATION_BUILD_DIR}/YogaKit/YogaKit.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/SSZipArchive/SSZipArchive.modulemap\"",
+					"-fmodule-map-file=\"${PODS_ROOT}/Headers/Public/yoga/Yoga.modulemap\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FBAllocationTracker\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FBMemoryProfiler\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FBRetainCycleDetector\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FDFullscreenPopGesture\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/FMDB\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/SQLCipher\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/GPUImage\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/HybridPageKit\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/KVOController\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/MMKV\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/MMKVCore\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/Protobuf\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/SSZipArchive\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/SVGAPlayer\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/TZScrollViewPopGesture\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/UITableView+FDTemplateLayoutCell\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/VasSonic\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/YYKit\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/libwebp\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/libextobjc\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/lottie-ios\"",
+					"$(inherited)",
+					"-DSQLITE_HAS_CODEC",
+					"-DHAVE_USLEEP=1",
+					"$(inherited)",
+					"-DSQLITE_HAS_CODEC",
+					"-DSQLITE_TEMP_STORE=2",
+					"-DSQLITE_SOUNDEX",
+					"-DSQLITE_THREADSAFE",
+					"-DSQLITE_ENABLE_RTREE",
+					"-DSQLITE_ENABLE_STAT3",
+					"-DSQLITE_ENABLE_STAT4",
+					"-DSQLITE_ENABLE_COLUMN_METADATA",
+					"-DSQLITE_ENABLE_MEMORY_MANAGEMENT",
+					"-DSQLITE_ENABLE_LOAD_EXTENSION",
+					"-DSQLITE_ENABLE_FTS4",
+					"-DSQLITE_ENABLE_FTS4_UNICODE61",
+					"-DSQLITE_ENABLE_FTS3_PARENTHESIS",
+					"-DSQLITE_ENABLE_UNLOCK_NOTIFY",
+					"-DSQLITE_ENABLE_JSON1",
+					"-DSQLITE_ENABLE_FTS5",
+					"-DSQLCIPHER_CRYPTO_CC",
+					"-DHAVE_USLEEP=1",
+					"-DSQLITE_MAX_VARIABLE_NUMBER=99999",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"FBAllocationTracker\"",
+					"-l\"FBMemoryProfiler\"",
+					"-l\"FBRetainCycleDetector\"",
+					"-l\"FDFullscreenPopGesture\"",
+					"-l\"FMDB\"",
+					"-l\"GPUImage\"",
+					"-l\"HybridPageKit\"",
+					"-l\"KVOController\"",
+					"-l\"MMKV\"",
+					"-l\"MMKVCore\"",
+					"-l\"PromiseKit\"",
+					"-l\"Protobuf\"",
+					"-l\"SQLCipher\"",
+					"-l\"SSZipArchive\"",
+					"-l\"SVGAPlayer\"",
+					"-l\"TZScrollViewPopGesture\"",
+					"-l\"UITableView+FDTemplateLayoutCell\"",
+					"-l\"VasSonic\"",
+					"-l\"YYKit\"",
+					"-l\"Yoga\"",
+					"-l\"YogaKit\"",
+					"-l\"c++\"",
+					"-l\"iconv\"",
+					"-l\"libextobjc\"",
+					"-l\"libwebp\"",
+					"-l\"lottie-ios\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"CoreFoundation\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibowen.coder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2893,6 +3127,70 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"FBAllocationTracker\"",
+					"-l\"FBMemoryProfiler\"",
+					"-l\"FBRetainCycleDetector\"",
+					"-l\"FDFullscreenPopGesture\"",
+					"-l\"FMDB\"",
+					"-l\"GPUImage\"",
+					"-l\"HybridPageKit\"",
+					"-l\"KVOController\"",
+					"-l\"MMKV\"",
+					"-l\"MMKVCore\"",
+					"-l\"PromiseKit\"",
+					"-l\"Protobuf\"",
+					"-l\"SQLCipher\"",
+					"-l\"SSZipArchive\"",
+					"-l\"SVGAPlayer\"",
+					"-l\"TZScrollViewPopGesture\"",
+					"-l\"UITableView+FDTemplateLayoutCell\"",
+					"-l\"VasSonic\"",
+					"-l\"YYKit\"",
+					"-l\"Yoga\"",
+					"-l\"YogaKit\"",
+					"-l\"c++\"",
+					"-l\"iconv\"",
+					"-l\"libextobjc\"",
+					"-l\"libwebp\"",
+					"-l\"lottie-ios\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"CoreFoundation\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibowen.coder;
 				PRODUCT_NAME = "$(TARGET_NAME)";

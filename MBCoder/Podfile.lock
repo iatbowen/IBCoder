@@ -128,17 +128,19 @@ DEPENDENCIES:
   - YYKit (from `https://github.com/SAGESSE-CN/YYKit.git`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/CocoaPods/Old-Specs:
     - FBAllocationTracker
     - FBMemoryProfiler
-    - FBRetainCycleDetector
     - FDFullscreenPopGesture
-    - FMDB
     - GPUImage
+    - KVOController
+  trunk:
+    - FBRetainCycleDetector
+    - FMDB
     - HybridPageKit
     - Kiwi
-    - KVOController
     - libextobjc
+    - libwebp
     - lottie-ios
     - MMKV
     - MMKVCore
@@ -152,8 +154,6 @@ SPEC REPOS:
     - VasSonic
     - Yoga
     - YogaKit
-  trunk:
-    - libwebp
 
 EXTERNAL SOURCES:
   YYKit:
@@ -191,6 +191,6 @@ SPEC CHECKSUMS:
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
   YYKit: 9ac092a14e3d5af709b707479bdb76b96a62fb41
 
-PODFILE CHECKSUM: c9d94105e96525f7e6453b0141b5cd530d3d1778
+PODFILE CHECKSUM: 42dc35946916e3f8c1a55386d336e7c91d993fdd
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.0

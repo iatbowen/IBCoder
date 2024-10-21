@@ -30,6 +30,7 @@ target 'MBCoder' do
   pod 'MMKV'
   pod 'GPUImage'
   pod 'FBMemoryProfiler'
+#  pod 'QuickJS_iOS'
 #  pod 'MLeaksFinder'
   
   target 'MBCoderUITests' do

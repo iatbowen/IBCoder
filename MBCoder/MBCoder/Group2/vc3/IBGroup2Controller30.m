@@ -53,10 +53,10 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
 //    [self testOriginCode];
-//    [self testContextSmoke];
+    [self testContextSmoke];
 //    [self testQJSContext_Block];
 //    [self testQJSValueInterface];
-    [self testContext_methodInvoke];
+//    [self testContext_methodInvoke];
 }
 
 - (void)testOriginCode {
@@ -77,15 +77,12 @@
     QJSRuntime *runtime = [[QJSRuntime alloc] init];
     QJSContext *context = [runtime newContext];
 
-    QJSValue *globalValue = [context getGlobalValue];
-    [globalValue setObject:@(1.1) forKey:@"testval"];
-
-    QJSValue *retValue = [context eval:@"console.log(fetch); var x = {a:1, b:2};console.log(JSON.stringify(x));x;"];
-
+    QJSValue *retValue = [context eval:@"console.log(fetch);"];
     if ([retValue isException]) {
         NSLog(@"%@", [context popException].exception);
     }
-    NSLog(@"%@", retValue);
+    retValue = [context eval:@"var x = {a:1, b:2};console.log(JSON.stringify(x));x;"];
+    NSLog(@"%@", retValue.objValue);
 }
 
 - (void)testQJSValueInterface {

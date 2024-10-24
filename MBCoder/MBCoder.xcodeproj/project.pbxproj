@@ -320,6 +320,11 @@
 		5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2652CC14DBB00AD59B6 /* QJSContext.m */; };
 		5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */; };
 		5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */; };
+		548741A62CCA3D8E0088F44D /* IBGroup2Controller31.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */; };
+		548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741A92CCA40860088F44D /* MBStateMachine.m */; };
+		548741AD2CCA40A10088F44D /* MBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741AC2CCA40A10088F44D /* MBEvent.m */; };
+		548741B02CCA40B30088F44D /* MBState.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741AF2CCA40B30088F44D /* MBState.m */; };
+		548741B32CCA410B0088F44D /* MBTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741B22CCA410B0088F44D /* MBTransition.m */; };
 		5C9906227B70649FAE25EC59 /* libPods-MBCoderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D3053F7803EC8C4E0C644 /* libPods-MBCoderUITests.a */; };
 		C26D33292B6BF082002062F4 /* MBProducerConsumerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C26D33282B6BF082002062F4 /* MBProducerConsumerQueue.m */; };
 		CFCF52D7F7724B5F9C48246D /* libPods-MBCoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F55995B515EF5A59C8491C /* libPods-MBCoder.a */; };
@@ -1006,6 +1011,16 @@
 		5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSRuntime.m; sourceTree = "<group>"; };
 		5427E2692CC14DBE00AD59B6 /* QJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSContext.h; sourceTree = "<group>"; };
 		5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSConfiguration.m; sourceTree = "<group>"; };
+		548741A42CCA3D8E0088F44D /* IBGroup2Controller31.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller31.h; sourceTree = "<group>"; };
+		548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller31.m; sourceTree = "<group>"; };
+		548741A82CCA40860088F44D /* MBStateMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBStateMachine.h; sourceTree = "<group>"; };
+		548741A92CCA40860088F44D /* MBStateMachine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBStateMachine.m; sourceTree = "<group>"; };
+		548741AB2CCA40A10088F44D /* MBEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBEvent.h; sourceTree = "<group>"; };
+		548741AC2CCA40A10088F44D /* MBEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBEvent.m; sourceTree = "<group>"; };
+		548741AE2CCA40B30088F44D /* MBState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBState.h; sourceTree = "<group>"; };
+		548741AF2CCA40B30088F44D /* MBState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBState.m; sourceTree = "<group>"; };
+		548741B12CCA410B0088F44D /* MBTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBTransition.h; sourceTree = "<group>"; };
+		548741B22CCA410B0088F44D /* MBTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBTransition.m; sourceTree = "<group>"; };
 		68F55995B515EF5A59C8491C /* libPods-MBCoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MBCoder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D89D083E41EFA39D866CFD /* Pods-MBCoderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.release.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A6E5ED77AC4908741E17981E /* Pods-MBCoderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.debug.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1859,6 +1874,7 @@
 		4ACBB8012341FA0D002D7955 /* IBModule */ = {
 			isa = PBXGroup;
 			children = (
+				548741A72CCA404C0088F44D /* StateMachine */,
 				541E82D02CC1374B00755059 /* QuickJS */,
 				4AA857DE23B20BED003D610F /* card */,
 				4AF2132F2399F2E800EFB85D /* TimeProfiler */,
@@ -2039,6 +2055,8 @@
 				4A43246B25E8FA5F005AD9A0 /* IBGroup2Controller29.m */,
 				542707B42CC63BA200AD59B6 /* IBGroup2Controller30.h */,
 				542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */,
+				548741A42CCA3D8E0088F44D /* IBGroup2Controller31.h */,
+				548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */,
 			);
 			path = vc3;
 			sourceTree = "<group>";
@@ -2104,7 +2122,7 @@
 			path = icon;
 			sourceTree = "<group>";
 		};
-		541E82B82CC1374B00755059 /* Bridge */ = {
+		541E82B82CC1374B00755059 /* wrapper */ = {
 			isa = PBXGroup;
 			children = (
 				5427E2662CC14DBC00AD59B6 /* QJSConfiguration.h */,
@@ -2114,10 +2132,10 @@
 				5427E2672CC14DBC00AD59B6 /* QJSRuntime.h */,
 				5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */,
 			);
-			path = Bridge;
+			path = wrapper;
 			sourceTree = "<group>";
 		};
-		541E82CF2CC1374B00755059 /* Core */ = {
+		541E82CF2CC1374B00755059 /* imp */ = {
 			isa = PBXGroup;
 			children = (
 				541E82B92CC1374B00755059 /* cutils.c */,
@@ -2139,16 +2157,31 @@
 				541E82CC2CC1374B00755059 /* quickjs.h */,
 				541E82CD2CC1374B00755059 /* unicode_gen_def.h */,
 			);
-			path = Core;
+			path = imp;
 			sourceTree = "<group>";
 		};
 		541E82D02CC1374B00755059 /* QuickJS */ = {
 			isa = PBXGroup;
 			children = (
-				541E82B82CC1374B00755059 /* Bridge */,
-				541E82CF2CC1374B00755059 /* Core */,
+				541E82B82CC1374B00755059 /* wrapper */,
+				541E82CF2CC1374B00755059 /* imp */,
 			);
 			path = QuickJS;
+			sourceTree = "<group>";
+		};
+		548741A72CCA404C0088F44D /* StateMachine */ = {
+			isa = PBXGroup;
+			children = (
+				548741A82CCA40860088F44D /* MBStateMachine.h */,
+				548741A92CCA40860088F44D /* MBStateMachine.m */,
+				548741AB2CCA40A10088F44D /* MBEvent.h */,
+				548741AC2CCA40A10088F44D /* MBEvent.m */,
+				548741AE2CCA40B30088F44D /* MBState.h */,
+				548741AF2CCA40B30088F44D /* MBState.m */,
+				548741B12CCA410B0088F44D /* MBTransition.h */,
+				548741B22CCA410B0088F44D /* MBTransition.m */,
+			);
+			path = StateMachine;
 			sourceTree = "<group>";
 		};
 		E0C3398B810AB45FA06458BC /* Frameworks */ = {
@@ -2486,6 +2519,7 @@
 				4ACBB8A52341FA0D002D7955 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				4A64EF842369D14E00431CEA /* VVStack.m in Sources */,
 				4AF213452399F2E800EFB85D /* TPCallTrace.c in Sources */,
+				548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */,
 				4ACBB9232341FA0D002D7955 /* IBGroup2Controller6.m in Sources */,
 				4AF213422399F2E800EFB85D /* TPRecordCell.m in Sources */,
 				4AB0C9AD234ECE80002356B7 /* IBGroup2Controller10.m in Sources */,
@@ -2567,6 +2601,7 @@
 				4ACBB88F2341FA0D002D7955 /* MASLayoutConstraint.m in Sources */,
 				4ACBB9262341FA0D002D7955 /* IBGroup2Controller4.m in Sources */,
 				4ACBB93C2341FA0D002D7955 /* IBCALayer.m in Sources */,
+				548741AD2CCA40A10088F44D /* MBEvent.m in Sources */,
 				4AF2132E2399207800EFB85D /* MBMmap.m in Sources */,
 				4ACBB8A62341FA0D002D7955 /* UISegmentedControl+RACSignalSupport.m in Sources */,
 				4ACBB8FF2341FA0D002D7955 /* AFHTTPSessionManager+RACSupport.m in Sources */,
@@ -2594,6 +2629,7 @@
 				4ACBB8A02341FA0D002D7955 /* MKAnnotationView+RACSignalSupport.m in Sources */,
 				4ACBB86F2341FA0D002D7955 /* IBController14.m in Sources */,
 				4ACBB9452341FA0D002D7955 /* BViewController.m in Sources */,
+				548741A62CCA3D8E0088F44D /* IBGroup2Controller31.m in Sources */,
 				F324A32823FD200A00B68E88 /* IBGroup2Controller24.m in Sources */,
 				4ACBB8EC2341FA0D002D7955 /* NSArray+RACSequenceAdditions.m in Sources */,
 				4ACBB8A82341FA0D002D7955 /* UIAlertView+RACSignalSupport.m in Sources */,
@@ -2620,6 +2656,7 @@
 				4ACBB9352341FA0D002D7955 /* IBCAEAGLLayer.m in Sources */,
 				4ACBB85E2341FA0D002D7955 /* IBController36.m in Sources */,
 				4ACBB93F2341FA0D002D7955 /* IBGrahpicsView.m in Sources */,
+				548741B32CCA410B0088F44D /* MBTransition.m in Sources */,
 				4ACBB8652341FA0D002D7955 /* IBController20.m in Sources */,
 				4ACBB92C2341FA0D002D7955 /* Calculate.m in Sources */,
 				4ACBB8562341FA0D002D7955 /* IBController42.m in Sources */,
@@ -2669,6 +2706,7 @@
 				4ACBB9062341FA0D002D7955 /* SDWebImageCodersManager.m in Sources */,
 				4ACBB8EB2341FA0D002D7955 /* NSData+RACSupport.m in Sources */,
 				4AA858EB23B24D2D003D610F /* UIImage+HSB.m in Sources */,
+				548741B02CCA40B30088F44D /* MBState.m in Sources */,
 				4ACBB9032341FA0D002D7955 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4ACBB90B2341FA0D002D7955 /* SDWebImageCompat.m in Sources */,
 				4ACBB8B72341FA0D002D7955 /* RACGroupedSignal.m in Sources */,

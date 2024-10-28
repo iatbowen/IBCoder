@@ -77,6 +77,17 @@
 @end
 
 /**
+ 
+ 页面的渲染流程：
+ 1）浏览器通过请求得到一个HTML文本
+ 2）渲染进程解析HTML文本，构建DOM树
+ 3）解析HTML的同时，如果遇到内联样式或者样式脚本，则下载并构建样式规则（stytle rules），若遇到JavaScript脚本，则会下载执行脚本。
+ 4）DOM树和样式规则构建完成之后，渲染进程将两者合并成渲染树（render tree）
+ 5）渲染进程开始对渲染树进行布局，生成布局树（layout tree）
+ 6）渲染进程对布局树进行绘制，生成绘制记录
+ 7）渲染进程的对布局树进行分层，分别栅格化每一层，并得到合成帧
+ 8）渲染进程将合成帧信息发送给GPU进程显示到页面中
+ 
  链接：https://github.com/Tencent/VasSonic/wiki
       https://dequan1331.github.io/
  
@@ -228,7 +239,22 @@
  - (nullable WKNavigation *)loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;
  需要使用WebView展示，且交互逻辑较多的页面，最常见的就是资讯类App的内容展示页。
  
+ 六、前端渲染模式
+ https://github.com/yacan8/blog/issues/30
  
-
+ 1、客户端渲染-CSR
+ 客户端渲染是指浏览器在请求页面 URL 后，服务端直接返回一个空的静态 HTML 文件，
+ 这个 HTML 文件需要再加载 JavaScript 脚本和 CSS 样式表，浏览器加载和执行这些文件去动态改变 DOM 树的结构，使页面渲染成用户所需要的界面，
+ 这种动态渲染的方式就是客户端渲染 （CSR）
+ 
+ 2、服务渲染-SSR
+ SSR（Server-Side Rendering）是一种在服务器端完成页面渲染的技术。
+ 在这种模式下，服务器接收到客户端的请求后，会先根据请求数据和模板文件生成完整的HTML页面，然后将这个页面直接发送给客户端。
+ 这样，用户可以直接看到完成的内容，无需等待JavaScript加载和执行。
+ 
+ 3、静态站点生成-SSG
+ SSG（Static Site Generation）是一种在构建时生成静态HTML页面的技术。
+ 在这种模式下，开发者会编写一些模板文件和数据文件，然后使用构建工具（如Hugo、Gatsby等）将这些文件转换为静态的HTML页面。
+ 这些页面可以直接部署到服务器上，而不需要服务器进行实时渲染。
  
  */

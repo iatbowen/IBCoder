@@ -22,7 +22,6 @@ target 'MBCoder' do
   pod 'UITableView+FDTemplateLayoutCell'
   pod 'VasSonic'
   pod 'HybridPageKit'
-#  pod 'YYKit'
   pod 'YYKit', git: 'https://github.com/SAGESSE-CN/YYKit.git'
   pod 'FDFullscreenPopGesture'
   pod 'TZScrollViewPopGesture' # 和FDFullscreenPopGesture库不冲突
@@ -30,8 +29,6 @@ target 'MBCoder' do
   pod 'MMKV'
   pod 'GPUImage'
   pod 'FBMemoryProfiler'
-#  pod 'QuickJS_iOS'
-#  pod 'MLeaksFinder'
   
   target 'MBCoderUITests' do
     inherit! :search_paths

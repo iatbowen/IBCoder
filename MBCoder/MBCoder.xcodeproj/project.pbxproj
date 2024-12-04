@@ -320,6 +320,7 @@
 		5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2652CC14DBB00AD59B6 /* QJSContext.m */; };
 		5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */; };
 		5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */; };
+		5476433F2CFFFBB60009FB51 /* IBGroup2Controller33.m in Sources */ = {isa = PBXBuildFile; fileRef = 5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */; };
 		548741A62CCA3D8E0088F44D /* IBGroup2Controller31.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */; };
 		548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741A92CCA40860088F44D /* MBStateMachine.m */; };
 		548741AD2CCA40A10088F44D /* MBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741AC2CCA40A10088F44D /* MBEvent.m */; };
@@ -1016,6 +1017,8 @@
 		5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSRuntime.m; sourceTree = "<group>"; };
 		5427E2692CC14DBE00AD59B6 /* QJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSContext.h; sourceTree = "<group>"; };
 		5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSConfiguration.m; sourceTree = "<group>"; };
+		5476433D2CFFFBB60009FB51 /* IBGroup2Controller33.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller33.h; sourceTree = "<group>"; };
+		5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller33.m; sourceTree = "<group>"; };
 		548741A42CCA3D8E0088F44D /* IBGroup2Controller31.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller31.h; sourceTree = "<group>"; };
 		548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller31.m; sourceTree = "<group>"; };
 		548741A82CCA40860088F44D /* MBStateMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBStateMachine.h; sourceTree = "<group>"; };
@@ -2101,6 +2104,8 @@
 				548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */,
 				54E43AE52CE20822005BE78A /* IBGroup2Controller32.h */,
 				54E43AE62CE20822005BE78A /* IBGroup2Controller32.mm */,
+				5476433D2CFFFBB60009FB51 /* IBGroup2Controller33.h */,
+				5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */,
 			);
 			path = vc3;
 			sourceTree = "<group>";
@@ -2673,6 +2678,7 @@
 				4ACBB9392341FA0D002D7955 /* IBCAReplicatorLayer.m in Sources */,
 				4ACBB8962341FA0D002D7955 /* GCDTimer.m in Sources */,
 				4A37DFC4236C68C1005CEF7B /* SonicWebViewController.m in Sources */,
+				5476433F2CFFFBB60009FB51 /* IBGroup2Controller33.m in Sources */,
 				4ACBB8972341FA0D002D7955 /* GCDGroup.m in Sources */,
 				4ACBB90D2341FA0D002D7955 /* SDWebImageCoder.m in Sources */,
 				4ACBB8792341FA0D002D7955 /* IBController8.m in Sources */,

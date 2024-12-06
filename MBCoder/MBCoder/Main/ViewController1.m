@@ -49,17 +49,7 @@
 }
 
 - (void)setupUI {
-//    self.navigationController.navigationBar.translucent = NO;
-    
     self.view.backgroundColor = [UIColor whiteColor];
-    
-//    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, TopBarHeight + 10, self.view.width, 40)];
-//    lbl.text = @"Better late than never";
-//    lbl.textColor = [UIColor redColor];
-//    lbl.font = [UIFont boldSystemFontOfSize:18];
-//    lbl.textAlignment = NSTextAlignmentCenter;
-//    [self.view addSubview:lbl];
-    
     self.tableView = ({
         UITableView *tb = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
         tb.backgroundColor = [UIColor clearColor];

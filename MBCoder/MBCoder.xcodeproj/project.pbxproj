@@ -326,6 +326,7 @@
 		548741AD2CCA40A10088F44D /* MBEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741AC2CCA40A10088F44D /* MBEvent.m */; };
 		548741B02CCA40B30088F44D /* MBState.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741AF2CCA40B30088F44D /* MBState.m */; };
 		548741B32CCA410B0088F44D /* MBTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741B22CCA410B0088F44D /* MBTransition.m */; };
+		54A0FC562D0BE76D00623965 /* IBGroup2Controller34.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */; };
 		54E43AE72CE20822005BE78A /* IBGroup2Controller32.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54E43AE62CE20822005BE78A /* IBGroup2Controller32.mm */; };
 		54E43B9E2CE30D8B005BE78A /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B8B2CE30D8B005BE78A /* idl_gen_text.cpp */; };
 		54E43B9F2CE30D8B005BE78A /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B8C2CE30D8B005BE78A /* idl_parser.cpp */; };
@@ -1029,6 +1030,8 @@
 		548741AF2CCA40B30088F44D /* MBState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBState.m; sourceTree = "<group>"; };
 		548741B12CCA410B0088F44D /* MBTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBTransition.h; sourceTree = "<group>"; };
 		548741B22CCA410B0088F44D /* MBTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBTransition.m; sourceTree = "<group>"; };
+		54A0FC542D0BE76D00623965 /* IBGroup2Controller34.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller34.h; sourceTree = "<group>"; };
+		54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller34.m; sourceTree = "<group>"; };
 		54E43AE52CE20822005BE78A /* IBGroup2Controller32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller32.h; sourceTree = "<group>"; };
 		54E43AE62CE20822005BE78A /* IBGroup2Controller32.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IBGroup2Controller32.mm; sourceTree = "<group>"; };
 		54E43B7D2CE30D8B005BE78A /* allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocator.h; sourceTree = "<group>"; };
@@ -2106,6 +2109,8 @@
 				54E43AE62CE20822005BE78A /* IBGroup2Controller32.mm */,
 				5476433D2CFFFBB60009FB51 /* IBGroup2Controller33.h */,
 				5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */,
+				54A0FC542D0BE76D00623965 /* IBGroup2Controller34.h */,
+				54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */,
 			);
 			path = vc3;
 			sourceTree = "<group>";
@@ -2755,6 +2760,7 @@
 				4ACBB9412341FA0D002D7955 /* IBCViewController.m in Sources */,
 				4ACBB9352341FA0D002D7955 /* IBCAEAGLLayer.m in Sources */,
 				4ACBB85E2341FA0D002D7955 /* IBController36.m in Sources */,
+				54A0FC562D0BE76D00623965 /* IBGroup2Controller34.m in Sources */,
 				4ACBB93F2341FA0D002D7955 /* IBGrahpicsView.m in Sources */,
 				548741B32CCA410B0088F44D /* MBTransition.m in Sources */,
 				4ACBB8652341FA0D002D7955 /* IBController20.m in Sources */,

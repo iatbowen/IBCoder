@@ -310,6 +310,7 @@
 		4AF2134E2399F31600EFB85D /* TPExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134C2399F31600EFB85D /* TPExpandIcon.png */; };
 		4AF2134F2399F31600EFB85D /* TPNOExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */; };
 		4AF2B56F24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */; };
+		541B733E2D150E5700DF354D /* IBGroup2Controller35.m in Sources */ = {isa = PBXBuildFile; fileRef = 541B733D2D150E5700DF354D /* IBGroup2Controller35.m */; };
 		541E82D12CC1374B00755059 /* cutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82B92CC1374B00755059 /* cutils.c */; };
 		541E82D22CC1374B00755059 /* libbf.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82BB2CC1374B00755059 /* libbf.c */; };
 		541E82D32CC1374B00755059 /* libregexp.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82BE2CC1374B00755059 /* libregexp.c */; };
@@ -992,6 +993,8 @@
 		4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPNOExpandIcon.png; sourceTree = "<group>"; };
 		4AF2B56D24ADB0ED00ADFB12 /* IBFlashChatTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBFlashChatTransitionView.h; sourceTree = "<group>"; };
 		4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBFlashChatTransitionView.m; sourceTree = "<group>"; };
+		541B733C2D150E5700DF354D /* IBGroup2Controller35.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller35.h; sourceTree = "<group>"; };
+		541B733D2D150E5700DF354D /* IBGroup2Controller35.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller35.m; sourceTree = "<group>"; };
 		541E82B92CC1374B00755059 /* cutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cutils.c; sourceTree = "<group>"; };
 		541E82BA2CC1374B00755059 /* cutils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cutils.h; sourceTree = "<group>"; };
 		541E82BB2CC1374B00755059 /* libbf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libbf.c; sourceTree = "<group>"; };
@@ -2111,6 +2114,8 @@
 				5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */,
 				54A0FC542D0BE76D00623965 /* IBGroup2Controller34.h */,
 				54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */,
+				541B733C2D150E5700DF354D /* IBGroup2Controller35.h */,
+				541B733D2D150E5700DF354D /* IBGroup2Controller35.m */,
 			);
 			path = vc3;
 			sourceTree = "<group>";
@@ -2554,6 +2559,7 @@
 				4A9D2B632369904C006B9771 /* IBGroup2Controller13.m in Sources */,
 				4ACBB8F62341FA0D002D7955 /* AFOAuthCredential.m in Sources */,
 				4ACBB8C62341FA0D002D7955 /* RACKVOChannel.m in Sources */,
+				541B733E2D150E5700DF354D /* IBGroup2Controller35.m in Sources */,
 				4ACBB8992341FA0D002D7955 /* IBCoreSpotlight.m in Sources */,
 				4ACBB8872341FA0D002D7955 /* IBDatabaseManager.m in Sources */,
 				4ACBB9202341FA0D002D7955 /* IBGroup2Controller7.m in Sources */,

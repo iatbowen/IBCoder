@@ -328,12 +328,22 @@
 		548741B02CCA40B30088F44D /* MBState.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741AF2CCA40B30088F44D /* MBState.m */; };
 		548741B32CCA410B0088F44D /* MBTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741B22CCA410B0088F44D /* MBTransition.m */; };
 		54A0FC562D0BE76D00623965 /* IBGroup2Controller34.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */; };
+		54B935112D27978D005D6A5E /* IBGroup3Controller2.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935102D27978D005D6A5E /* IBGroup3Controller2.m */; };
+		54B935142D27BD40005D6A5E /* arm64-ios.meson in Resources */ = {isa = PBXBuildFile; fileRef = 54B935122D27BD40005D6A5E /* arm64-ios.meson */; };
+		54B935152D27BD40005D6A5E /* x86_64-ios.meson in Resources */ = {isa = PBXBuildFile; fileRef = 54B935132D27BD40005D6A5E /* x86_64-ios.meson */; };
+		54B935182D27BDEF005D6A5E /* IBGroup3Controller3.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935172D27BDEF005D6A5E /* IBGroup3Controller3.m */; };
+		54B9351B2D27C193005D6A5E /* IBGroup3Controller4.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B9351A2D27C193005D6A5E /* IBGroup3Controller4.m */; };
+		54B9351E2D27C4F2005D6A5E /* IBGroup3Controller5.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B9351D2D27C4F2005D6A5E /* IBGroup3Controller5.m */; };
+		54B935212D27C4FD005D6A5E /* IBGroup3Controller6.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935202D27C4FD005D6A5E /* IBGroup3Controller6.m */; };
+		54B935242D27C505005D6A5E /* IBGroup3Controller7.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935232D27C505005D6A5E /* IBGroup3Controller7.m */; };
+		54B935272D27C50F005D6A5E /* IBGroup3Controller8.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935262D27C50F005D6A5E /* IBGroup3Controller8.m */; };
+		54B9352A2D27C517005D6A5E /* IBGroup3Controller9.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935292D27C517005D6A5E /* IBGroup3Controller9.m */; };
 		54E43AE72CE20822005BE78A /* IBGroup2Controller32.mm in Sources */ = {isa = PBXBuildFile; fileRef = 54E43AE62CE20822005BE78A /* IBGroup2Controller32.mm */; };
 		54E43B9E2CE30D8B005BE78A /* idl_gen_text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B8B2CE30D8B005BE78A /* idl_gen_text.cpp */; };
 		54E43B9F2CE30D8B005BE78A /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B8C2CE30D8B005BE78A /* idl_parser.cpp */; };
 		54E43BA02CE30D8B005BE78A /* reflection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B902CE30D8B005BE78A /* reflection.cpp */; };
 		54E43BA12CE30D8B005BE78A /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B972CE30D8B005BE78A /* util.cpp */; };
-		54EB63B62D1547BC00C4E2F2 /* IBGroup2Controller36.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EB63B52D1547BC00C4E2F2 /* IBGroup2Controller36.m */; };
+		54EB63B62D1547BC00C4E2F2 /* IBGroup3Controller1.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */; };
 		5C9906227B70649FAE25EC59 /* libPods-MBCoderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D3053F7803EC8C4E0C644 /* libPods-MBCoderUITests.a */; };
 		C26D33292B6BF082002062F4 /* MBProducerConsumerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C26D33282B6BF082002062F4 /* MBProducerConsumerQueue.m */; };
 		CFCF52D7F7724B5F9C48246D /* libPods-MBCoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F55995B515EF5A59C8491C /* libPods-MBCoder.a */; };
@@ -1036,6 +1046,24 @@
 		548741B22CCA410B0088F44D /* MBTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MBTransition.m; sourceTree = "<group>"; };
 		54A0FC542D0BE76D00623965 /* IBGroup2Controller34.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller34.h; sourceTree = "<group>"; };
 		54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller34.m; sourceTree = "<group>"; };
+		54B9350F2D27978D005D6A5E /* IBGroup3Controller2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller2.h; sourceTree = "<group>"; };
+		54B935102D27978D005D6A5E /* IBGroup3Controller2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller2.m; sourceTree = "<group>"; };
+		54B935122D27BD40005D6A5E /* arm64-ios.meson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arm64-ios.meson"; sourceTree = "<group>"; };
+		54B935132D27BD40005D6A5E /* x86_64-ios.meson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "x86_64-ios.meson"; sourceTree = "<group>"; };
+		54B935162D27BDEF005D6A5E /* IBGroup3Controller3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller3.h; sourceTree = "<group>"; };
+		54B935172D27BDEF005D6A5E /* IBGroup3Controller3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller3.m; sourceTree = "<group>"; };
+		54B935192D27C193005D6A5E /* IBGroup3Controller4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller4.h; sourceTree = "<group>"; };
+		54B9351A2D27C193005D6A5E /* IBGroup3Controller4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller4.m; sourceTree = "<group>"; };
+		54B9351C2D27C4F2005D6A5E /* IBGroup3Controller5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller5.h; sourceTree = "<group>"; };
+		54B9351D2D27C4F2005D6A5E /* IBGroup3Controller5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller5.m; sourceTree = "<group>"; };
+		54B9351F2D27C4FD005D6A5E /* IBGroup3Controller6.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller6.h; sourceTree = "<group>"; };
+		54B935202D27C4FD005D6A5E /* IBGroup3Controller6.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller6.m; sourceTree = "<group>"; };
+		54B935222D27C505005D6A5E /* IBGroup3Controller7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller7.h; sourceTree = "<group>"; };
+		54B935232D27C505005D6A5E /* IBGroup3Controller7.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller7.m; sourceTree = "<group>"; };
+		54B935252D27C50F005D6A5E /* IBGroup3Controller8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller8.h; sourceTree = "<group>"; };
+		54B935262D27C50F005D6A5E /* IBGroup3Controller8.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller8.m; sourceTree = "<group>"; };
+		54B935282D27C517005D6A5E /* IBGroup3Controller9.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller9.h; sourceTree = "<group>"; };
+		54B935292D27C517005D6A5E /* IBGroup3Controller9.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller9.m; sourceTree = "<group>"; };
 		54E43AE52CE20822005BE78A /* IBGroup2Controller32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller32.h; sourceTree = "<group>"; };
 		54E43AE62CE20822005BE78A /* IBGroup2Controller32.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IBGroup2Controller32.mm; sourceTree = "<group>"; };
 		54E43B7D2CE30D8B005BE78A /* allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = allocator.h; sourceTree = "<group>"; };
@@ -1071,8 +1099,8 @@
 		54E43B9B2CE30D8B005BE78A /* verifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verifier.h; sourceTree = "<group>"; };
 		54E43BA22CE31034005BE78A /* idl_gen_text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl_gen_text.h; sourceTree = "<group>"; };
 		54E43BA32CE317AA005BE78A /* teacher_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teacher_generated.h; sourceTree = "<group>"; };
-		54EB63B42D1547BC00C4E2F2 /* IBGroup2Controller36.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller36.h; sourceTree = "<group>"; };
-		54EB63B52D1547BC00C4E2F2 /* IBGroup2Controller36.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller36.m; sourceTree = "<group>"; };
+		54EB63B42D1547BC00C4E2F2 /* IBGroup3Controller1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller1.h; sourceTree = "<group>"; };
+		54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller1.m; sourceTree = "<group>"; };
 		68F55995B515EF5A59C8491C /* libPods-MBCoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MBCoder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D89D083E41EFA39D866CFD /* Pods-MBCoderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.release.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A6E5ED77AC4908741E17981E /* Pods-MBCoderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.debug.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1205,6 +1233,7 @@
 			children = (
 				4ACBB6282341FA0B002D7955 /* Group1 */,
 				4ACBB7E72341FA0C002D7955 /* Group2 */,
+				54B9350D2D27952E005D6A5E /* Group3 */,
 				4ACBB68C2341FA0C002D7955 /* HelperFile */,
 				4ACBB8012341FA0D002D7955 /* IBModule */,
 				4ACBB7E22341FA0C002D7955 /* IBTool */,
@@ -2078,6 +2107,8 @@
 				4ACBB84E2341FA0D002D7955 /* Main.storyboard */,
 				4ACBB8532341FA0D002D7955 /* ViewController.h */,
 				4ACBB84B2341FA0D002D7955 /* ViewController.m */,
+				54B935122D27BD40005D6A5E /* arm64-ios.meson */,
+				54B935132D27BD40005D6A5E /* x86_64-ios.meson */,
 				4AA84ACD236AEDFC00AF5BC9 /* data.json */,
 				4AB0C9B7234F5912002356B7 /* LottieLogo.json */,
 				4AB0C9B5234F4266002356B7 /* home_colourline.svga */,
@@ -2119,8 +2150,6 @@
 				54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */,
 				541B733C2D150E5700DF354D /* IBGroup2Controller35.h */,
 				541B733D2D150E5700DF354D /* IBGroup2Controller35.m */,
-				54EB63B42D1547BC00C4E2F2 /* IBGroup2Controller36.h */,
-				54EB63B52D1547BC00C4E2F2 /* IBGroup2Controller36.m */,
 			);
 			path = vc3;
 			sourceTree = "<group>";
@@ -2246,6 +2275,39 @@
 				548741B22CCA410B0088F44D /* MBTransition.m */,
 			);
 			path = StateMachine;
+			sourceTree = "<group>";
+		};
+		54B9350D2D27952E005D6A5E /* Group3 */ = {
+			isa = PBXGroup;
+			children = (
+				54B9350E2D27953F005D6A5E /* vc1 */,
+			);
+			path = Group3;
+			sourceTree = "<group>";
+		};
+		54B9350E2D27953F005D6A5E /* vc1 */ = {
+			isa = PBXGroup;
+			children = (
+				54EB63B42D1547BC00C4E2F2 /* IBGroup3Controller1.h */,
+				54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */,
+				54B9350F2D27978D005D6A5E /* IBGroup3Controller2.h */,
+				54B935102D27978D005D6A5E /* IBGroup3Controller2.m */,
+				54B935162D27BDEF005D6A5E /* IBGroup3Controller3.h */,
+				54B935172D27BDEF005D6A5E /* IBGroup3Controller3.m */,
+				54B935192D27C193005D6A5E /* IBGroup3Controller4.h */,
+				54B9351A2D27C193005D6A5E /* IBGroup3Controller4.m */,
+				54B9351C2D27C4F2005D6A5E /* IBGroup3Controller5.h */,
+				54B9351D2D27C4F2005D6A5E /* IBGroup3Controller5.m */,
+				54B9351F2D27C4FD005D6A5E /* IBGroup3Controller6.h */,
+				54B935202D27C4FD005D6A5E /* IBGroup3Controller6.m */,
+				54B935222D27C505005D6A5E /* IBGroup3Controller7.h */,
+				54B935232D27C505005D6A5E /* IBGroup3Controller7.m */,
+				54B935252D27C50F005D6A5E /* IBGroup3Controller8.h */,
+				54B935262D27C50F005D6A5E /* IBGroup3Controller8.m */,
+				54B935282D27C517005D6A5E /* IBGroup3Controller9.h */,
+				54B935292D27C517005D6A5E /* IBGroup3Controller9.m */,
+			);
+			path = vc1;
 			sourceTree = "<group>";
 		};
 		54E43B9C2CE30D8B005BE78A /* flatbuffers */ = {
@@ -2424,7 +2486,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A77231724D943C3007E7BD6 /* FatBinary.png in Resources */,
+				54B935142D27BD40005D6A5E /* arm64-ios.meson in Resources */,
 				4ACBB8762341FA0D002D7955 /* class_metaclass.png in Resources */,
+				54B935152D27BD40005D6A5E /* x86_64-ios.meson in Resources */,
 				4AB0C9B8234F5912002356B7 /* LottieLogo.json in Resources */,
 				4ACBB8752341FA0D002D7955 /* IBController1.xib in Resources */,
 				4AA84ACE236AEDFD00AF5BC9 /* data.json in Resources */,
@@ -2575,6 +2639,7 @@
 				4ACBB88A2341FA0D002D7955 /* LoggerClient.m in Sources */,
 				4ACBB85D2341FA0D002D7955 /* IBController29.m in Sources */,
 				4ACBB8912341FA0D002D7955 /* View+MASAdditions.m in Sources */,
+				54B9351B2D27C193005D6A5E /* IBGroup3Controller4.m in Sources */,
 				4ACBB86B2341FA0D002D7955 /* IBController19.m in Sources */,
 				4ACBB90C2341FA0D002D7955 /* SDWebImagePrefetcher.m in Sources */,
 				5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */,
@@ -2629,10 +2694,13 @@
 				4ACBB8712341FA0D002D7955 /* IBController25.m in Sources */,
 				5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */,
 				4ACBB8AA2341FA0D002D7955 /* UIRefreshControl+RACCommandSupport.m in Sources */,
+				54B935212D27C4FD005D6A5E /* IBGroup3Controller6.m in Sources */,
 				4ACBB8A52341FA0D002D7955 /* UIDatePicker+RACSignalSupport.m in Sources */,
+				54B935182D27BDEF005D6A5E /* IBGroup3Controller3.m in Sources */,
 				4A64EF842369D14E00431CEA /* VVStack.m in Sources */,
 				4AF213452399F2E800EFB85D /* TPCallTrace.c in Sources */,
 				548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */,
+				54B9352A2D27C517005D6A5E /* IBGroup3Controller9.m in Sources */,
 				4ACBB9232341FA0D002D7955 /* IBGroup2Controller6.m in Sources */,
 				4AF213422399F2E800EFB85D /* TPRecordCell.m in Sources */,
 				4AB0C9AD234ECE80002356B7 /* IBGroup2Controller10.m in Sources */,
@@ -2735,6 +2803,7 @@
 				4ACBB8B12341FA0D002D7955 /* RACScheduler.m in Sources */,
 				4AF213472399F2E800EFB85D /* TPRecordModel.m in Sources */,
 				4ACBB8BE2341FA0D002D7955 /* RACSequence.m in Sources */,
+				54B935242D27C505005D6A5E /* IBGroup3Controller7.m in Sources */,
 				4ACBB8AE2341FA0D002D7955 /* UIActionSheet+RACSignalSupport.m in Sources */,
 				54E43B9E2CE30D8B005BE78A /* idl_gen_text.cpp in Sources */,
 				4AF209252397BFE000EFB85D /* MBPresentationControllerTransition.m in Sources */,
@@ -2754,7 +2823,7 @@
 				4ACBB950234201DA002D7955 /* PromiseFoundation.swift in Sources */,
 				4ACBB90E2341FA0D002D7955 /* NSButton+WebCache.m in Sources */,
 				4AF2076223967AE800EFB85D /* IBGroup2Controller21.m in Sources */,
-				54EB63B62D1547BC00C4E2F2 /* IBGroup2Controller36.m in Sources */,
+				54EB63B62D1547BC00C4E2F2 /* IBGroup3Controller1.m in Sources */,
 				4ACBB8C42341FA0D002D7955 /* RACArraySequence.m in Sources */,
 				4ACBB9322341FA0D002D7955 /* Father+Cate.m in Sources */,
 				4AF2091A2397676600EFB85D /* IBGroup2Controller22.m in Sources */,
@@ -2783,6 +2852,7 @@
 				F3954B052412471A009EC505 /* llvm.c in Sources */,
 				4ACBB8D62341FA0D002D7955 /* RACSubscriber.m in Sources */,
 				4ACBB8E52341FA0D002D7955 /* NSEnumerator+RACSequenceAdditions.m in Sources */,
+				54B935112D27978D005D6A5E /* IBGroup3Controller2.m in Sources */,
 				4ACBB8CF2341FA0D002D7955 /* RACKVOProxy.m in Sources */,
 				4ACBB8732341FA0D002D7955 /* IBController11.m in Sources */,
 				4ACBB93E2341FA0D002D7955 /* UIView+Gesture.m in Sources */,
@@ -2801,6 +2871,7 @@
 				4AF209222397B49200EFB85D /* MBPresentationController.m in Sources */,
 				4A86C074237D953500498C20 /* IBGroup2Controller17.m in Sources */,
 				4ACBB9292341FA0D002D7955 /* BClothesProvider.m in Sources */,
+				54B9351E2D27C4F2005D6A5E /* IBGroup3Controller5.m in Sources */,
 				4ACBB8AF2341FA0D002D7955 /* RACSubscriptionScheduler.m in Sources */,
 				4ACBB8DA2341FA0D002D7955 /* RACCompoundDisposable.m in Sources */,
 				4ACBB90F2341FA0D002D7955 /* SDAnimatedImageRep.m in Sources */,
@@ -2834,6 +2905,7 @@
 				4ACBB9362341FA0D002D7955 /* IBCATextLayer.m in Sources */,
 				4ACBB95A234D845F002D7955 /* IBGroup2Controller9.m in Sources */,
 				4ACBB8FD2341FA0D002D7955 /* AFNetworkReachabilityManager.m in Sources */,
+				54B935272D27C50F005D6A5E /* IBGroup3Controller8.m in Sources */,
 				4ACBB93B2341FA0D002D7955 /* IBCAScrollLayer.m in Sources */,
 				4ACBB8D32341FA0D002D7955 /* RACDisposable.m in Sources */,
 				4ACBB8C12341FA0D002D7955 /* RACSubscriptingAssignmentTrampoline.m in Sources */,

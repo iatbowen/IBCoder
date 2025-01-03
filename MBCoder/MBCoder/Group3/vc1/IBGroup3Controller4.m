@@ -1,22 +1,25 @@
 //
-//  IBGroup2Controller36.m
+//  IBGroup3Controller4.m
 //  MBCoder
 //
-//  Created by 叶修 on 2024/12/20.
-//  Copyright © 2024 inke. All rights reserved.
+//  Created by 叶修 on 2025/1/3.
+//  Copyright © 2025 inke. All rights reserved.
 //
 
-#import "IBGroup2Controller36.h"
+#import "IBGroup3Controller4.h"
 
-@interface IBGroup2Controller36 ()
+@interface IBGroup3Controller4 ()
 
 @end
 
-@implementation IBGroup2Controller36
+@implementation IBGroup3Controller4
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
 }
+
+@end
 
 /**
  一、JSPatch
@@ -44,7 +47,7 @@
  七、DynamicCocoa
  https://juejin.cn/post/6844903457699135495
  
+ 八、OCS ——史上最疯狂的 iOS 动态化方案
+ https://www.jianshu.com/p/0f99d106d93a
+ 
  */
-
-
-@end

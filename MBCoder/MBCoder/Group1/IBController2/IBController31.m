@@ -21,6 +21,10 @@
  UIScrollView的约束基于父视图，设置frame
  UIScrollView的子视图约束基于本身，撑起contentSize
  
+ UICollectionView
+ minimumLineSpacing ：跟滚动方向一致的间距，例如垂直滚动，就是上下的间距，水平滚动就是，就是左右的间距。
+ minimumInteritemSpacing ：跟滚动方向垂直的间距，例如垂直滚动，就是左右的间距，水平滚动就是，就是上下的间距。
+ 
  */
 
 #import "IBController31.h"

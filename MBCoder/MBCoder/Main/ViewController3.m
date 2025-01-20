@@ -31,7 +31,7 @@
 }
 
 - (void)initialize {
-    self.tableArray = @[@"编译速度-远程编译（XCRemoteCache）", @"性能监控", @"App瘦身", @"热修复", @"libpag动画和TGFX图形渲染库", @"filament实时物理渲染引擎", @"React-Native和VL", @"数据驱动（IGListKit）", @"开发效率工具"];
+    self.tableArray = @[@"编译速度-远程编译（XCRemoteCache）", @"热修复", @"App瘦身", @"性能监控", @"libpag动画和TGFX图形渲染库", @"filament实时物理渲染引擎", @"React-Native和VL", @"数据驱动（IGListKit）", @"开发效率工具"];
 }
 
 - (void)setupUI {

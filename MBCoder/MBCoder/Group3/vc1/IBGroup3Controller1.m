@@ -21,6 +21,23 @@
 @end
 
 /*
+ 一、Header Map
+ Header Map是一种编译优化技术，它通过减少头文件的搜索范围来加速编译过程。
+ 当编译器编译源文件时，它会搜索头文件以获取所需的声明和定义。 如果头文件很大或者有很多依赖关系，那么搜索时间可能会很长。 Header Map可以减少搜索范围，从而加快编译速度
+ 
+ 二、XCRemoteCache
+ https://github.com/spotify/XCRemoteCache
+ 
+ 
+ 
+ 一款可以让大型iOS工程编译速度提升50%的工具
+ https://tech.meituan.com/2021/02/25/cocoapods-hmap-prebuilt.html
+ 
+ iOS编译速度如何稳定提高10倍以上之一
+ https://juejin.cn/post/6903407900006449160
+ 
+ 微信团队分享：极致优化，iOS版微信编译速度3倍提升的实践总结
+ https://cloud.tencent.com/developer/article/1558486
  
  iOS编译速度优化实践
  https://juejin.cn/post/7227084645481365559
@@ -31,23 +48,11 @@
  深入剖析iOS编译
  https://ming1016.github.io/2017/03/01/deeply-analyse-llvm/
 
- iOS编译原理
- http://hchong.net/2019/07/30/iOS%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/
-
- Xcode编译速度提升
- https://elliotsomething.github.io/2018/05/23/XCodeBuild/
-
- iOS 微信编译速度优化
- https://mp.weixin.qq.com/s/QI7cyVyYuayLaJTXJVYgzQ
-
- 浅谈iOS编译过程
- https://blog.csdn.net/Future_One/article/details/81882359
-
- Xcode Build过程
- https://www.jianshu.com/p/44f97ca6f452
-
- 关于Xcode编译性能优化的研究工作总结
- https://blog.csdn.net/qq_25131687/article/details/52194034
+ iOS同学需要了解的基本编译原理
+ https://juejin.cn/post/6985767264863649828
+ 
+ iOS 编译全过程
+ https://juejin.cn/post/6859926544408969224
 
  美团 iOS 工程 zsource 命令背后的那些事儿
  https://tech.meituan.com/2019/08/08/the-things-behind-the-ios-project-zsource-command.html
@@ -56,29 +61,18 @@
  基于LLVM开发属于自己Xcode的Clang插件
  https://www.jianshu.com/p/4935e919bb45
 
- 开发Xcode插件
- https://cloud.tencent.com/developer/article/1513387
-
  开启Link Time Optimization(LTO)后到底有什么优化？
  https://www.jianshu.com/p/58fef052291a
-
- XCode 分析編譯耗時之我見
- https://medium.com/@SunXiaoShan/llvm-%E7%B7%A8%E8%AD%AF%E8%80%97%E6%99%82%E4%B9%8B%E6%88%91%E8%A6%8B-eabb3fb3817e
-
-
- clang(-ftime-trace)优化C/C++工程编译时长
- https://blog.csdn.net/wwchao2012/article/details/105897623
 
  深入浅出 iOS 编译
  https://github.com/LeoMobileDeveloper/Blogs/blob/master/Compiler/xcode-compile-deep.md
 
  iOS里的导入头文件
- https://www.zybuluo.com/qidiandasheng/note/602118
  https://zhuanlan.zhihu.com/p/51194169
+ 
 
  修改：Clang，Zsource
 
-  
  替换Clang
 
  下面我详细记录一下操作步骤：

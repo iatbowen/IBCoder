@@ -343,6 +343,58 @@
 		54E43B9F2CE30D8B005BE78A /* idl_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B8C2CE30D8B005BE78A /* idl_parser.cpp */; };
 		54E43BA02CE30D8B005BE78A /* reflection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B902CE30D8B005BE78A /* reflection.cpp */; };
 		54E43BA12CE30D8B005BE78A /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B972CE30D8B005BE78A /* util.cpp */; };
+		54EAECAA2D3FA2BF00D893D3 /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC2F2D3FA2BF00D893D3 /* JPEngine.m */; };
+		54EAECAB2D3FA2BF00D893D3 /* JSPatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 54EAEC302D3FA2BF00D893D3 /* JSPatch.js */; };
+		54EAECAC2D3FA2BF00D893D3 /* ffi_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC432D3FA2BF00D893D3 /* ffi_arm64.c */; };
+		54EAECAD2D3FA2BF00D893D3 /* sysv_arm64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC442D3FA2BF00D893D3 /* sysv_arm64.S */; };
+		54EAECAE2D3FA2BF00D893D3 /* ffi_armv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC462D3FA2BF00D893D3 /* ffi_armv7.c */; };
+		54EAECAF2D3FA2BF00D893D3 /* sysv_armv7.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC472D3FA2BF00D893D3 /* sysv_armv7.S */; };
+		54EAECB02D3FA2BF00D893D3 /* trampoline_armv7.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC482D3FA2BF00D893D3 /* trampoline_armv7.S */; };
+		54EAECB12D3FA2BF00D893D3 /* prep_cif.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4A2D3FA2BF00D893D3 /* prep_cif.c */; };
+		54EAECB22D3FA2BF00D893D3 /* raw_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4B2D3FA2BF00D893D3 /* raw_api.c */; };
+		54EAECB32D3FA2BF00D893D3 /* types.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4C2D3FA2BF00D893D3 /* types.c */; };
+		54EAECB42D3FA2BF00D893D3 /* darwin_i386.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4E2D3FA2BF00D893D3 /* darwin_i386.S */; };
+		54EAECB52D3FA2BF00D893D3 /* darwin64_x86_64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4F2D3FA2BF00D893D3 /* darwin64_x86_64.S */; };
+		54EAECB62D3FA2BF00D893D3 /* ffi_i386.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC502D3FA2BF00D893D3 /* ffi_i386.c */; };
+		54EAECB72D3FA2BF00D893D3 /* ffi64_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC512D3FA2BF00D893D3 /* ffi64_x86_64.c */; };
+		54EAECB82D3FA2BF00D893D3 /* win32_i386.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC522D3FA2BF00D893D3 /* win32_i386.S */; };
+		54EAECB92D3FA2BF00D893D3 /* JPCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC572D3FA2BF00D893D3 /* JPCFunction.m */; };
+		54EAECBA2D3FA2BF00D893D3 /* JPMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC592D3FA2BF00D893D3 /* JPMemory.m */; };
+		54EAECBB2D3FA2BF00D893D3 /* JPStructPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC5B2D3FA2BF00D893D3 /* JPStructPointer.m */; };
+		54EAECBC2D3FA2BF00D893D3 /* JPCGBitmapContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC5E2D3FA2BF00D893D3 /* JPCGBitmapContext.m */; };
+		54EAECBD2D3FA2BF00D893D3 /* JPCGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC602D3FA2BF00D893D3 /* JPCGColor.m */; };
+		54EAECBE2D3FA2BF00D893D3 /* JPCGContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC622D3FA2BF00D893D3 /* JPCGContext.m */; };
+		54EAECBF2D3FA2BF00D893D3 /* JPCGGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC642D3FA2BF00D893D3 /* JPCGGeometry.m */; };
+		54EAECC02D3FA2BF00D893D3 /* JPCGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC662D3FA2BF00D893D3 /* JPCGImage.m */; };
+		54EAECC12D3FA2BF00D893D3 /* JPCGPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC682D3FA2BF00D893D3 /* JPCGPath.m */; };
+		54EAECC22D3FA2BF00D893D3 /* JPCGTransform.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC6A2D3FA2BF00D893D3 /* JPCGTransform.m */; };
+		54EAECC32D3FA2BF00D893D3 /* JPCoreGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC6C2D3FA2BF00D893D3 /* JPCoreGraphics.m */; };
+		54EAECC42D3FA2BF00D893D3 /* JPUIGeometry.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC6F2D3FA2BF00D893D3 /* JPUIGeometry.m */; };
+		54EAECC52D3FA2BF00D893D3 /* JPUIGraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC712D3FA2BF00D893D3 /* JPUIGraphics.m */; };
+		54EAECC62D3FA2BF00D893D3 /* JPUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC732D3FA2BF00D893D3 /* JPUIImage.m */; };
+		54EAECC72D3FA2BF00D893D3 /* JPUIKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC752D3FA2BF00D893D3 /* JPUIKit.m */; };
+		54EAECC82D3FA2BF00D893D3 /* JPKeyCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC792D3FA2BF00D893D3 /* JPKeyCommands.m */; };
+		54EAECC92D3FA2BF00D893D3 /* SGDirWatchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC7B2D3FA2BF00D893D3 /* SGDirWatchdog.m */; };
+		54EAECCA2D3FA2BF00D893D3 /* JPDevErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC7E2D3FA2BF00D893D3 /* JPDevErrorView.m */; };
+		54EAECCB2D3FA2BF00D893D3 /* JPDevMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC802D3FA2BF00D893D3 /* JPDevMenu.m */; };
+		54EAECCC2D3FA2BF00D893D3 /* JPDevTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC822D3FA2BF00D893D3 /* JPDevTipView.m */; };
+		54EAECCD2D3FA2BF00D893D3 /* JPPlayground.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC852D3FA2BF00D893D3 /* JPPlayground.m */; };
+		54EAECCE2D3FA2BF00D893D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 54EAEC862D3FA2BF00D893D3 /* README.md */; };
+		54EAECCF2D3FA2BF00D893D3 /* JPCleaner.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC892D3FA2BF00D893D3 /* JPCleaner.m */; };
+		54EAECD02D3FA2BF00D893D3 /* JPDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC8B2D3FA2BF00D893D3 /* JPDispatch.m */; };
+		54EAECD12D3FA2BF00D893D3 /* JPLocker.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC8D2D3FA2BF00D893D3 /* JPLocker.m */; };
+		54EAECD22D3FA2BF00D893D3 /* JPNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC8F2D3FA2BF00D893D3 /* JPNumber.m */; };
+		54EAECD32D3FA2BF00D893D3 /* JPProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC912D3FA2BF00D893D3 /* JPProtocol.m */; };
+		54EAECD42D3FA2BF00D893D3 /* JPSpecialInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC932D3FA2BF00D893D3 /* JPSpecialInit.m */; };
+		54EAECD52D3FA2BF00D893D3 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC962D3FA2BF00D893D3 /* ioapi.c */; };
+		54EAECD62D3FA2BF00D893D3 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC982D3FA2BF00D893D3 /* mztools.c */; };
+		54EAECD72D3FA2BF00D893D3 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC9A2D3FA2BF00D893D3 /* unzip.c */; };
+		54EAECD82D3FA2BF00D893D3 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC9C2D3FA2BF00D893D3 /* zip.c */; };
+		54EAECD92D3FA2BF00D893D3 /* RSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAECA02D3FA2BF00D893D3 /* RSA.m */; };
+		54EAECDA2D3FA2BF00D893D3 /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAECA22D3FA2BF00D893D3 /* ZipArchive.m */; };
+		54EAECDB2D3FA2BF00D893D3 /* packer.php in Resources */ = {isa = PBXBuildFile; fileRef = 54EAECA42D3FA2BF00D893D3 /* packer.php */; };
+		54EAECDC2D3FA2BF00D893D3 /* JPLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAECA72D3FA2BF00D893D3 /* JPLoader.m */; };
+		54EAECDE2D3FA2ED00D893D3 /* demo.js in Resources */ = {isa = PBXBuildFile; fileRef = 54EAECDD2D3FA2ED00D893D3 /* demo.js */; };
 		54EB63B62D1547BC00C4E2F2 /* IBGroup3Controller1.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */; };
 		5C9906227B70649FAE25EC59 /* libPods-MBCoderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D3053F7803EC8C4E0C644 /* libPods-MBCoderUITests.a */; };
 		C26D33292B6BF082002062F4 /* MBProducerConsumerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C26D33282B6BF082002062F4 /* MBProducerConsumerQueue.m */; };
@@ -1099,6 +1151,110 @@
 		54E43B9B2CE30D8B005BE78A /* verifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verifier.h; sourceTree = "<group>"; };
 		54E43BA22CE31034005BE78A /* idl_gen_text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idl_gen_text.h; sourceTree = "<group>"; };
 		54E43BA32CE317AA005BE78A /* teacher_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = teacher_generated.h; sourceTree = "<group>"; };
+		54EAEC2E2D3FA2BF00D893D3 /* JPEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPEngine.h; sourceTree = "<group>"; };
+		54EAEC2F2D3FA2BF00D893D3 /* JPEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPEngine.m; sourceTree = "<group>"; };
+		54EAEC302D3FA2BF00D893D3 /* JSPatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSPatch.js; sourceTree = "<group>"; };
+		54EAEC322D3FA2BF00D893D3 /* ffi_arm64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_arm64.h; sourceTree = "<group>"; };
+		54EAEC332D3FA2BF00D893D3 /* ffi_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_armv7.h; sourceTree = "<group>"; };
+		54EAEC342D3FA2BF00D893D3 /* ffi_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_common.h; sourceTree = "<group>"; };
+		54EAEC352D3FA2BF00D893D3 /* ffi_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_i386.h; sourceTree = "<group>"; };
+		54EAEC362D3FA2BF00D893D3 /* ffi_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_x86_64.h; sourceTree = "<group>"; };
+		54EAEC372D3FA2BF00D893D3 /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
+		54EAEC382D3FA2BF00D893D3 /* fficonfig_arm64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_arm64.h; sourceTree = "<group>"; };
+		54EAEC392D3FA2BF00D893D3 /* fficonfig_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_armv7.h; sourceTree = "<group>"; };
+		54EAEC3A2D3FA2BF00D893D3 /* fficonfig_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_i386.h; sourceTree = "<group>"; };
+		54EAEC3B2D3FA2BF00D893D3 /* fficonfig_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_x86_64.h; sourceTree = "<group>"; };
+		54EAEC3C2D3FA2BF00D893D3 /* fficonfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig.h; sourceTree = "<group>"; };
+		54EAEC3D2D3FA2BF00D893D3 /* ffitarget_arm64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_arm64.h; sourceTree = "<group>"; };
+		54EAEC3E2D3FA2BF00D893D3 /* ffitarget_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_armv7.h; sourceTree = "<group>"; };
+		54EAEC3F2D3FA2BF00D893D3 /* ffitarget_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_i386.h; sourceTree = "<group>"; };
+		54EAEC402D3FA2BF00D893D3 /* ffitarget_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_x86_64.h; sourceTree = "<group>"; };
+		54EAEC412D3FA2BF00D893D3 /* ffitarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget.h; sourceTree = "<group>"; };
+		54EAEC432D3FA2BF00D893D3 /* ffi_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi_arm64.c; sourceTree = "<group>"; };
+		54EAEC442D3FA2BF00D893D3 /* sysv_arm64.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = sysv_arm64.S; sourceTree = "<group>"; };
+		54EAEC462D3FA2BF00D893D3 /* ffi_armv7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi_armv7.c; sourceTree = "<group>"; };
+		54EAEC472D3FA2BF00D893D3 /* sysv_armv7.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = sysv_armv7.S; sourceTree = "<group>"; };
+		54EAEC482D3FA2BF00D893D3 /* trampoline_armv7.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = trampoline_armv7.S; sourceTree = "<group>"; };
+		54EAEC4A2D3FA2BF00D893D3 /* prep_cif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prep_cif.c; sourceTree = "<group>"; };
+		54EAEC4B2D3FA2BF00D893D3 /* raw_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = raw_api.c; sourceTree = "<group>"; };
+		54EAEC4C2D3FA2BF00D893D3 /* types.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = types.c; sourceTree = "<group>"; };
+		54EAEC4E2D3FA2BF00D893D3 /* darwin_i386.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = darwin_i386.S; sourceTree = "<group>"; };
+		54EAEC4F2D3FA2BF00D893D3 /* darwin64_x86_64.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = darwin64_x86_64.S; sourceTree = "<group>"; };
+		54EAEC502D3FA2BF00D893D3 /* ffi_i386.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi_i386.c; sourceTree = "<group>"; };
+		54EAEC512D3FA2BF00D893D3 /* ffi64_x86_64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi64_x86_64.c; sourceTree = "<group>"; };
+		54EAEC522D3FA2BF00D893D3 /* win32_i386.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = win32_i386.S; sourceTree = "<group>"; };
+		54EAEC562D3FA2BF00D893D3 /* JPCFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCFunction.h; sourceTree = "<group>"; };
+		54EAEC572D3FA2BF00D893D3 /* JPCFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCFunction.m; sourceTree = "<group>"; };
+		54EAEC582D3FA2BF00D893D3 /* JPMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPMemory.h; sourceTree = "<group>"; };
+		54EAEC592D3FA2BF00D893D3 /* JPMemory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPMemory.m; sourceTree = "<group>"; };
+		54EAEC5A2D3FA2BF00D893D3 /* JPStructPointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPStructPointer.h; sourceTree = "<group>"; };
+		54EAEC5B2D3FA2BF00D893D3 /* JPStructPointer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPStructPointer.m; sourceTree = "<group>"; };
+		54EAEC5D2D3FA2BF00D893D3 /* JPCGBitmapContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGBitmapContext.h; sourceTree = "<group>"; };
+		54EAEC5E2D3FA2BF00D893D3 /* JPCGBitmapContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGBitmapContext.m; sourceTree = "<group>"; };
+		54EAEC5F2D3FA2BF00D893D3 /* JPCGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGColor.h; sourceTree = "<group>"; };
+		54EAEC602D3FA2BF00D893D3 /* JPCGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGColor.m; sourceTree = "<group>"; };
+		54EAEC612D3FA2BF00D893D3 /* JPCGContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGContext.h; sourceTree = "<group>"; };
+		54EAEC622D3FA2BF00D893D3 /* JPCGContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGContext.m; sourceTree = "<group>"; };
+		54EAEC632D3FA2BF00D893D3 /* JPCGGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGGeometry.h; sourceTree = "<group>"; };
+		54EAEC642D3FA2BF00D893D3 /* JPCGGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGGeometry.m; sourceTree = "<group>"; };
+		54EAEC652D3FA2BF00D893D3 /* JPCGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGImage.h; sourceTree = "<group>"; };
+		54EAEC662D3FA2BF00D893D3 /* JPCGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGImage.m; sourceTree = "<group>"; };
+		54EAEC672D3FA2BF00D893D3 /* JPCGPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGPath.h; sourceTree = "<group>"; };
+		54EAEC682D3FA2BF00D893D3 /* JPCGPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGPath.m; sourceTree = "<group>"; };
+		54EAEC692D3FA2BF00D893D3 /* JPCGTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCGTransform.h; sourceTree = "<group>"; };
+		54EAEC6A2D3FA2BF00D893D3 /* JPCGTransform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCGTransform.m; sourceTree = "<group>"; };
+		54EAEC6B2D3FA2BF00D893D3 /* JPCoreGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCoreGraphics.h; sourceTree = "<group>"; };
+		54EAEC6C2D3FA2BF00D893D3 /* JPCoreGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCoreGraphics.m; sourceTree = "<group>"; };
+		54EAEC6E2D3FA2BF00D893D3 /* JPUIGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUIGeometry.h; sourceTree = "<group>"; };
+		54EAEC6F2D3FA2BF00D893D3 /* JPUIGeometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPUIGeometry.m; sourceTree = "<group>"; };
+		54EAEC702D3FA2BF00D893D3 /* JPUIGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUIGraphics.h; sourceTree = "<group>"; };
+		54EAEC712D3FA2BF00D893D3 /* JPUIGraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPUIGraphics.m; sourceTree = "<group>"; };
+		54EAEC722D3FA2BF00D893D3 /* JPUIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUIImage.h; sourceTree = "<group>"; };
+		54EAEC732D3FA2BF00D893D3 /* JPUIImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPUIImage.m; sourceTree = "<group>"; };
+		54EAEC742D3FA2BF00D893D3 /* JPUIKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUIKit.h; sourceTree = "<group>"; };
+		54EAEC752D3FA2BF00D893D3 /* JPUIKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPUIKit.m; sourceTree = "<group>"; };
+		54EAEC782D3FA2BF00D893D3 /* JPKeyCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPKeyCommands.h; sourceTree = "<group>"; };
+		54EAEC792D3FA2BF00D893D3 /* JPKeyCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPKeyCommands.m; sourceTree = "<group>"; };
+		54EAEC7A2D3FA2BF00D893D3 /* SGDirWatchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGDirWatchdog.h; sourceTree = "<group>"; };
+		54EAEC7B2D3FA2BF00D893D3 /* SGDirWatchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGDirWatchdog.m; sourceTree = "<group>"; };
+		54EAEC7D2D3FA2BF00D893D3 /* JPDevErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDevErrorView.h; sourceTree = "<group>"; };
+		54EAEC7E2D3FA2BF00D893D3 /* JPDevErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDevErrorView.m; sourceTree = "<group>"; };
+		54EAEC7F2D3FA2BF00D893D3 /* JPDevMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDevMenu.h; sourceTree = "<group>"; };
+		54EAEC802D3FA2BF00D893D3 /* JPDevMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDevMenu.m; sourceTree = "<group>"; };
+		54EAEC812D3FA2BF00D893D3 /* JPDevTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDevTipView.h; sourceTree = "<group>"; };
+		54EAEC822D3FA2BF00D893D3 /* JPDevTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDevTipView.m; sourceTree = "<group>"; };
+		54EAEC842D3FA2BF00D893D3 /* JPPlayground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPPlayground.h; sourceTree = "<group>"; };
+		54EAEC852D3FA2BF00D893D3 /* JPPlayground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPPlayground.m; sourceTree = "<group>"; };
+		54EAEC862D3FA2BF00D893D3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		54EAEC882D3FA2BF00D893D3 /* JPCleaner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCleaner.h; sourceTree = "<group>"; };
+		54EAEC892D3FA2BF00D893D3 /* JPCleaner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCleaner.m; sourceTree = "<group>"; };
+		54EAEC8A2D3FA2BF00D893D3 /* JPDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPDispatch.h; sourceTree = "<group>"; };
+		54EAEC8B2D3FA2BF00D893D3 /* JPDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPDispatch.m; sourceTree = "<group>"; };
+		54EAEC8C2D3FA2BF00D893D3 /* JPLocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPLocker.h; sourceTree = "<group>"; };
+		54EAEC8D2D3FA2BF00D893D3 /* JPLocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPLocker.m; sourceTree = "<group>"; };
+		54EAEC8E2D3FA2BF00D893D3 /* JPNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPNumber.h; sourceTree = "<group>"; };
+		54EAEC8F2D3FA2BF00D893D3 /* JPNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPNumber.m; sourceTree = "<group>"; };
+		54EAEC902D3FA2BF00D893D3 /* JPProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPProtocol.h; sourceTree = "<group>"; };
+		54EAEC912D3FA2BF00D893D3 /* JPProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPProtocol.m; sourceTree = "<group>"; };
+		54EAEC922D3FA2BF00D893D3 /* JPSpecialInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSpecialInit.h; sourceTree = "<group>"; };
+		54EAEC932D3FA2BF00D893D3 /* JPSpecialInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSpecialInit.m; sourceTree = "<group>"; };
+		54EAEC952D3FA2BF00D893D3 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		54EAEC962D3FA2BF00D893D3 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		54EAEC972D3FA2BF00D893D3 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		54EAEC982D3FA2BF00D893D3 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		54EAEC992D3FA2BF00D893D3 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		54EAEC9A2D3FA2BF00D893D3 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		54EAEC9B2D3FA2BF00D893D3 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		54EAEC9C2D3FA2BF00D893D3 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		54EAEC9D2D3FA2BF00D893D3 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		54EAEC9F2D3FA2BF00D893D3 /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
+		54EAECA02D3FA2BF00D893D3 /* RSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSA.m; sourceTree = "<group>"; };
+		54EAECA12D3FA2BF00D893D3 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		54EAECA22D3FA2BF00D893D3 /* ZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipArchive.m; sourceTree = "<group>"; };
+		54EAECA42D3FA2BF00D893D3 /* packer.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = packer.php; sourceTree = "<group>"; };
+		54EAECA62D3FA2BF00D893D3 /* JPLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPLoader.h; sourceTree = "<group>"; };
+		54EAECA72D3FA2BF00D893D3 /* JPLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPLoader.m; sourceTree = "<group>"; };
+		54EAECDD2D3FA2ED00D893D3 /* demo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = demo.js; sourceTree = "<group>"; };
 		54EB63B42D1547BC00C4E2F2 /* IBGroup3Controller1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller1.h; sourceTree = "<group>"; };
 		54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller1.m; sourceTree = "<group>"; };
 		68F55995B515EF5A59C8491C /* libPods-MBCoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MBCoder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1956,6 +2112,7 @@
 		4ACBB8012341FA0D002D7955 /* IBModule */ = {
 			isa = PBXGroup;
 			children = (
+				54EAECA92D3FA2BF00D893D3 /* JSPatch */,
 				54E43B9D2CE30D8B005BE78A /* flatbuffers */,
 				548741A72CCA404C0088F44D /* StateMachine */,
 				541E82D02CC1374B00755059 /* QuickJS */,
@@ -2107,6 +2264,7 @@
 				4ACBB84E2341FA0D002D7955 /* Main.storyboard */,
 				4ACBB8532341FA0D002D7955 /* ViewController.h */,
 				4ACBB84B2341FA0D002D7955 /* ViewController.m */,
+				54EAECDD2D3FA2ED00D893D3 /* demo.js */,
 				54B935122D27BD40005D6A5E /* arm64-ios.meson */,
 				54B935132D27BD40005D6A5E /* x86_64-ios.meson */,
 				4AA84ACD236AEDFC00AF5BC9 /* data.json */,
@@ -2357,6 +2515,276 @@
 			path = flatbuffers;
 			sourceTree = "<group>";
 		};
+		54EAEC312D3FA2BF00D893D3 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC2E2D3FA2BF00D893D3 /* JPEngine.h */,
+				54EAEC2F2D3FA2BF00D893D3 /* JPEngine.m */,
+				54EAEC302D3FA2BF00D893D3 /* JSPatch.js */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		54EAEC422D3FA2BF00D893D3 /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC322D3FA2BF00D893D3 /* ffi_arm64.h */,
+				54EAEC332D3FA2BF00D893D3 /* ffi_armv7.h */,
+				54EAEC342D3FA2BF00D893D3 /* ffi_common.h */,
+				54EAEC352D3FA2BF00D893D3 /* ffi_i386.h */,
+				54EAEC362D3FA2BF00D893D3 /* ffi_x86_64.h */,
+				54EAEC372D3FA2BF00D893D3 /* ffi.h */,
+				54EAEC382D3FA2BF00D893D3 /* fficonfig_arm64.h */,
+				54EAEC392D3FA2BF00D893D3 /* fficonfig_armv7.h */,
+				54EAEC3A2D3FA2BF00D893D3 /* fficonfig_i386.h */,
+				54EAEC3B2D3FA2BF00D893D3 /* fficonfig_x86_64.h */,
+				54EAEC3C2D3FA2BF00D893D3 /* fficonfig.h */,
+				54EAEC3D2D3FA2BF00D893D3 /* ffitarget_arm64.h */,
+				54EAEC3E2D3FA2BF00D893D3 /* ffitarget_armv7.h */,
+				54EAEC3F2D3FA2BF00D893D3 /* ffitarget_i386.h */,
+				54EAEC402D3FA2BF00D893D3 /* ffitarget_x86_64.h */,
+				54EAEC412D3FA2BF00D893D3 /* ffitarget.h */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		54EAEC452D3FA2BF00D893D3 /* aarch64 */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC432D3FA2BF00D893D3 /* ffi_arm64.c */,
+				54EAEC442D3FA2BF00D893D3 /* sysv_arm64.S */,
+			);
+			path = aarch64;
+			sourceTree = "<group>";
+		};
+		54EAEC492D3FA2BF00D893D3 /* arm */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC462D3FA2BF00D893D3 /* ffi_armv7.c */,
+				54EAEC472D3FA2BF00D893D3 /* sysv_armv7.S */,
+				54EAEC482D3FA2BF00D893D3 /* trampoline_armv7.S */,
+			);
+			path = arm;
+			sourceTree = "<group>";
+		};
+		54EAEC4D2D3FA2BF00D893D3 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC4A2D3FA2BF00D893D3 /* prep_cif.c */,
+				54EAEC4B2D3FA2BF00D893D3 /* raw_api.c */,
+				54EAEC4C2D3FA2BF00D893D3 /* types.c */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		54EAEC532D3FA2BF00D893D3 /* x86 */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC4E2D3FA2BF00D893D3 /* darwin_i386.S */,
+				54EAEC4F2D3FA2BF00D893D3 /* darwin64_x86_64.S */,
+				54EAEC502D3FA2BF00D893D3 /* ffi_i386.c */,
+				54EAEC512D3FA2BF00D893D3 /* ffi64_x86_64.c */,
+				54EAEC522D3FA2BF00D893D3 /* win32_i386.S */,
+			);
+			path = x86;
+			sourceTree = "<group>";
+		};
+		54EAEC542D3FA2BF00D893D3 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC452D3FA2BF00D893D3 /* aarch64 */,
+				54EAEC492D3FA2BF00D893D3 /* arm */,
+				54EAEC4D2D3FA2BF00D893D3 /* common */,
+				54EAEC532D3FA2BF00D893D3 /* x86 */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		54EAEC552D3FA2BF00D893D3 /* libffi */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC422D3FA2BF00D893D3 /* headers */,
+				54EAEC542D3FA2BF00D893D3 /* src */,
+			);
+			path = libffi;
+			sourceTree = "<group>";
+		};
+		54EAEC5C2D3FA2BF00D893D3 /* JPCFunction */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC552D3FA2BF00D893D3 /* libffi */,
+				54EAEC562D3FA2BF00D893D3 /* JPCFunction.h */,
+				54EAEC572D3FA2BF00D893D3 /* JPCFunction.m */,
+				54EAEC582D3FA2BF00D893D3 /* JPMemory.h */,
+				54EAEC592D3FA2BF00D893D3 /* JPMemory.m */,
+				54EAEC5A2D3FA2BF00D893D3 /* JPStructPointer.h */,
+				54EAEC5B2D3FA2BF00D893D3 /* JPStructPointer.m */,
+			);
+			path = JPCFunction;
+			sourceTree = "<group>";
+		};
+		54EAEC6D2D3FA2BF00D893D3 /* CoreGraphics */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC5D2D3FA2BF00D893D3 /* JPCGBitmapContext.h */,
+				54EAEC5E2D3FA2BF00D893D3 /* JPCGBitmapContext.m */,
+				54EAEC5F2D3FA2BF00D893D3 /* JPCGColor.h */,
+				54EAEC602D3FA2BF00D893D3 /* JPCGColor.m */,
+				54EAEC612D3FA2BF00D893D3 /* JPCGContext.h */,
+				54EAEC622D3FA2BF00D893D3 /* JPCGContext.m */,
+				54EAEC632D3FA2BF00D893D3 /* JPCGGeometry.h */,
+				54EAEC642D3FA2BF00D893D3 /* JPCGGeometry.m */,
+				54EAEC652D3FA2BF00D893D3 /* JPCGImage.h */,
+				54EAEC662D3FA2BF00D893D3 /* JPCGImage.m */,
+				54EAEC672D3FA2BF00D893D3 /* JPCGPath.h */,
+				54EAEC682D3FA2BF00D893D3 /* JPCGPath.m */,
+				54EAEC692D3FA2BF00D893D3 /* JPCGTransform.h */,
+				54EAEC6A2D3FA2BF00D893D3 /* JPCGTransform.m */,
+				54EAEC6B2D3FA2BF00D893D3 /* JPCoreGraphics.h */,
+				54EAEC6C2D3FA2BF00D893D3 /* JPCoreGraphics.m */,
+			);
+			path = CoreGraphics;
+			sourceTree = "<group>";
+		};
+		54EAEC762D3FA2BF00D893D3 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC6E2D3FA2BF00D893D3 /* JPUIGeometry.h */,
+				54EAEC6F2D3FA2BF00D893D3 /* JPUIGeometry.m */,
+				54EAEC702D3FA2BF00D893D3 /* JPUIGraphics.h */,
+				54EAEC712D3FA2BF00D893D3 /* JPUIGraphics.m */,
+				54EAEC722D3FA2BF00D893D3 /* JPUIImage.h */,
+				54EAEC732D3FA2BF00D893D3 /* JPUIImage.m */,
+				54EAEC742D3FA2BF00D893D3 /* JPUIKit.h */,
+				54EAEC752D3FA2BF00D893D3 /* JPUIKit.m */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		54EAEC772D3FA2BF00D893D3 /* JPCFunctionBinder */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC6D2D3FA2BF00D893D3 /* CoreGraphics */,
+				54EAEC762D3FA2BF00D893D3 /* UIKit */,
+			);
+			path = JPCFunctionBinder;
+			sourceTree = "<group>";
+		};
+		54EAEC7C2D3FA2BF00D893D3 /* JPPlaygroundModule */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC782D3FA2BF00D893D3 /* JPKeyCommands.h */,
+				54EAEC792D3FA2BF00D893D3 /* JPKeyCommands.m */,
+				54EAEC7A2D3FA2BF00D893D3 /* SGDirWatchdog.h */,
+				54EAEC7B2D3FA2BF00D893D3 /* SGDirWatchdog.m */,
+			);
+			path = JPPlaygroundModule;
+			sourceTree = "<group>";
+		};
+		54EAEC832D3FA2BF00D893D3 /* JPPlaygroundView */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC7D2D3FA2BF00D893D3 /* JPDevErrorView.h */,
+				54EAEC7E2D3FA2BF00D893D3 /* JPDevErrorView.m */,
+				54EAEC7F2D3FA2BF00D893D3 /* JPDevMenu.h */,
+				54EAEC802D3FA2BF00D893D3 /* JPDevMenu.m */,
+				54EAEC812D3FA2BF00D893D3 /* JPDevTipView.h */,
+				54EAEC822D3FA2BF00D893D3 /* JPDevTipView.m */,
+			);
+			path = JPPlaygroundView;
+			sourceTree = "<group>";
+		};
+		54EAEC872D3FA2BF00D893D3 /* JPPlaygroundTool */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC7C2D3FA2BF00D893D3 /* JPPlaygroundModule */,
+				54EAEC832D3FA2BF00D893D3 /* JPPlaygroundView */,
+				54EAEC842D3FA2BF00D893D3 /* JPPlayground.h */,
+				54EAEC852D3FA2BF00D893D3 /* JPPlayground.m */,
+				54EAEC862D3FA2BF00D893D3 /* README.md */,
+			);
+			path = JPPlaygroundTool;
+			sourceTree = "<group>";
+		};
+		54EAEC942D3FA2BF00D893D3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC5C2D3FA2BF00D893D3 /* JPCFunction */,
+				54EAEC772D3FA2BF00D893D3 /* JPCFunctionBinder */,
+				54EAEC872D3FA2BF00D893D3 /* JPPlaygroundTool */,
+				54EAEC882D3FA2BF00D893D3 /* JPCleaner.h */,
+				54EAEC892D3FA2BF00D893D3 /* JPCleaner.m */,
+				54EAEC8A2D3FA2BF00D893D3 /* JPDispatch.h */,
+				54EAEC8B2D3FA2BF00D893D3 /* JPDispatch.m */,
+				54EAEC8C2D3FA2BF00D893D3 /* JPLocker.h */,
+				54EAEC8D2D3FA2BF00D893D3 /* JPLocker.m */,
+				54EAEC8E2D3FA2BF00D893D3 /* JPNumber.h */,
+				54EAEC8F2D3FA2BF00D893D3 /* JPNumber.m */,
+				54EAEC902D3FA2BF00D893D3 /* JPProtocol.h */,
+				54EAEC912D3FA2BF00D893D3 /* JPProtocol.m */,
+				54EAEC922D3FA2BF00D893D3 /* JPSpecialInit.h */,
+				54EAEC932D3FA2BF00D893D3 /* JPSpecialInit.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		54EAEC9E2D3FA2BF00D893D3 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC952D3FA2BF00D893D3 /* crypt.h */,
+				54EAEC962D3FA2BF00D893D3 /* ioapi.c */,
+				54EAEC972D3FA2BF00D893D3 /* ioapi.h */,
+				54EAEC982D3FA2BF00D893D3 /* mztools.c */,
+				54EAEC992D3FA2BF00D893D3 /* mztools.h */,
+				54EAEC9A2D3FA2BF00D893D3 /* unzip.c */,
+				54EAEC9B2D3FA2BF00D893D3 /* unzip.h */,
+				54EAEC9C2D3FA2BF00D893D3 /* zip.c */,
+				54EAEC9D2D3FA2BF00D893D3 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
+		54EAECA32D3FA2BF00D893D3 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC9E2D3FA2BF00D893D3 /* minizip */,
+				54EAEC9F2D3FA2BF00D893D3 /* RSA.h */,
+				54EAECA02D3FA2BF00D893D3 /* RSA.m */,
+				54EAECA12D3FA2BF00D893D3 /* ZipArchive.h */,
+				54EAECA22D3FA2BF00D893D3 /* ZipArchive.m */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		54EAECA52D3FA2BF00D893D3 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				54EAECA42D3FA2BF00D893D3 /* packer.php */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		54EAECA82D3FA2BF00D893D3 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				54EAECA32D3FA2BF00D893D3 /* libs */,
+				54EAECA52D3FA2BF00D893D3 /* tools */,
+				54EAECA62D3FA2BF00D893D3 /* JPLoader.h */,
+				54EAECA72D3FA2BF00D893D3 /* JPLoader.m */,
+			);
+			path = Loader;
+			sourceTree = "<group>";
+		};
+		54EAECA92D3FA2BF00D893D3 /* JSPatch */ = {
+			isa = PBXGroup;
+			children = (
+				54EAEC312D3FA2BF00D893D3 /* Core */,
+				54EAEC942D3FA2BF00D893D3 /* Extensions */,
+				54EAECA82D3FA2BF00D893D3 /* Loader */,
+			);
+			path = JSPatch;
+			sourceTree = "<group>";
+		};
 		E0C3398B810AB45FA06458BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2485,11 +2913,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54EAECAB2D3FA2BF00D893D3 /* JSPatch.js in Resources */,
 				4A77231724D943C3007E7BD6 /* FatBinary.png in Resources */,
 				54B935142D27BD40005D6A5E /* arm64-ios.meson in Resources */,
 				4ACBB8762341FA0D002D7955 /* class_metaclass.png in Resources */,
 				54B935152D27BD40005D6A5E /* x86_64-ios.meson in Resources */,
 				4AB0C9B8234F5912002356B7 /* LottieLogo.json in Resources */,
+				54EAECDE2D3FA2ED00D893D3 /* demo.js in Resources */,
+				54EAECDB2D3FA2BF00D893D3 /* packer.php in Resources */,
 				4ACBB8752341FA0D002D7955 /* IBController1.xib in Resources */,
 				4AA84ACE236AEDFD00AF5BC9 /* data.json in Resources */,
 				4AF2134E2399F31600EFB85D /* TPExpandIcon.png in Resources */,
@@ -2497,6 +2928,7 @@
 				4A77231524D941BD007E7BD6 /* Mach-O文件结构.png in Resources */,
 				4AB0C9B6234F4267002356B7 /* home_colourline.svga in Resources */,
 				4AF2134F2399F31600EFB85D /* TPNOExpandIcon.png in Resources */,
+				54EAECCE2D3FA2BF00D893D3 /* README.md in Resources */,
 				4ACBB94A2341FA0D002D7955 /* Main.storyboard in Resources */,
 				4ACBB9492341FA0D002D7955 /* LaunchScreen.storyboard in Resources */,
 				4A4963A7235B64BC001338AB /* common in Resources */,
@@ -2592,11 +3024,14 @@
 				4ACBB86A2341FA0D002D7955 /* IBController27.m in Sources */,
 				4AF213442399F2E800EFB85D /* UIWindow+CallRecordShake.m in Sources */,
 				4ACBB89C2341FA0D002D7955 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */,
+				54EAECCB2D3FA2BF00D893D3 /* JPDevMenu.m in Sources */,
 				4ACBB94C2341FA0D002D7955 /* AppDelegate.m in Sources */,
 				4ACBB8F92341FA0D002D7955 /* AFURLResponseSerialization.m in Sources */,
 				F3A3E330238C441200925ACC /* IBGroup2Controller19.m in Sources */,
 				541E82D82CC1374B00755059 /* quickjs-libc.c in Sources */,
 				F3955B0024179C17009EC505 /* MBRetainCycleLoggerPlugin.m in Sources */,
+				54EAECB82D3FA2BF00D893D3 /* win32_i386.S in Sources */,
+				54EAECD02D3FA2BF00D893D3 /* JPDispatch.m in Sources */,
 				4ACBB85A2341FA0D002D7955 /* IBController30.m in Sources */,
 				4ACBB9132341FA0D002D7955 /* NSData+ImageContentType.m in Sources */,
 				4ACBB89B2341FA0D002D7955 /* UIStepper+RACSignalSupport.m in Sources */,
@@ -2606,6 +3041,7 @@
 				4ACBB9402341FA0D002D7955 /* Target_AViewController.m in Sources */,
 				4A37DFC3236C68C1005CEF7B /* SonicJSContext.m in Sources */,
 				4ACBB8B32341FA0D002D7955 /* RACTargetQueueScheduler.m in Sources */,
+				54EAECB02D3FA2BF00D893D3 /* trampoline_armv7.S in Sources */,
 				4ACBB9102341FA0D002D7955 /* SDImageCache.m in Sources */,
 				4ACBB8DD2341FA0D002D7955 /* RACImmediateScheduler.m in Sources */,
 				4ACBB8EA2341FA0D002D7955 /* NSObject+RACPropertySubscribing.m in Sources */,
@@ -2613,6 +3049,7 @@
 				4ACBB9082341FA0D002D7955 /* UIImage+GIF.m in Sources */,
 				4ACBB8A32341FA0D002D7955 /* UIBarButtonItem+RACCommandSupport.m in Sources */,
 				4ACBB8AD2341FA0D002D7955 /* UIButton+RACCommandSupport.m in Sources */,
+				54EAECD22D3FA2BF00D893D3 /* JPNumber.m in Sources */,
 				4A86C071237D442300498C20 /* MBPresenter.m in Sources */,
 				4ACBB8A42341FA0D002D7955 /* UICollectionReusableView+RACSignalSupport.m in Sources */,
 				4ACBB8EE2341FA0D002D7955 /* NSString+RACSequenceAdditions.m in Sources */,
@@ -2631,13 +3068,16 @@
 				541B733E2D150E5700DF354D /* IBGroup2Controller35.m in Sources */,
 				4ACBB8992341FA0D002D7955 /* IBCoreSpotlight.m in Sources */,
 				4ACBB8872341FA0D002D7955 /* IBDatabaseManager.m in Sources */,
+				54EAECC02D3FA2BF00D893D3 /* JPCGImage.m in Sources */,
 				4ACBB9202341FA0D002D7955 /* IBGroup2Controller7.m in Sources */,
 				4AAA1243238E590300DC5478 /* IBGroup2Controller20.m in Sources */,
 				54E43AE72CE20822005BE78A /* IBGroup2Controller32.mm in Sources */,
 				4AA857E123B20C23003D610F /* GMMarqueeCardView.m in Sources */,
 				4ACBB91A2341FA0D002D7955 /* SDWebImageImageIOCoder.m in Sources */,
 				4ACBB88A2341FA0D002D7955 /* LoggerClient.m in Sources */,
+				54EAECDA2D3FA2BF00D893D3 /* ZipArchive.m in Sources */,
 				4ACBB85D2341FA0D002D7955 /* IBController29.m in Sources */,
+				54EAECD12D3FA2BF00D893D3 /* JPLocker.m in Sources */,
 				4ACBB8912341FA0D002D7955 /* View+MASAdditions.m in Sources */,
 				54B9351B2D27C193005D6A5E /* IBGroup3Controller4.m in Sources */,
 				4ACBB86B2341FA0D002D7955 /* IBController19.m in Sources */,
@@ -2651,10 +3091,14 @@
 				4ACBB8F02341FA0D002D7955 /* NSSet+RACSequenceAdditions.m in Sources */,
 				4ACBB94B2341FA0D002D7955 /* main.mm in Sources */,
 				4ACBB8D72341FA0D002D7955 /* RACDelegateProxy.m in Sources */,
+				54EAECC12D3FA2BF00D893D3 /* JPCGPath.m in Sources */,
 				4ACBB87A2341FA0D002D7955 /* IBController2.m in Sources */,
+				54EAECBF2D3FA2BF00D893D3 /* JPCGGeometry.m in Sources */,
 				4ACBB88B2341FA0D002D7955 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				54EAECC22D3FA2BF00D893D3 /* JPCGTransform.m in Sources */,
 				4ACBB8D42341FA0D002D7955 /* RACSerialDisposable.m in Sources */,
 				4ACBB8552341FA0D002D7955 /* IBController39.m in Sources */,
+				54EAECC62D3FA2BF00D893D3 /* JPUIImage.m in Sources */,
 				4ACBB8CC2341FA0D002D7955 /* RACDynamicSignal.m in Sources */,
 				4ACBB8662341FA0D002D7955 /* IBController24.m in Sources */,
 				4A37DE14236BD860005CEF7B /* IBGroup2Controller16.m in Sources */,
@@ -2666,6 +3110,7 @@
 				4A9D220C23682F47006B9771 /* IBGroup2Controller12.m in Sources */,
 				4ACBB8842341FA0D002D7955 /* ASCameraButton.m in Sources */,
 				4ACBB89A2341FA0D002D7955 /* NSObject+Log.m in Sources */,
+				54EAECCA2D3FA2BF00D893D3 /* JPDevErrorView.m in Sources */,
 				4AA84ACC236ABFC800AF5BC9 /* IBGroup2Controller15.m in Sources */,
 				F3D01E2224D56B770007DD23 /* IBGroup2Controller28.m in Sources */,
 				4ACBB88C2341FA0D002D7955 /* ViewController+MASAdditions.m in Sources */,
@@ -2675,21 +3120,27 @@
 				4ACBB8CB2341FA0D002D7955 /* RACScopedDisposable.m in Sources */,
 				4ACBB8F42341FA0D002D7955 /* NSObject+RACSelectorSignal.m in Sources */,
 				4AF2B56F24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m in Sources */,
+				54EAECDC2D3FA2BF00D893D3 /* JPLoader.m in Sources */,
 				4A37DFC8236C6A6E005CEF7B /* SonicSetup.m in Sources */,
 				4ACBB9282341FA0D002D7955 /* IBView.m in Sources */,
+				54EAECB92D3FA2BF00D893D3 /* JPCFunction.m in Sources */,
 				4ACBB9182341FA0D002D7955 /* UIView+WebCacheOperation.m in Sources */,
+				54EAECB62D3FA2BF00D893D3 /* ffi_i386.c in Sources */,
 				4ACBB8B92341FA0D002D7955 /* RACChannel.m in Sources */,
 				4ACBB93A2341FA0D002D7955 /* IBCAGradientLayer.m in Sources */,
 				4ACBB8602341FA0D002D7955 /* IBController38.m in Sources */,
 				4ACBB9012341FA0D002D7955 /* MKAnnotationView+WebCache.m in Sources */,
 				4ACBB8A22341FA0D002D7955 /* UIControl+RACSignalSupportPrivate.m in Sources */,
 				4ACBB87F2341FA0D002D7955 /* IBController10.m in Sources */,
+				54EAECB12D3FA2BF00D893D3 /* prep_cif.c in Sources */,
+				54EAECAD2D3FA2BF00D893D3 /* sysv_arm64.S in Sources */,
 				4ACBB9042341FA0D002D7955 /* SDWebImageFrame.m in Sources */,
 				4ACBB8892341FA0D002D7955 /* FMEncryptQueue.m in Sources */,
 				F3955AFF24179C17009EC505 /* MBMemoryProfiler.m in Sources */,
 				4ACBB8852341FA0D002D7955 /* FMDBMigrationManager.m in Sources */,
 				4ACBB8DE2341FA0D002D7955 /* RACTuple.m in Sources */,
 				4ACBB9122341FA0D002D7955 /* SDWebImageTransition.m in Sources */,
+				54EAECD52D3FA2BF00D893D3 /* ioapi.c in Sources */,
 				4ACBB8E32341FA0D002D7955 /* NSObject+RACDescription.m in Sources */,
 				4ACBB8712341FA0D002D7955 /* IBController25.m in Sources */,
 				5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */,
@@ -2697,6 +3148,7 @@
 				54B935212D27C4FD005D6A5E /* IBGroup3Controller6.m in Sources */,
 				4ACBB8A52341FA0D002D7955 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				54B935182D27BDEF005D6A5E /* IBGroup3Controller3.m in Sources */,
+				54EAECB42D3FA2BF00D893D3 /* darwin_i386.S in Sources */,
 				4A64EF842369D14E00431CEA /* VVStack.m in Sources */,
 				4AF213452399F2E800EFB85D /* TPCallTrace.c in Sources */,
 				548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */,
@@ -2704,21 +3156,27 @@
 				4ACBB9232341FA0D002D7955 /* IBGroup2Controller6.m in Sources */,
 				4AF213422399F2E800EFB85D /* TPRecordCell.m in Sources */,
 				4AB0C9AD234ECE80002356B7 /* IBGroup2Controller10.m in Sources */,
+				54EAECD92D3FA2BF00D893D3 /* RSA.m in Sources */,
 				4ACBB8B42341FA0D002D7955 /* RACIndexSetSequence.m in Sources */,
 				4ACBB8C52341FA0D002D7955 /* RACBlockTrampoline.m in Sources */,
+				54EAECBE2D3FA2BF00D893D3 /* JPCGContext.m in Sources */,
 				4ACBB8E62341FA0D002D7955 /* NSString+RACSupport.m in Sources */,
 				C26D33292B6BF082002062F4 /* MBProducerConsumerQueue.m in Sources */,
 				4ACBB8BB2341FA0D002D7955 /* RACUnarySequence.m in Sources */,
 				4A37DFC5236C68C1005CEF7B /* SonicEventObserver.m in Sources */,
+				54EAECC92D3FA2BF00D893D3 /* SGDirWatchdog.m in Sources */,
 				4ACBB92D2341FA0D002D7955 /* BBookProvider.m in Sources */,
 				4ACBB91E2341FA0D002D7955 /* UIView+Ext.m in Sources */,
 				4ACBB8C82341FA0D002D7955 /* RACMulticastConnection.m in Sources */,
 				4ACBB9072341FA0D002D7955 /* SDWebImageDownloader.m in Sources */,
 				4ACBB9372341FA0D002D7955 /* IBCAShapeLayer.m in Sources */,
 				541E82D32CC1374B00755059 /* libregexp.c in Sources */,
+				54EAECB72D3FA2BF00D893D3 /* ffi64_x86_64.c in Sources */,
 				4ACBB86E2341FA0D002D7955 /* IBController26.m in Sources */,
+				54EAECD72D3FA2BF00D893D3 /* unzip.c in Sources */,
 				4ACBB8F72341FA0D002D7955 /* AFHTTPRequestSerializer+OAuth2.m in Sources */,
 				4ACBB8ED2341FA0D002D7955 /* NSDictionary+RACSequenceAdditions.m in Sources */,
+				54EAECCF2D3FA2BF00D893D3 /* JPCleaner.m in Sources */,
 				4ACBB89F2341FA0D002D7955 /* UITextView+RACSignalSupport.m in Sources */,
 				4ACBB8582341FA0D002D7955 /* IBController40.m in Sources */,
 				4AB0C9B0234F30C0002356B7 /* IBGroup2Controller11.m in Sources */,
@@ -2729,12 +3187,15 @@
 				4ACBB85C2341FA0D002D7955 /* IBController33.m in Sources */,
 				541E82D92CC1374B00755059 /* quickjs.c in Sources */,
 				4ACBB8E12341FA0D002D7955 /* NSFileHandle+RACSupport.m in Sources */,
+				54EAECCC2D3FA2BF00D893D3 /* JPDevTipView.m in Sources */,
 				4ACBB8FA2341FA0D002D7955 /* AFHTTPSessionManager.m in Sources */,
 				4ACBB8F52341FA0D002D7955 /* NSIndexSet+RACSequenceAdditions.m in Sources */,
 				4ACBB8D02341FA0D002D7955 /* RACValueTransformer.m in Sources */,
 				4AF213462399F2E800EFB85D /* TPRecordHierarchyModel.m in Sources */,
+				54EAECC82D3FA2BF00D893D3 /* JPKeyCommands.m in Sources */,
 				4ACBB8A12341FA0D002D7955 /* UIImagePickerController+RACSignalSupport.m in Sources */,
 				541E82D42CC1374B00755059 /* libunicode.c in Sources */,
+				54EAECCD2D3FA2BF00D893D3 /* JPPlayground.m in Sources */,
 				4ACBB8742341FA0D002D7955 /* IBController1.m in Sources */,
 				4ACBB8862341FA0D002D7955 /* FMEncryptHelper.m in Sources */,
 				4ACBB8E92341FA0D002D7955 /* NSObject+RACDeallocating.m in Sources */,
@@ -2744,6 +3205,7 @@
 				4ACBB8C22341FA0D002D7955 /* RACReplaySubject.m in Sources */,
 				4ACBB9442341FA0D002D7955 /* IBCMediator+BViewController.m in Sources */,
 				4ACBB91B2341FA0D002D7955 /* UIButton+WebCache.m in Sources */,
+				54EAECAE2D3FA2BF00D893D3 /* ffi_armv7.c in Sources */,
 				4ACBB9482341FA0D002D7955 /* ViewController.m in Sources */,
 				4ACBB8672341FA0D002D7955 /* IBController18.m in Sources */,
 				4ACBB8DF2341FA0D002D7955 /* EXTRuntimeExtensions.m in Sources */,
@@ -2773,6 +3235,7 @@
 				4ACBB91D2341FA0D002D7955 /* IBRunLoopLoad.m in Sources */,
 				4ACBB91C2341FA0D002D7955 /* SDWebImageWebPCoder.m in Sources */,
 				4ACBB8D52341FA0D002D7955 /* RACSubject.m in Sources */,
+				54EAECD42D3FA2BF00D893D3 /* JPSpecialInit.m in Sources */,
 				4ACBB9242341FA0D002D7955 /* IBGroup2Controller2.m in Sources */,
 				4ACBB9462341FA0D002D7955 /* Target_BViewController.m in Sources */,
 				4ACBB9382341FA0D002D7955 /* IBCATransformLayer.m in Sources */,
@@ -2782,14 +3245,17 @@
 				4ACBB8B62341FA0D002D7955 /* RACSignal+Operations.m in Sources */,
 				4ACBB88F2341FA0D002D7955 /* MASLayoutConstraint.m in Sources */,
 				4ACBB9262341FA0D002D7955 /* IBGroup2Controller4.m in Sources */,
+				54EAECC72D3FA2BF00D893D3 /* JPUIKit.m in Sources */,
 				4ACBB93C2341FA0D002D7955 /* IBCALayer.m in Sources */,
 				548741AD2CCA40A10088F44D /* MBEvent.m in Sources */,
 				4AF2132E2399207800EFB85D /* MBMmap.m in Sources */,
+				54EAECC32D3FA2BF00D893D3 /* JPCoreGraphics.m in Sources */,
 				4ACBB8A62341FA0D002D7955 /* UISegmentedControl+RACSignalSupport.m in Sources */,
 				4ACBB8FF2341FA0D002D7955 /* AFHTTPSessionManager+RACSupport.m in Sources */,
 				4ACBB9212341FA0D002D7955 /* IBGroup2Controller5.m in Sources */,
 				4ACBB92F2341FA0D002D7955 /* Son+Cate.m in Sources */,
 				F3955286241608AA009EC505 /* IBGroup2Controller25.m in Sources */,
+				54EAECAF2D3FA2BF00D893D3 /* sysv_armv7.S in Sources */,
 				4ACBB8A72341FA0D002D7955 /* UITextField+RACSignalSupport.m in Sources */,
 				4ACBB8CD2341FA0D002D7955 /* RACPassthroughSubscriber.m in Sources */,
 				4ACBB8C92341FA0D002D7955 /* RACSignalProvider.d in Sources */,
@@ -2797,13 +3263,16 @@
 				5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */,
 				4ACBB89D2341FA0D002D7955 /* UITableViewCell+RACSignalSupport.m in Sources */,
 				4ACBB8612341FA0D002D7955 /* IBController28.m in Sources */,
+				54EAECD32D3FA2BF00D893D3 /* JPProtocol.m in Sources */,
 				4ACBB85F2341FA0D002D7955 /* IBController32.m in Sources */,
 				4ACBB93D2341FA0D002D7955 /* IBCATiledLayer.m in Sources */,
 				4A416E2F249888B900C192EF /* IBGroup2Controller27.m in Sources */,
 				4ACBB8B12341FA0D002D7955 /* RACScheduler.m in Sources */,
 				4AF213472399F2E800EFB85D /* TPRecordModel.m in Sources */,
+				54EAECBC2D3FA2BF00D893D3 /* JPCGBitmapContext.m in Sources */,
 				4ACBB8BE2341FA0D002D7955 /* RACSequence.m in Sources */,
 				54B935242D27C505005D6A5E /* IBGroup3Controller7.m in Sources */,
+				54EAECC42D3FA2BF00D893D3 /* JPUIGeometry.m in Sources */,
 				4ACBB8AE2341FA0D002D7955 /* UIActionSheet+RACSignalSupport.m in Sources */,
 				54E43B9E2CE30D8B005BE78A /* idl_gen_text.cpp in Sources */,
 				4AF209252397BFE000EFB85D /* MBPresentationControllerTransition.m in Sources */,
@@ -2814,6 +3283,7 @@
 				4ACBB86F2341FA0D002D7955 /* IBController14.m in Sources */,
 				4ACBB9452341FA0D002D7955 /* BViewController.m in Sources */,
 				548741A62CCA3D8E0088F44D /* IBGroup2Controller31.m in Sources */,
+				54EAECAA2D3FA2BF00D893D3 /* JPEngine.m in Sources */,
 				F324A32823FD200A00B68E88 /* IBGroup2Controller24.m in Sources */,
 				4ACBB8EC2341FA0D002D7955 /* NSArray+RACSequenceAdditions.m in Sources */,
 				4ACBB8A82341FA0D002D7955 /* UIAlertView+RACSignalSupport.m in Sources */,
@@ -2829,6 +3299,7 @@
 				4AF2091A2397676600EFB85D /* IBGroup2Controller22.m in Sources */,
 				4ACBB9252341FA0D002D7955 /* IBGroup2Controller3.m in Sources */,
 				4ACBB9002341FA0D002D7955 /* UIImage+WebP.m in Sources */,
+				54EAECBA2D3FA2BF00D893D3 /* JPMemory.m in Sources */,
 				54E43BA12CE30D8B005BE78A /* util.cpp in Sources */,
 				4AA84AD1236AF07100AF5BC9 /* IBGroup2Controller15Cell.m in Sources */,
 				4ACBB9192341FA0D002D7955 /* UIView+WebCache.m in Sources */,
@@ -2850,10 +3321,12 @@
 				4ACBB87E2341FA0D002D7955 /* IBController9.m in Sources */,
 				4ACBB8B82341FA0D002D7955 /* RACTupleSequence.m in Sources */,
 				F3954B052412471A009EC505 /* llvm.c in Sources */,
+				54EAECC52D3FA2BF00D893D3 /* JPUIGraphics.m in Sources */,
 				4ACBB8D62341FA0D002D7955 /* RACSubscriber.m in Sources */,
 				4ACBB8E52341FA0D002D7955 /* NSEnumerator+RACSequenceAdditions.m in Sources */,
 				54B935112D27978D005D6A5E /* IBGroup3Controller2.m in Sources */,
 				4ACBB8CF2341FA0D002D7955 /* RACKVOProxy.m in Sources */,
+				54EAECBB2D3FA2BF00D893D3 /* JPStructPointer.m in Sources */,
 				4ACBB8732341FA0D002D7955 /* IBController11.m in Sources */,
 				4ACBB93E2341FA0D002D7955 /* UIView+Gesture.m in Sources */,
 				4ACBB8E22341FA0D002D7955 /* NSNotificationCenter+RACSupport.m in Sources */,
@@ -2865,13 +3338,16 @@
 				4ACBB9142341FA0D002D7955 /* UIImageView+WebCache.m in Sources */,
 				4ACBB88D2341FA0D002D7955 /* MASCompositeConstraint.m in Sources */,
 				4ACBB8E42341FA0D002D7955 /* NSUserDefaults+RACSupport.m in Sources */,
+				54EAECD62D3FA2BF00D893D3 /* mztools.c in Sources */,
 				4ACBB8A92341FA0D002D7955 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
 				541E82D12CC1374B00755059 /* cutils.c in Sources */,
+				54EAECD82D3FA2BF00D893D3 /* zip.c in Sources */,
 				542707B62CC63BA200AD59B6 /* IBGroup2Controller30.m in Sources */,
 				4AF209222397B49200EFB85D /* MBPresentationController.m in Sources */,
 				4A86C074237D953500498C20 /* IBGroup2Controller17.m in Sources */,
 				4ACBB9292341FA0D002D7955 /* BClothesProvider.m in Sources */,
 				54B9351E2D27C4F2005D6A5E /* IBGroup3Controller5.m in Sources */,
+				54EAECBD2D3FA2BF00D893D3 /* JPCGColor.m in Sources */,
 				4ACBB8AF2341FA0D002D7955 /* RACSubscriptionScheduler.m in Sources */,
 				4ACBB8DA2341FA0D002D7955 /* RACCompoundDisposable.m in Sources */,
 				4ACBB90F2341FA0D002D7955 /* SDAnimatedImageRep.m in Sources */,
@@ -2894,9 +3370,12 @@
 				4ACBB8922341FA0D002D7955 /* MASConstraint.m in Sources */,
 				4ACBB8BC2341FA0D002D7955 /* RACEmptySequence.m in Sources */,
 				4ACBB9062341FA0D002D7955 /* SDWebImageCodersManager.m in Sources */,
+				54EAECB32D3FA2BF00D893D3 /* types.c in Sources */,
 				4ACBB8EB2341FA0D002D7955 /* NSData+RACSupport.m in Sources */,
+				54EAECB22D3FA2BF00D893D3 /* raw_api.c in Sources */,
 				4AA858EB23B24D2D003D610F /* UIImage+HSB.m in Sources */,
 				548741B02CCA40B30088F44D /* MBState.m in Sources */,
+				54EAECAC2D3FA2BF00D893D3 /* ffi_arm64.c in Sources */,
 				4ACBB9032341FA0D002D7955 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4ACBB90B2341FA0D002D7955 /* SDWebImageCompat.m in Sources */,
 				4ACBB8B72341FA0D002D7955 /* RACGroupedSignal.m in Sources */,
@@ -2905,6 +3384,7 @@
 				4ACBB9362341FA0D002D7955 /* IBCATextLayer.m in Sources */,
 				4ACBB95A234D845F002D7955 /* IBGroup2Controller9.m in Sources */,
 				4ACBB8FD2341FA0D002D7955 /* AFNetworkReachabilityManager.m in Sources */,
+				54EAECB52D3FA2BF00D893D3 /* darwin64_x86_64.S in Sources */,
 				54B935272D27C50F005D6A5E /* IBGroup3Controller8.m in Sources */,
 				4ACBB93B2341FA0D002D7955 /* IBCAScrollLayer.m in Sources */,
 				4ACBB8D32341FA0D002D7955 /* RACDisposable.m in Sources */,

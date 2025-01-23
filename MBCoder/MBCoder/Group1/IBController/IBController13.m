@@ -80,6 +80,31 @@
  答：_objc_msgForward是 IMP 类型，用于消息转发的：当向一个对象发送一条消息，但它并没有实现的时候，_objc_msgForward会尝试做消息转发。
     函数：id _Nullable _objc_msgForward(id _Nonnull receiver, SEL _Nonnull sel, ...)
  
+ 拓展：_objc_msgForward_stret 代替 _objc_msgForward 两者区别
+ 
+ 大多数 CPU 在执行 C 函数时会把前几个参数放进寄存器里，对 obj_msgSend 来说前两个参数固定是 self / _cmd，
+ 它们会放在寄存器上，在最后执行完后返回值也会保存在寄存器上，取这个寄存器的值就是返回值：
+ -(int) method:(id)arg;
+     r3 = self
+     r4 = _cmd, @selector(method:)
+     r5 = arg
+     (on exit) r3 = returned int
+ 
+ 普通的返回值(int/pointer)很小，放在寄存器上没问题，但有些 struct 是很大的，寄存器放不下，所以要用另一种方式，
+ 在一开始申请一段内存，把指针保存在寄存器上，返回值往这个指针指向的内存写数据，所以寄存器要腾出一个位置放这个指针，self / _cmd 在寄存器的位置就变了：
+  -(struct st) method:(id)arg;
+     r3 = &struct_var (in caller's stack frame)
+     r4 = self
+     r5 = _cmd, @selector(method:)
+     r6 = arg
+     (on exit) return value written into struct_var
+ 
+ objc_msgSend 不知道 self / _cmd 的位置变了，所以要用另一个方法 objc_msgSend_stret 代替
+ 
+ 遇到的问题：
+ 如果替换方法的返回值是某些 struct，在 iOS 架构中非 arm64，使用 _objc_msgForward 会 crash
+ 
+ 
  五、应用
  总结起来，iOS中的RunTime的作用有以下几点：
  1.发送消息(obj_msgSend)

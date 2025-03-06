@@ -310,6 +310,9 @@
 		4AF2134E2399F31600EFB85D /* TPExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134C2399F31600EFB85D /* TPExpandIcon.png */; };
 		4AF2134F2399F31600EFB85D /* TPNOExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */; };
 		4AF2B56F24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */; };
+		540459BD2D799D2F009CBCE8 /* math.c in Sources */ = {isa = PBXBuildFile; fileRef = 540459BC2D799D2F009CBCE8 /* math.c */; };
+		540459C02D799DF5009CBCE8 /* math.js in Resources */ = {isa = PBXBuildFile; fileRef = 540459BE2D799DF5009CBCE8 /* math.js */; };
+		540459C12D799DF5009CBCE8 /* math.wasm in Resources */ = {isa = PBXBuildFile; fileRef = 540459BF2D799DF5009CBCE8 /* math.wasm */; };
 		541B733E2D150E5700DF354D /* IBGroup2Controller35.m in Sources */ = {isa = PBXBuildFile; fileRef = 541B733D2D150E5700DF354D /* IBGroup2Controller35.m */; };
 		541E82D12CC1374B00755059 /* cutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82B92CC1374B00755059 /* cutils.c */; };
 		541E82D22CC1374B00755059 /* libbf.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82BB2CC1374B00755059 /* libbf.c */; };
@@ -1059,6 +1062,10 @@
 		4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPNOExpandIcon.png; sourceTree = "<group>"; };
 		4AF2B56D24ADB0ED00ADFB12 /* IBFlashChatTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBFlashChatTransitionView.h; sourceTree = "<group>"; };
 		4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBFlashChatTransitionView.m; sourceTree = "<group>"; };
+		540459BB2D799D2F009CBCE8 /* math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
+		540459BC2D799D2F009CBCE8 /* math.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = math.c; sourceTree = "<group>"; };
+		540459BE2D799DF5009CBCE8 /* math.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = math.js; sourceTree = "<group>"; };
+		540459BF2D799DF5009CBCE8 /* math.wasm */ = {isa = PBXFileReference; lastKnownFileType = file; path = math.wasm; sourceTree = "<group>"; };
 		541B733C2D150E5700DF354D /* IBGroup2Controller35.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller35.h; sourceTree = "<group>"; };
 		541B733D2D150E5700DF354D /* IBGroup2Controller35.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller35.m; sourceTree = "<group>"; };
 		541E82B92CC1374B00755059 /* cutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cutils.c; sourceTree = "<group>"; };
@@ -1555,6 +1562,7 @@
 		4ACBB68C2341FA0C002D7955 /* HelperFile */ = {
 			isa = PBXGroup;
 			children = (
+				540459BA2D799D14009CBCE8 /* wasm */,
 				F3955AFA24179C17009EC505 /* MBMemoryProfiler */,
 				4ACBB6CB2341FA0C002D7955 /* AFNetworking-RACExtensions */,
 				4ACBB68D2341FA0C002D7955 /* CameraButton */,
@@ -2382,6 +2390,17 @@
 			path = icon;
 			sourceTree = "<group>";
 		};
+		540459BA2D799D14009CBCE8 /* wasm */ = {
+			isa = PBXGroup;
+			children = (
+				540459BB2D799D2F009CBCE8 /* math.h */,
+				540459BC2D799D2F009CBCE8 /* math.c */,
+				540459BE2D799DF5009CBCE8 /* math.js */,
+				540459BF2D799DF5009CBCE8 /* math.wasm */,
+			);
+			path = wasm;
+			sourceTree = "<group>";
+		};
 		541E82B82CC1374B00755059 /* wrapper */ = {
 			isa = PBXGroup;
 			children = (
@@ -2938,6 +2957,8 @@
 				54EAECDB2D3FA2BF00D893D3 /* packer.php in Resources */,
 				4ACBB8752341FA0D002D7955 /* IBController1.xib in Resources */,
 				4AA84ACE236AEDFD00AF5BC9 /* data.json in Resources */,
+				540459C02D799DF5009CBCE8 /* math.js in Resources */,
+				540459C12D799DF5009CBCE8 /* math.wasm in Resources */,
 				4AF2134E2399F31600EFB85D /* TPExpandIcon.png in Resources */,
 				4ACBB9472341FA0D002D7955 /* Assets.xcassets in Resources */,
 				4A77231524D941BD007E7BD6 /* Mach-O文件结构.png in Resources */,
@@ -3106,6 +3127,7 @@
 				4ACBB8702341FA0D002D7955 /* IBController21.m in Sources */,
 				4ACBB8F02341FA0D002D7955 /* NSSet+RACSequenceAdditions.m in Sources */,
 				4ACBB94B2341FA0D002D7955 /* main.mm in Sources */,
+				540459BD2D799D2F009CBCE8 /* math.c in Sources */,
 				4ACBB8D72341FA0D002D7955 /* RACDelegateProxy.m in Sources */,
 				54EAECC12D3FA2BF00D893D3 /* JPCGPath.m in Sources */,
 				4ACBB87A2341FA0D002D7955 /* IBController2.m in Sources */,

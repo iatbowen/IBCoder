@@ -157,6 +157,31 @@
     setContentHuggingPriority：该优先级表示一个控件抗被拉伸的优先级。优先级越高，越不容易被拉伸。
     setContentCompressionResistancePriority：该优先级和上面那个优先级相对应，表示一个控件抗压缩的优先级。优先级越高，越不容易被压缩
  
+
+ 九、主线程不能更新UI原因
+ 1、线程安全性（Thread Safety）：
+ UIKit 和 SwiftUI 的底层实现不是线程安全的。如果多个线程同时修改 UI 元素（例如同时更改同一个 UILabel 的 text），可能导致竞态条件（Race Condition），引发崩溃或 UI 状态不一致。
+ 2、渲染引擎限制
+ iOS 的渲染系统（Core Animation、Core Graphics）依赖 RunLoop 在主线程上管理和同步 UI 的刷新。
+ 所有 UI 变更必须通过 Core Commit Transaction 提交到渲染树，这一过程是主线程 RunLoop 驱动的
+ 
+ 十、为什么 Texture（AsyncDisplayKit）可以子线程更新UI
+ 核心在于它通过 异步预合成、线程安全的布局计算 和 CALayer 的轻量级操作 绕过主线程部分耗时任务，而最终的 UI 更新仍严格在主线程完成
+ 
+ AsyncDisplayKit 的核心设计
+ 1. 基于 Node 的抽象层
+ Node：每个 ASDisplayNode 对应一个 UIView 或 CALayer，但 Node 的生命周期方法（如布局、渲染）允许在子线程执行。
+ 线程隔离：Node 的属性（如 frame、backgroundColor）在子线程计算，最终仅将结果提交到主线程的 UIView/CALayer。
+ 
+ 2. 异步布局与渲染
+ 布局计算（Layout）：在子线程执行 calculateLayoutThatFits: 方法，生成布局结果。
+ 图像预合成：在子线程解码图片、绘制文本（通过 CoreText），生成位图（Bitmap）缓存。
+ 主线程提交：仅在需要显示时，将最终结果（如 CALayer 的 contents）同步到主线程。
+ 
+ 3. CALayer 的轻量操作
+ 相比 UIView，CALayer 的属性（如 position、contents）修改不需要严格在主线程进行（但需通过事务提交）。
+ AsyncDisplayKit 通过 CATransaction 批量提交属性变更，减少主线程开销。
+ 
 */
 
 - (void)viewDidLoad {

@@ -199,15 +199,56 @@
  1.2.2.3 Hotfix 分支
  hotfix/v1.17.1
  v1.17.1 表示v1.17.0 这个版本做了1次线上问题热修复。
-
-
-
  
+ 五、Git LFS 允许存储大文件
+ 1、安装 Git LFS
+ git lfs install
 
-
-
-
-
+ 2、追踪大文件（支持通配符）
+ git lfs track "Lynx-3.2.0-rc.0/buildtools/llvm/bin/llvm"
  
+ 3、编辑.gitignore
+ 添加忽略文件路径
+
+ 4、提交并推送
+ git add .gitattributes
+ git commit -m "使用 LFS 追踪大文件"
+ git push origin main
  
+ 5、如果文件已提交到 Git
+ git rm --cached 文件路径
+
+ 六、git 合并 commit
+ 
+ 1、启动交互式变基
+ 指定要合并的提交数量（如合并最近的 3 个提交）：
+ git rebase -i HEAD~3  # 合并 HEAD、HEAD~1、HEAD~2 三个提交
+ 
+ 或者直接指定目标提交哈希：
+ git rebase -i <commit-hash>  # 合并到该提交之后的所有记录
+ 
+ 2、编辑提交列表
+ 文本编辑器会打开一个列表（如 Vim），显示类似内容：
+ pick a1b2c3d Commit 1
+ pick d4e5f6g Commit 2
+ pick h7i8j9k Commit 3
+ 
+ 将需要合并的提交前的 pick 改为 squash 或 s
+ 例如，将后两个提交合并到第一个提交：
+ pick a1b2c3d Commit 1
+ squash d4e5f6g Commit 2
+ squash h7i8j9k Commit 3
+ 
+ 3、保存并退出编辑器
+ 在 Vim 中按 Esc → 输入 :wq → 回车。
+ 
+ 4、编辑合并后的提交信息
+ 新的编辑器窗口会打开，允许你修改合并后的提交信息。删除或注释掉不需要的旧信息，保留最终描述。
+
+ 5、完成变基
+ 保存退出后，Git 会完成提交合并。
+
+ 6、强制推送（如果已推送到远程）
+ git push origin <branch-name> --force
+
  */

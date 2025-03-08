@@ -52,8 +52,11 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
-//    [self testOriginCode];
-    [self testContextSmoke];
+}
+
+- (void)testQuickJS {
+    [self testOriginCode];
+//    [self testContextSmoke];
 //    [self testQJSContext_Block];
 //    [self testQJSValueInterface];
 //    [self testContext_methodInvoke];
@@ -127,3 +130,29 @@
 }
 
 @end
+
+
+/*
+ 一、cmake 介绍
+ 1、option
+ 1.1、-G 生成器选择
+ -G "Ninja"             # 最快的构建系统
+ -G "Xcode"             # 生成Xcode工程
+ -G "Visual Studio 17 2022"  # VS2022项目
+ 
+ 1.2、-B/-S 路径控制
+ -B build              # 指定构建目录
+ -S src                # 指定源码目录（含CMakeLists.txt）
+ 
+ 1.3 -D 定义变量
+ -DCMAKE_SYSTEM_NAME=iOS
+ -DCMAKE_OSX_SYSROOT=iphoneos
+ -DCMAKE_BUILD_TYPE=Release
+ -DCMAKE_OSX_ARCHITECTURES=arm64
+ -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
+ -DHERMES_BUILD_APPLE_FRAMEWORK=ON
+ 
+ */
+
+
+

@@ -217,6 +217,12 @@
  
  5、如果文件已提交到 Git
  git rm --cached 文件路径
+ 
+ 6、 拉取所有 LFS 文件（默认自动执行）
+ git lfs pull
+ 未拉取成功可能没安装先执行：
+ git lfs install
+ git lfs pull
 
  六、git 合并 commit
  

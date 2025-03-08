@@ -65,7 +65,7 @@
  pod 'QueryKit', :subspecs => ['Attribute', 'QuerySet']
 
  5、Using the files from a local path (使用本地文件)
- pod 'AFNetworking', :path => '~/Documents/AFNetworking'
+ pod 'AFNetworking', :path => './LocalPods/MyLocalPod'
  
  6、From a podspec in the root of a library repository (引用仓库根目录的podspec)
 
@@ -117,6 +117,22 @@
  14、Source
  source是指定pod的来源
  source 'https://github.com/artsy/Specs.git'
+ 
+ 15、通过环境变量传递参数
+ 
+ Podspec中条件配置：
+ Pod::Spec.new do |s|
+   s.name = 'MyPod'
+   if ENV['ENABLE_DEBUG'] == 'YES'
+     s.source_files = ''
+     s.compiler_flags = '-DDEBUG'
+   else
+     s.source_files = ''
+   end
+ end
+
+ 命令行传递环境变量
+ ENABLE_DEBUG=YES pod install
 
  二、搭建私有库
  

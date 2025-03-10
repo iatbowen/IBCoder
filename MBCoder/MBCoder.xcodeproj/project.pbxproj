@@ -313,6 +313,8 @@
 		540459BD2D799D2F009CBCE8 /* math.c in Sources */ = {isa = PBXBuildFile; fileRef = 540459BC2D799D2F009CBCE8 /* math.c */; };
 		540459C02D799DF5009CBCE8 /* math.js in Resources */ = {isa = PBXBuildFile; fileRef = 540459BE2D799DF5009CBCE8 /* math.js */; };
 		540459C12D799DF5009CBCE8 /* math.wasm in Resources */ = {isa = PBXBuildFile; fileRef = 540459BF2D799DF5009CBCE8 /* math.wasm */; };
+		540F2B3D2D7F09D700C0679F /* hermes.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F2B3A2D7F09B000C0679F /* hermes.xcframework */; };
+		540F2B3E2D7F09D700C0679F /* hermes.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 540F2B3A2D7F09B000C0679F /* hermes.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		541B733E2D150E5700DF354D /* IBGroup2Controller35.m in Sources */ = {isa = PBXBuildFile; fileRef = 541B733D2D150E5700DF354D /* IBGroup2Controller35.m */; };
 		541E82D12CC1374B00755059 /* cutils.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82B92CC1374B00755059 /* cutils.c */; };
 		541E82D22CC1374B00755059 /* libbf.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82BB2CC1374B00755059 /* libbf.c */; };
@@ -320,7 +322,7 @@
 		541E82D42CC1374B00755059 /* libunicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82C12CC1374B00755059 /* libunicode.c */; };
 		541E82D82CC1374B00755059 /* quickjs-libc.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82C82CC1374B00755059 /* quickjs-libc.c */; };
 		541E82D92CC1374B00755059 /* quickjs.c in Sources */ = {isa = PBXBuildFile; fileRef = 541E82CB2CC1374B00755059 /* quickjs.c */; };
-		542707B62CC63BA200AD59B6 /* IBGroup2Controller30.m in Sources */ = {isa = PBXBuildFile; fileRef = 542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */; };
+		542707B62CC63BA200AD59B6 /* IBGroup2Controller30.mm in Sources */ = {isa = PBXBuildFile; fileRef = 542707B52CC63BA200AD59B6 /* IBGroup2Controller30.mm */; };
 		5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2652CC14DBB00AD59B6 /* QJSContext.m */; };
 		5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */; };
 		5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */; };
@@ -431,6 +433,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				540F2B3E2D7F09D700C0679F /* hermes.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1066,6 +1069,65 @@
 		540459BC2D799D2F009CBCE8 /* math.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = math.c; sourceTree = "<group>"; };
 		540459BE2D799DF5009CBCE8 /* math.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = math.js; sourceTree = "<group>"; };
 		540459BF2D799DF5009CBCE8 /* math.wasm */ = {isa = PBXFileReference; lastKnownFileType = file; path = math.wasm; sourceTree = "<group>"; };
+		540F2AF82D7F09B000C0679F /* CallbackOStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallbackOStream.h; sourceTree = "<group>"; };
+		540F2AF92D7F09B000C0679F /* CDPAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPAgent.h; sourceTree = "<group>"; };
+		540F2AFA2D7F09B000C0679F /* CDPDebugAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPDebugAPI.h; sourceTree = "<group>"; };
+		540F2AFB2D7F09B000C0679F /* ConsoleMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsoleMessage.h; sourceTree = "<group>"; };
+		540F2AFC2D7F09B000C0679F /* DebuggerDomainAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebuggerDomainAgent.h; sourceTree = "<group>"; };
+		540F2AFD2D7F09B000C0679F /* DomainAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainAgent.h; sourceTree = "<group>"; };
+		540F2AFE2D7F09B000C0679F /* DomainState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomainState.h; sourceTree = "<group>"; };
+		540F2AFF2D7F09B000C0679F /* HeapProfilerDomainAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeapProfilerDomainAgent.h; sourceTree = "<group>"; };
+		540F2B002D7F09B000C0679F /* JSONValueInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueInterfaces.h; sourceTree = "<group>"; };
+		540F2B012D7F09B000C0679F /* MessageConverters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageConverters.h; sourceTree = "<group>"; };
+		540F2B022D7F09B000C0679F /* MessageInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageInterfaces.h; sourceTree = "<group>"; };
+		540F2B032D7F09B000C0679F /* MessageTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTypes.h; sourceTree = "<group>"; };
+		540F2B042D7F09B000C0679F /* MessageTypesInlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTypesInlines.h; sourceTree = "<group>"; };
+		540F2B052D7F09B000C0679F /* ProfilerDomainAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilerDomainAgent.h; sourceTree = "<group>"; };
+		540F2B062D7F09B000C0679F /* RemoteObjectConverters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObjectConverters.h; sourceTree = "<group>"; };
+		540F2B072D7F09B000C0679F /* RemoteObjectsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObjectsTable.h; sourceTree = "<group>"; };
+		540F2B082D7F09B000C0679F /* RuntimeDomainAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeDomainAgent.h; sourceTree = "<group>"; };
+		540F2B0A2D7F09B000C0679F /* AsyncHermesRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncHermesRuntime.h; sourceTree = "<group>"; };
+		540F2B0B2D7F09B000C0679F /* SyncConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncConnection.h; sourceTree = "<group>"; };
+		540F2B0C2D7F09B000C0679F /* TestHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestHelpers.h; sourceTree = "<group>"; };
+		540F2B0E2D7F09B000C0679F /* CallbackOStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallbackOStream.h; sourceTree = "<group>"; };
+		540F2B0F2D7F09B000C0679F /* CDPHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDPHandler.h; sourceTree = "<group>"; };
+		540F2B102D7F09B000C0679F /* JSONValueInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONValueInterfaces.h; sourceTree = "<group>"; };
+		540F2B112D7F09B000C0679F /* MessageConverters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageConverters.h; sourceTree = "<group>"; };
+		540F2B122D7F09B000C0679F /* MessageInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageInterfaces.h; sourceTree = "<group>"; };
+		540F2B132D7F09B000C0679F /* MessageTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTypes.h; sourceTree = "<group>"; };
+		540F2B142D7F09B000C0679F /* MessageTypesInlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTypesInlines.h; sourceTree = "<group>"; };
+		540F2B152D7F09B000C0679F /* RemoteObjectConverters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObjectConverters.h; sourceTree = "<group>"; };
+		540F2B162D7F09B000C0679F /* RemoteObjectsTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteObjectsTable.h; sourceTree = "<group>"; };
+		540F2B182D7F09B000C0679F /* RuntimeAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeAdapter.h; sourceTree = "<group>"; };
+		540F2B1A2D7F09B000C0679F /* Buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
+		540F2B1B2D7F09B000C0679F /* CrashManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashManager.h; sourceTree = "<group>"; };
+		540F2B1C2D7F09B000C0679F /* CtorConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CtorConfig.h; sourceTree = "<group>"; };
+		540F2B1D2D7F09B000C0679F /* DebuggerTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebuggerTypes.h; sourceTree = "<group>"; };
+		540F2B1E2D7F09B000C0679F /* GCConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConfig.h; sourceTree = "<group>"; };
+		540F2B1F2D7F09B000C0679F /* GCTripwireContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTripwireContext.h; sourceTree = "<group>"; };
+		540F2B202D7F09B000C0679F /* HermesExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HermesExport.h; sourceTree = "<group>"; };
+		540F2B212D7F09B000C0679F /* JSOutOfMemoryError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSOutOfMemoryError.h; sourceTree = "<group>"; };
+		540F2B222D7F09B000C0679F /* RuntimeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeConfig.h; sourceTree = "<group>"; };
+		540F2B242D7F09B000C0679F /* AsyncDebuggerAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncDebuggerAPI.h; sourceTree = "<group>"; };
+		540F2B252D7F09B000C0679F /* CompileJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompileJS.h; sourceTree = "<group>"; };
+		540F2B262D7F09B000C0679F /* DebuggerAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebuggerAPI.h; sourceTree = "<group>"; };
+		540F2B272D7F09B000C0679F /* hermes_tracing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hermes_tracing.h; sourceTree = "<group>"; };
+		540F2B282D7F09B000C0679F /* hermes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hermes.h; sourceTree = "<group>"; };
+		540F2B292D7F09B000C0679F /* RuntimeTaskRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeTaskRunner.h; sourceTree = "<group>"; };
+		540F2B2A2D7F09B000C0679F /* SynthTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthTrace.h; sourceTree = "<group>"; };
+		540F2B2B2D7F09B000C0679F /* SynthTraceParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthTraceParser.h; sourceTree = "<group>"; };
+		540F2B2C2D7F09B000C0679F /* ThreadSafetyAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadSafetyAnalysis.h; sourceTree = "<group>"; };
+		540F2B2D2D7F09B000C0679F /* TimerStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerStats.h; sourceTree = "<group>"; };
+		540F2B2E2D7F09B000C0679F /* TraceInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TraceInterpreter.h; sourceTree = "<group>"; };
+		540F2B2F2D7F09B000C0679F /* TracingRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TracingRuntime.h; sourceTree = "<group>"; };
+		540F2B312D7F09B000C0679F /* decorator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decorator.h; sourceTree = "<group>"; };
+		540F2B322D7F09B000C0679F /* instrumentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = instrumentation.h; sourceTree = "<group>"; };
+		540F2B332D7F09B000C0679F /* jsi-inl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "jsi-inl.h"; sourceTree = "<group>"; };
+		540F2B342D7F09B000C0679F /* jsi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsi.h; sourceTree = "<group>"; };
+		540F2B352D7F09B000C0679F /* JSIDynamic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSIDynamic.h; sourceTree = "<group>"; };
+		540F2B362D7F09B000C0679F /* jsilib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsilib.h; sourceTree = "<group>"; };
+		540F2B372D7F09B000C0679F /* threadsafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threadsafe.h; sourceTree = "<group>"; };
+		540F2B3A2D7F09B000C0679F /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = hermes.xcframework; sourceTree = "<group>"; };
 		541B733C2D150E5700DF354D /* IBGroup2Controller35.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller35.h; sourceTree = "<group>"; };
 		541B733D2D150E5700DF354D /* IBGroup2Controller35.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller35.m; sourceTree = "<group>"; };
 		541E82B92CC1374B00755059 /* cutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cutils.c; sourceTree = "<group>"; };
@@ -1087,7 +1149,7 @@
 		541E82CC2CC1374B00755059 /* quickjs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quickjs.h; sourceTree = "<group>"; };
 		541E82CD2CC1374B00755059 /* unicode_gen_def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unicode_gen_def.h; sourceTree = "<group>"; };
 		542707B42CC63BA200AD59B6 /* IBGroup2Controller30.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller30.h; sourceTree = "<group>"; };
-		542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller30.m; sourceTree = "<group>"; };
+		542707B52CC63BA200AD59B6 /* IBGroup2Controller30.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IBGroup2Controller30.mm; sourceTree = "<group>"; };
 		5427E2652CC14DBB00AD59B6 /* QJSContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSContext.m; sourceTree = "<group>"; };
 		5427E2662CC14DBC00AD59B6 /* QJSConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSConfiguration.h; sourceTree = "<group>"; };
 		5427E2672CC14DBC00AD59B6 /* QJSRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSRuntime.h; sourceTree = "<group>"; };
@@ -1313,6 +1375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFCF52D7F7724B5F9C48246D /* libPods-MBCoder.a in Frameworks */,
+				540F2B3D2D7F09D700C0679F /* hermes.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2129,6 +2192,7 @@
 		4ACBB8012341FA0D002D7955 /* IBModule */ = {
 			isa = PBXGroup;
 			children = (
+				540F2B3B2D7F09B000C0679F /* hermes */,
 				54EAECA92D3FA2BF00D893D3 /* JSPatch */,
 				54E43B9D2CE30D8B005BE78A /* flatbuffers */,
 				548741A72CCA404C0088F44D /* StateMachine */,
@@ -2314,7 +2378,7 @@
 				4A43246A25E8FA5F005AD9A0 /* IBGroup2Controller29.h */,
 				4A43246B25E8FA5F005AD9A0 /* IBGroup2Controller29.m */,
 				542707B42CC63BA200AD59B6 /* IBGroup2Controller30.h */,
-				542707B52CC63BA200AD59B6 /* IBGroup2Controller30.m */,
+				542707B52CC63BA200AD59B6 /* IBGroup2Controller30.mm */,
 				548741A42CCA3D8E0088F44D /* IBGroup2Controller31.h */,
 				548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */,
 				54E43AE52CE20822005BE78A /* IBGroup2Controller32.h */,
@@ -2399,6 +2463,160 @@
 				540459BF2D799DF5009CBCE8 /* math.wasm */,
 			);
 			path = wasm;
+			sourceTree = "<group>";
+		};
+		540F2AF52D7F09B000C0679F /* src */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		540F2AF62D7F09B000C0679F /* hermes-inspector-msggen */ = {
+			isa = PBXGroup;
+			children = (
+				540F2AF52D7F09B000C0679F /* src */,
+			);
+			path = "hermes-inspector-msggen";
+			sourceTree = "<group>";
+		};
+		540F2AF72D7F09B000C0679F /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				540F2AF62D7F09B000C0679F /* hermes-inspector-msggen */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		540F2B092D7F09B000C0679F /* cdp */ = {
+			isa = PBXGroup;
+			children = (
+				540F2AF72D7F09B000C0679F /* tools */,
+				540F2AF82D7F09B000C0679F /* CallbackOStream.h */,
+				540F2AF92D7F09B000C0679F /* CDPAgent.h */,
+				540F2AFA2D7F09B000C0679F /* CDPDebugAPI.h */,
+				540F2AFB2D7F09B000C0679F /* ConsoleMessage.h */,
+				540F2AFC2D7F09B000C0679F /* DebuggerDomainAgent.h */,
+				540F2AFD2D7F09B000C0679F /* DomainAgent.h */,
+				540F2AFE2D7F09B000C0679F /* DomainState.h */,
+				540F2AFF2D7F09B000C0679F /* HeapProfilerDomainAgent.h */,
+				540F2B002D7F09B000C0679F /* JSONValueInterfaces.h */,
+				540F2B012D7F09B000C0679F /* MessageConverters.h */,
+				540F2B022D7F09B000C0679F /* MessageInterfaces.h */,
+				540F2B032D7F09B000C0679F /* MessageTypes.h */,
+				540F2B042D7F09B000C0679F /* MessageTypesInlines.h */,
+				540F2B052D7F09B000C0679F /* ProfilerDomainAgent.h */,
+				540F2B062D7F09B000C0679F /* RemoteObjectConverters.h */,
+				540F2B072D7F09B000C0679F /* RemoteObjectsTable.h */,
+				540F2B082D7F09B000C0679F /* RuntimeDomainAgent.h */,
+			);
+			path = cdp;
+			sourceTree = "<group>";
+		};
+		540F2B0D2D7F09B000C0679F /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B0A2D7F09B000C0679F /* AsyncHermesRuntime.h */,
+				540F2B0B2D7F09B000C0679F /* SyncConnection.h */,
+				540F2B0C2D7F09B000C0679F /* TestHelpers.h */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		540F2B172D7F09B000C0679F /* chrome */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B0D2D7F09B000C0679F /* tests */,
+				540F2B0E2D7F09B000C0679F /* CallbackOStream.h */,
+				540F2B0F2D7F09B000C0679F /* CDPHandler.h */,
+				540F2B102D7F09B000C0679F /* JSONValueInterfaces.h */,
+				540F2B112D7F09B000C0679F /* MessageConverters.h */,
+				540F2B122D7F09B000C0679F /* MessageInterfaces.h */,
+				540F2B132D7F09B000C0679F /* MessageTypes.h */,
+				540F2B142D7F09B000C0679F /* MessageTypesInlines.h */,
+				540F2B152D7F09B000C0679F /* RemoteObjectConverters.h */,
+				540F2B162D7F09B000C0679F /* RemoteObjectsTable.h */,
+			);
+			path = chrome;
+			sourceTree = "<group>";
+		};
+		540F2B192D7F09B000C0679F /* inspector */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B172D7F09B000C0679F /* chrome */,
+				540F2B182D7F09B000C0679F /* RuntimeAdapter.h */,
+			);
+			path = inspector;
+			sourceTree = "<group>";
+		};
+		540F2B232D7F09B000C0679F /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B1A2D7F09B000C0679F /* Buffer.h */,
+				540F2B1B2D7F09B000C0679F /* CrashManager.h */,
+				540F2B1C2D7F09B000C0679F /* CtorConfig.h */,
+				540F2B1D2D7F09B000C0679F /* DebuggerTypes.h */,
+				540F2B1E2D7F09B000C0679F /* GCConfig.h */,
+				540F2B1F2D7F09B000C0679F /* GCTripwireContext.h */,
+				540F2B202D7F09B000C0679F /* HermesExport.h */,
+				540F2B212D7F09B000C0679F /* JSOutOfMemoryError.h */,
+				540F2B222D7F09B000C0679F /* RuntimeConfig.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		540F2B302D7F09B000C0679F /* hermes */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B092D7F09B000C0679F /* cdp */,
+				540F2B192D7F09B000C0679F /* inspector */,
+				540F2B232D7F09B000C0679F /* Public */,
+				540F2B242D7F09B000C0679F /* AsyncDebuggerAPI.h */,
+				540F2B252D7F09B000C0679F /* CompileJS.h */,
+				540F2B262D7F09B000C0679F /* DebuggerAPI.h */,
+				540F2B272D7F09B000C0679F /* hermes_tracing.h */,
+				540F2B282D7F09B000C0679F /* hermes.h */,
+				540F2B292D7F09B000C0679F /* RuntimeTaskRunner.h */,
+				540F2B2A2D7F09B000C0679F /* SynthTrace.h */,
+				540F2B2B2D7F09B000C0679F /* SynthTraceParser.h */,
+				540F2B2C2D7F09B000C0679F /* ThreadSafetyAnalysis.h */,
+				540F2B2D2D7F09B000C0679F /* TimerStats.h */,
+				540F2B2E2D7F09B000C0679F /* TraceInterpreter.h */,
+				540F2B2F2D7F09B000C0679F /* TracingRuntime.h */,
+			);
+			path = hermes;
+			sourceTree = "<group>";
+		};
+		540F2B382D7F09B000C0679F /* jsi */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B312D7F09B000C0679F /* decorator.h */,
+				540F2B322D7F09B000C0679F /* instrumentation.h */,
+				540F2B332D7F09B000C0679F /* jsi-inl.h */,
+				540F2B342D7F09B000C0679F /* jsi.h */,
+				540F2B352D7F09B000C0679F /* JSIDynamic.h */,
+				540F2B362D7F09B000C0679F /* jsilib.h */,
+				540F2B372D7F09B000C0679F /* threadsafe.h */,
+			);
+			path = jsi;
+			sourceTree = "<group>";
+		};
+		540F2B392D7F09B000C0679F /* include */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B302D7F09B000C0679F /* hermes */,
+				540F2B382D7F09B000C0679F /* jsi */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		540F2B3B2D7F09B000C0679F /* hermes */ = {
+			isa = PBXGroup;
+			children = (
+				540F2B392D7F09B000C0679F /* include */,
+				540F2B3A2D7F09B000C0679F /* hermes.xcframework */,
+			);
+			path = hermes;
 			sourceTree = "<group>";
 		};
 		541E82B82CC1374B00755059 /* wrapper */ = {
@@ -3382,7 +3600,7 @@
 				4ACBB8A92341FA0D002D7955 /* UIGestureRecognizer+RACSignalSupport.m in Sources */,
 				541E82D12CC1374B00755059 /* cutils.c in Sources */,
 				54EAECD82D3FA2BF00D893D3 /* zip.c in Sources */,
-				542707B62CC63BA200AD59B6 /* IBGroup2Controller30.m in Sources */,
+				542707B62CC63BA200AD59B6 /* IBGroup2Controller30.mm in Sources */,
 				4AF209222397B49200EFB85D /* MBPresentationController.m in Sources */,
 				4A86C074237D953500498C20 /* IBGroup2Controller17.m in Sources */,
 				4ACBB9292341FA0D002D7955 /* BClothesProvider.m in Sources */,
@@ -3729,6 +3947,7 @@
 					"\"${PODS_ROOT}/Headers/Public/libwebp\"",
 					"\"${PODS_ROOT}/Headers/Public/lottie-ios\"",
 					"$(SRCROOT)/MBCoder/IBModule/flatbuffers",
+					"$(SRCROOT)/MBCoder/IBModule/hermes/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MBCoder/other/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -3931,6 +4150,7 @@
 					"\"${PODS_ROOT}/Headers/Public/libwebp\"",
 					"\"${PODS_ROOT}/Headers/Public/lottie-ios\"",
 					"$(SRCROOT)/MBCoder/IBModule/flatbuffers",
+					"$(SRCROOT)/MBCoder/IBModule/hermes/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MBCoder/other/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;

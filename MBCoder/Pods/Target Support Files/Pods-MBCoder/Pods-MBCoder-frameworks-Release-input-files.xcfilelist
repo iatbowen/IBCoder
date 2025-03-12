@@ -1,2 +1,2 @@
 ${PODS_ROOT}/Target Support Files/Pods-MBCoder/Pods-MBCoder-frameworks.sh
-${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes
+${PODS_ROOT}/GoogleWebRTC/Frameworks/frameworks/WebRTC.framework

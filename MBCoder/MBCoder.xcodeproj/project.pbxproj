@@ -353,19 +353,6 @@
 		54E43BA12CE30D8B005BE78A /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 54E43B972CE30D8B005BE78A /* util.cpp */; };
 		54EAECAA2D3FA2BF00D893D3 /* JPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC2F2D3FA2BF00D893D3 /* JPEngine.m */; };
 		54EAECAB2D3FA2BF00D893D3 /* JSPatch.js in Resources */ = {isa = PBXBuildFile; fileRef = 54EAEC302D3FA2BF00D893D3 /* JSPatch.js */; };
-		54EAECAC2D3FA2BF00D893D3 /* ffi_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC432D3FA2BF00D893D3 /* ffi_arm64.c */; };
-		54EAECAD2D3FA2BF00D893D3 /* sysv_arm64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC442D3FA2BF00D893D3 /* sysv_arm64.S */; };
-		54EAECAE2D3FA2BF00D893D3 /* ffi_armv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC462D3FA2BF00D893D3 /* ffi_armv7.c */; };
-		54EAECAF2D3FA2BF00D893D3 /* sysv_armv7.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC472D3FA2BF00D893D3 /* sysv_armv7.S */; };
-		54EAECB02D3FA2BF00D893D3 /* trampoline_armv7.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC482D3FA2BF00D893D3 /* trampoline_armv7.S */; };
-		54EAECB12D3FA2BF00D893D3 /* prep_cif.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4A2D3FA2BF00D893D3 /* prep_cif.c */; };
-		54EAECB22D3FA2BF00D893D3 /* raw_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4B2D3FA2BF00D893D3 /* raw_api.c */; };
-		54EAECB32D3FA2BF00D893D3 /* types.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4C2D3FA2BF00D893D3 /* types.c */; };
-		54EAECB42D3FA2BF00D893D3 /* darwin_i386.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4E2D3FA2BF00D893D3 /* darwin_i386.S */; };
-		54EAECB52D3FA2BF00D893D3 /* darwin64_x86_64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC4F2D3FA2BF00D893D3 /* darwin64_x86_64.S */; };
-		54EAECB62D3FA2BF00D893D3 /* ffi_i386.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC502D3FA2BF00D893D3 /* ffi_i386.c */; };
-		54EAECB72D3FA2BF00D893D3 /* ffi64_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC512D3FA2BF00D893D3 /* ffi64_x86_64.c */; };
-		54EAECB82D3FA2BF00D893D3 /* win32_i386.S in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC522D3FA2BF00D893D3 /* win32_i386.S */; };
 		54EAECB92D3FA2BF00D893D3 /* JPCFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC572D3FA2BF00D893D3 /* JPCFunction.m */; };
 		54EAECBA2D3FA2BF00D893D3 /* JPMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC592D3FA2BF00D893D3 /* JPMemory.m */; };
 		54EAECBB2D3FA2BF00D893D3 /* JPStructPointer.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAEC5B2D3FA2BF00D893D3 /* JPStructPointer.m */; };
@@ -404,6 +391,23 @@
 		54EAECDC2D3FA2BF00D893D3 /* JPLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAECA72D3FA2BF00D893D3 /* JPLoader.m */; };
 		54EAECDE2D3FA2ED00D893D3 /* demo.js in Resources */ = {isa = PBXBuildFile; fileRef = 54EAECDD2D3FA2ED00D893D3 /* demo.js */; };
 		54EB63B62D1547BC00C4E2F2 /* IBGroup3Controller1.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */; };
+		54FB65D62D81BDDF00299C90 /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65AD2D81BDDF00299C90 /* debug.c */; };
+		54FB65D72D81BDDF00299C90 /* prep_cif.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65B02D81BDDF00299C90 /* prep_cif.c */; };
+		54FB65D82D81BDDF00299C90 /* ffi_armv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65C62D81BDDF00299C90 /* ffi_armv7.c */; };
+		54FB65D92D81BDDF00299C90 /* ffiw64_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65CD2D81BDDF00299C90 /* ffiw64_x86_64.c */; };
+		54FB65DA2D81BDDF00299C90 /* sysv_armv7.S in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65C82D81BDDF00299C90 /* sysv_armv7.S */; };
+		54FB65DB2D81BDDF00299C90 /* ffi_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65C22D81BDDF00299C90 /* ffi_arm64.c */; };
+		54FB65DC2D81BDDF00299C90 /* ffi_i386.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65CB2D81BDDF00299C90 /* ffi_i386.c */; };
+		54FB65DD2D81BDDF00299C90 /* unix64_x86_64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65D12D81BDDF00299C90 /* unix64_x86_64.S */; };
+		54FB65DE2D81BDDF00299C90 /* ffi64_x86_64.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65CC2D81BDDF00299C90 /* ffi64_x86_64.c */; };
+		54FB65DF2D81BDDF00299C90 /* sysv_arm64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65C42D81BDDF00299C90 /* sysv_arm64.S */; };
+		54FB65E02D81BDDF00299C90 /* java_raw_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65AF2D81BDDF00299C90 /* java_raw_api.c */; };
+		54FB65E12D81BDDF00299C90 /* types.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65B22D81BDDF00299C90 /* types.c */; };
+		54FB65E22D81BDDF00299C90 /* dlmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65AE2D81BDDF00299C90 /* dlmalloc.c */; };
+		54FB65E32D81BDDF00299C90 /* sysv_i386.S in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65D02D81BDDF00299C90 /* sysv_i386.S */; };
+		54FB65E42D81BDDF00299C90 /* win64_x86_64.S in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65D22D81BDDF00299C90 /* win64_x86_64.S */; };
+		54FB65E52D81BDDF00299C90 /* raw_api.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65B12D81BDDF00299C90 /* raw_api.c */; };
+		54FB65E62D81BDDF00299C90 /* closures.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65AC2D81BDDF00299C90 /* closures.c */; };
 		5C9906227B70649FAE25EC59 /* libPods-MBCoderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB6D3053F7803EC8C4E0C644 /* libPods-MBCoderUITests.a */; };
 		C26D33292B6BF082002062F4 /* MBProducerConsumerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = C26D33282B6BF082002062F4 /* MBProducerConsumerQueue.m */; };
 		CFCF52D7F7724B5F9C48246D /* libPods-MBCoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F55995B515EF5A59C8491C /* libPods-MBCoder.a */; };
@@ -1232,35 +1236,6 @@
 		54EAEC2E2D3FA2BF00D893D3 /* JPEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPEngine.h; sourceTree = "<group>"; };
 		54EAEC2F2D3FA2BF00D893D3 /* JPEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPEngine.m; sourceTree = "<group>"; };
 		54EAEC302D3FA2BF00D893D3 /* JSPatch.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = JSPatch.js; sourceTree = "<group>"; };
-		54EAEC322D3FA2BF00D893D3 /* ffi_arm64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_arm64.h; sourceTree = "<group>"; };
-		54EAEC332D3FA2BF00D893D3 /* ffi_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_armv7.h; sourceTree = "<group>"; };
-		54EAEC342D3FA2BF00D893D3 /* ffi_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_common.h; sourceTree = "<group>"; };
-		54EAEC352D3FA2BF00D893D3 /* ffi_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_i386.h; sourceTree = "<group>"; };
-		54EAEC362D3FA2BF00D893D3 /* ffi_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi_x86_64.h; sourceTree = "<group>"; };
-		54EAEC372D3FA2BF00D893D3 /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
-		54EAEC382D3FA2BF00D893D3 /* fficonfig_arm64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_arm64.h; sourceTree = "<group>"; };
-		54EAEC392D3FA2BF00D893D3 /* fficonfig_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_armv7.h; sourceTree = "<group>"; };
-		54EAEC3A2D3FA2BF00D893D3 /* fficonfig_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_i386.h; sourceTree = "<group>"; };
-		54EAEC3B2D3FA2BF00D893D3 /* fficonfig_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig_x86_64.h; sourceTree = "<group>"; };
-		54EAEC3C2D3FA2BF00D893D3 /* fficonfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fficonfig.h; sourceTree = "<group>"; };
-		54EAEC3D2D3FA2BF00D893D3 /* ffitarget_arm64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_arm64.h; sourceTree = "<group>"; };
-		54EAEC3E2D3FA2BF00D893D3 /* ffitarget_armv7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_armv7.h; sourceTree = "<group>"; };
-		54EAEC3F2D3FA2BF00D893D3 /* ffitarget_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_i386.h; sourceTree = "<group>"; };
-		54EAEC402D3FA2BF00D893D3 /* ffitarget_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget_x86_64.h; sourceTree = "<group>"; };
-		54EAEC412D3FA2BF00D893D3 /* ffitarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffitarget.h; sourceTree = "<group>"; };
-		54EAEC432D3FA2BF00D893D3 /* ffi_arm64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi_arm64.c; sourceTree = "<group>"; };
-		54EAEC442D3FA2BF00D893D3 /* sysv_arm64.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = sysv_arm64.S; sourceTree = "<group>"; };
-		54EAEC462D3FA2BF00D893D3 /* ffi_armv7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi_armv7.c; sourceTree = "<group>"; };
-		54EAEC472D3FA2BF00D893D3 /* sysv_armv7.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = sysv_armv7.S; sourceTree = "<group>"; };
-		54EAEC482D3FA2BF00D893D3 /* trampoline_armv7.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = trampoline_armv7.S; sourceTree = "<group>"; };
-		54EAEC4A2D3FA2BF00D893D3 /* prep_cif.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prep_cif.c; sourceTree = "<group>"; };
-		54EAEC4B2D3FA2BF00D893D3 /* raw_api.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = raw_api.c; sourceTree = "<group>"; };
-		54EAEC4C2D3FA2BF00D893D3 /* types.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = types.c; sourceTree = "<group>"; };
-		54EAEC4E2D3FA2BF00D893D3 /* darwin_i386.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = darwin_i386.S; sourceTree = "<group>"; };
-		54EAEC4F2D3FA2BF00D893D3 /* darwin64_x86_64.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = darwin64_x86_64.S; sourceTree = "<group>"; };
-		54EAEC502D3FA2BF00D893D3 /* ffi_i386.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi_i386.c; sourceTree = "<group>"; };
-		54EAEC512D3FA2BF00D893D3 /* ffi64_x86_64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi64_x86_64.c; sourceTree = "<group>"; };
-		54EAEC522D3FA2BF00D893D3 /* win32_i386.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = win32_i386.S; sourceTree = "<group>"; };
 		54EAEC562D3FA2BF00D893D3 /* JPCFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPCFunction.h; sourceTree = "<group>"; };
 		54EAEC572D3FA2BF00D893D3 /* JPCFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPCFunction.m; sourceTree = "<group>"; };
 		54EAEC582D3FA2BF00D893D3 /* JPMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPMemory.h; sourceTree = "<group>"; };
@@ -1335,6 +1310,45 @@
 		54EAECDD2D3FA2ED00D893D3 /* demo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = demo.js; sourceTree = "<group>"; };
 		54EB63B42D1547BC00C4E2F2 /* IBGroup3Controller1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller1.h; sourceTree = "<group>"; };
 		54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller1.m; sourceTree = "<group>"; };
+		54FB65A62D81BDDF00299C90 /* ffi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
+		54FB65A72D81BDDF00299C90 /* ffi_cfi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi_cfi.h; sourceTree = "<group>"; };
+		54FB65A82D81BDDF00299C90 /* ffi_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi_common.h; sourceTree = "<group>"; };
+		54FB65A92D81BDDF00299C90 /* fficonfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fficonfig.h; sourceTree = "<group>"; };
+		54FB65AA2D81BDDF00299C90 /* ffitarget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffitarget.h; sourceTree = "<group>"; };
+		54FB65AC2D81BDDF00299C90 /* closures.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = closures.c; sourceTree = "<group>"; };
+		54FB65AD2D81BDDF00299C90 /* debug.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = debug.c; sourceTree = "<group>"; };
+		54FB65AE2D81BDDF00299C90 /* dlmalloc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dlmalloc.c; sourceTree = "<group>"; };
+		54FB65AF2D81BDDF00299C90 /* java_raw_api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = java_raw_api.c; sourceTree = "<group>"; };
+		54FB65B02D81BDDF00299C90 /* prep_cif.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = prep_cif.c; sourceTree = "<group>"; };
+		54FB65B12D81BDDF00299C90 /* raw_api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = raw_api.c; sourceTree = "<group>"; };
+		54FB65B22D81BDDF00299C90 /* types.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = types.c; sourceTree = "<group>"; };
+		54FB65B52D81BDDF00299C90 /* ffi_arm64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi_arm64.h; sourceTree = "<group>"; };
+		54FB65B62D81BDDF00299C90 /* ffi_armv7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi_armv7.h; sourceTree = "<group>"; };
+		54FB65B72D81BDDF00299C90 /* ffi_i386.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi_i386.h; sourceTree = "<group>"; };
+		54FB65B82D81BDDF00299C90 /* ffi_x86_64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi_x86_64.h; sourceTree = "<group>"; };
+		54FB65B92D81BDDF00299C90 /* fficonfig_arm64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fficonfig_arm64.h; sourceTree = "<group>"; };
+		54FB65BA2D81BDDF00299C90 /* fficonfig_armv7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fficonfig_armv7.h; sourceTree = "<group>"; };
+		54FB65BB2D81BDDF00299C90 /* fficonfig_i386.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fficonfig_i386.h; sourceTree = "<group>"; };
+		54FB65BC2D81BDDF00299C90 /* fficonfig_x86_64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fficonfig_x86_64.h; sourceTree = "<group>"; };
+		54FB65BD2D81BDDF00299C90 /* ffitarget_arm64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffitarget_arm64.h; sourceTree = "<group>"; };
+		54FB65BE2D81BDDF00299C90 /* ffitarget_armv7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffitarget_armv7.h; sourceTree = "<group>"; };
+		54FB65BF2D81BDDF00299C90 /* ffitarget_i386.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffitarget_i386.h; sourceTree = "<group>"; };
+		54FB65C02D81BDDF00299C90 /* ffitarget_x86_64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffitarget_x86_64.h; sourceTree = "<group>"; };
+		54FB65C22D81BDDF00299C90 /* ffi_arm64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ffi_arm64.c; sourceTree = "<group>"; };
+		54FB65C32D81BDDF00299C90 /* internal_arm64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal_arm64.h; sourceTree = "<group>"; };
+		54FB65C42D81BDDF00299C90 /* sysv_arm64.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = sysv_arm64.S; sourceTree = "<group>"; };
+		54FB65C62D81BDDF00299C90 /* ffi_armv7.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ffi_armv7.c; sourceTree = "<group>"; };
+		54FB65C72D81BDDF00299C90 /* internal_armv7.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal_armv7.h; sourceTree = "<group>"; };
+		54FB65C82D81BDDF00299C90 /* sysv_armv7.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = sysv_armv7.S; sourceTree = "<group>"; };
+		54FB65CA2D81BDDF00299C90 /* asmnames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = asmnames.h; sourceTree = "<group>"; };
+		54FB65CB2D81BDDF00299C90 /* ffi_i386.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ffi_i386.c; sourceTree = "<group>"; };
+		54FB65CC2D81BDDF00299C90 /* ffi64_x86_64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ffi64_x86_64.c; sourceTree = "<group>"; };
+		54FB65CD2D81BDDF00299C90 /* ffiw64_x86_64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ffiw64_x86_64.c; sourceTree = "<group>"; };
+		54FB65CE2D81BDDF00299C90 /* internal32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal32.h; sourceTree = "<group>"; };
+		54FB65CF2D81BDDF00299C90 /* internal64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal64.h; sourceTree = "<group>"; };
+		54FB65D02D81BDDF00299C90 /* sysv_i386.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = sysv_i386.S; sourceTree = "<group>"; };
+		54FB65D12D81BDDF00299C90 /* unix64_x86_64.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = unix64_x86_64.S; sourceTree = "<group>"; };
+		54FB65D22D81BDDF00299C90 /* win64_x86_64.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = win64_x86_64.S; sourceTree = "<group>"; };
 		68F55995B515EF5A59C8491C /* libPods-MBCoder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MBCoder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4D89D083E41EFA39D866CFD /* Pods-MBCoderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.release.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		A6E5ED77AC4908741E17981E /* Pods-MBCoderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MBCoderUITests.debug.xcconfig"; path = "Target Support Files/Pods-MBCoderUITests/Pods-MBCoderUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2777,86 +2791,11 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		54EAEC422D3FA2BF00D893D3 /* headers */ = {
-			isa = PBXGroup;
-			children = (
-				54EAEC322D3FA2BF00D893D3 /* ffi_arm64.h */,
-				54EAEC332D3FA2BF00D893D3 /* ffi_armv7.h */,
-				54EAEC342D3FA2BF00D893D3 /* ffi_common.h */,
-				54EAEC352D3FA2BF00D893D3 /* ffi_i386.h */,
-				54EAEC362D3FA2BF00D893D3 /* ffi_x86_64.h */,
-				54EAEC372D3FA2BF00D893D3 /* ffi.h */,
-				54EAEC382D3FA2BF00D893D3 /* fficonfig_arm64.h */,
-				54EAEC392D3FA2BF00D893D3 /* fficonfig_armv7.h */,
-				54EAEC3A2D3FA2BF00D893D3 /* fficonfig_i386.h */,
-				54EAEC3B2D3FA2BF00D893D3 /* fficonfig_x86_64.h */,
-				54EAEC3C2D3FA2BF00D893D3 /* fficonfig.h */,
-				54EAEC3D2D3FA2BF00D893D3 /* ffitarget_arm64.h */,
-				54EAEC3E2D3FA2BF00D893D3 /* ffitarget_armv7.h */,
-				54EAEC3F2D3FA2BF00D893D3 /* ffitarget_i386.h */,
-				54EAEC402D3FA2BF00D893D3 /* ffitarget_x86_64.h */,
-				54EAEC412D3FA2BF00D893D3 /* ffitarget.h */,
-			);
-			path = headers;
-			sourceTree = "<group>";
-		};
-		54EAEC452D3FA2BF00D893D3 /* aarch64 */ = {
-			isa = PBXGroup;
-			children = (
-				54EAEC432D3FA2BF00D893D3 /* ffi_arm64.c */,
-				54EAEC442D3FA2BF00D893D3 /* sysv_arm64.S */,
-			);
-			path = aarch64;
-			sourceTree = "<group>";
-		};
-		54EAEC492D3FA2BF00D893D3 /* arm */ = {
-			isa = PBXGroup;
-			children = (
-				54EAEC462D3FA2BF00D893D3 /* ffi_armv7.c */,
-				54EAEC472D3FA2BF00D893D3 /* sysv_armv7.S */,
-				54EAEC482D3FA2BF00D893D3 /* trampoline_armv7.S */,
-			);
-			path = arm;
-			sourceTree = "<group>";
-		};
-		54EAEC4D2D3FA2BF00D893D3 /* common */ = {
-			isa = PBXGroup;
-			children = (
-				54EAEC4A2D3FA2BF00D893D3 /* prep_cif.c */,
-				54EAEC4B2D3FA2BF00D893D3 /* raw_api.c */,
-				54EAEC4C2D3FA2BF00D893D3 /* types.c */,
-			);
-			path = common;
-			sourceTree = "<group>";
-		};
-		54EAEC532D3FA2BF00D893D3 /* x86 */ = {
-			isa = PBXGroup;
-			children = (
-				54EAEC4E2D3FA2BF00D893D3 /* darwin_i386.S */,
-				54EAEC4F2D3FA2BF00D893D3 /* darwin64_x86_64.S */,
-				54EAEC502D3FA2BF00D893D3 /* ffi_i386.c */,
-				54EAEC512D3FA2BF00D893D3 /* ffi64_x86_64.c */,
-				54EAEC522D3FA2BF00D893D3 /* win32_i386.S */,
-			);
-			path = x86;
-			sourceTree = "<group>";
-		};
-		54EAEC542D3FA2BF00D893D3 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				54EAEC452D3FA2BF00D893D3 /* aarch64 */,
-				54EAEC492D3FA2BF00D893D3 /* arm */,
-				54EAEC4D2D3FA2BF00D893D3 /* common */,
-				54EAEC532D3FA2BF00D893D3 /* x86 */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		54EAEC552D3FA2BF00D893D3 /* libffi */ = {
 			isa = PBXGroup;
 			children = (
-				54EAEC422D3FA2BF00D893D3 /* headers */,
-				54EAEC542D3FA2BF00D893D3 /* src */,
+				54FB65B42D81BDDF00299C90 /* darwin_common */,
+				54FB65D52D81BDDF00299C90 /* darwin_ios */,
 			);
 			path = libffi;
 			sourceTree = "<group>";
@@ -3035,6 +2974,115 @@
 				54EAECA82D3FA2BF00D893D3 /* Loader */,
 			);
 			path = JSPatch;
+			sourceTree = "<group>";
+		};
+		54FB65AB2D81BDDF00299C90 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65A62D81BDDF00299C90 /* ffi.h */,
+				54FB65A72D81BDDF00299C90 /* ffi_cfi.h */,
+				54FB65A82D81BDDF00299C90 /* ffi_common.h */,
+				54FB65A92D81BDDF00299C90 /* fficonfig.h */,
+				54FB65AA2D81BDDF00299C90 /* ffitarget.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		54FB65B32D81BDDF00299C90 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65AC2D81BDDF00299C90 /* closures.c */,
+				54FB65AD2D81BDDF00299C90 /* debug.c */,
+				54FB65AE2D81BDDF00299C90 /* dlmalloc.c */,
+				54FB65AF2D81BDDF00299C90 /* java_raw_api.c */,
+				54FB65B02D81BDDF00299C90 /* prep_cif.c */,
+				54FB65B12D81BDDF00299C90 /* raw_api.c */,
+				54FB65B22D81BDDF00299C90 /* types.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		54FB65B42D81BDDF00299C90 /* darwin_common */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65AB2D81BDDF00299C90 /* include */,
+				54FB65B32D81BDDF00299C90 /* src */,
+			);
+			path = darwin_common;
+			sourceTree = "<group>";
+		};
+		54FB65C12D81BDDF00299C90 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65B52D81BDDF00299C90 /* ffi_arm64.h */,
+				54FB65B62D81BDDF00299C90 /* ffi_armv7.h */,
+				54FB65B72D81BDDF00299C90 /* ffi_i386.h */,
+				54FB65B82D81BDDF00299C90 /* ffi_x86_64.h */,
+				54FB65B92D81BDDF00299C90 /* fficonfig_arm64.h */,
+				54FB65BA2D81BDDF00299C90 /* fficonfig_armv7.h */,
+				54FB65BB2D81BDDF00299C90 /* fficonfig_i386.h */,
+				54FB65BC2D81BDDF00299C90 /* fficonfig_x86_64.h */,
+				54FB65BD2D81BDDF00299C90 /* ffitarget_arm64.h */,
+				54FB65BE2D81BDDF00299C90 /* ffitarget_armv7.h */,
+				54FB65BF2D81BDDF00299C90 /* ffitarget_i386.h */,
+				54FB65C02D81BDDF00299C90 /* ffitarget_x86_64.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		54FB65C52D81BDDF00299C90 /* aarch64 */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65C22D81BDDF00299C90 /* ffi_arm64.c */,
+				54FB65C32D81BDDF00299C90 /* internal_arm64.h */,
+				54FB65C42D81BDDF00299C90 /* sysv_arm64.S */,
+			);
+			path = aarch64;
+			sourceTree = "<group>";
+		};
+		54FB65C92D81BDDF00299C90 /* arm */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65C62D81BDDF00299C90 /* ffi_armv7.c */,
+				54FB65C72D81BDDF00299C90 /* internal_armv7.h */,
+				54FB65C82D81BDDF00299C90 /* sysv_armv7.S */,
+			);
+			path = arm;
+			sourceTree = "<group>";
+		};
+		54FB65D32D81BDDF00299C90 /* x86 */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65CA2D81BDDF00299C90 /* asmnames.h */,
+				54FB65CB2D81BDDF00299C90 /* ffi_i386.c */,
+				54FB65CC2D81BDDF00299C90 /* ffi64_x86_64.c */,
+				54FB65CD2D81BDDF00299C90 /* ffiw64_x86_64.c */,
+				54FB65CE2D81BDDF00299C90 /* internal32.h */,
+				54FB65CF2D81BDDF00299C90 /* internal64.h */,
+				54FB65D02D81BDDF00299C90 /* sysv_i386.S */,
+				54FB65D12D81BDDF00299C90 /* unix64_x86_64.S */,
+				54FB65D22D81BDDF00299C90 /* win64_x86_64.S */,
+			);
+			path = x86;
+			sourceTree = "<group>";
+		};
+		54FB65D42D81BDDF00299C90 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65C52D81BDDF00299C90 /* aarch64 */,
+				54FB65C92D81BDDF00299C90 /* arm */,
+				54FB65D32D81BDDF00299C90 /* x86 */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		54FB65D52D81BDDF00299C90 /* darwin_ios */ = {
+			isa = PBXGroup;
+			children = (
+				54FB65C12D81BDDF00299C90 /* include */,
+				54FB65D42D81BDDF00299C90 /* src */,
+			);
+			path = darwin_ios;
 			sourceTree = "<group>";
 		};
 		E0C3398B810AB45FA06458BC /* Frameworks */ = {
@@ -3285,7 +3333,6 @@
 				F3A3E330238C441200925ACC /* IBGroup2Controller19.m in Sources */,
 				541E82D82CC1374B00755059 /* quickjs-libc.c in Sources */,
 				F3955B0024179C17009EC505 /* MBRetainCycleLoggerPlugin.m in Sources */,
-				54EAECB82D3FA2BF00D893D3 /* win32_i386.S in Sources */,
 				54EAECD02D3FA2BF00D893D3 /* JPDispatch.m in Sources */,
 				4ACBB85A2341FA0D002D7955 /* IBController30.m in Sources */,
 				4ACBB9132341FA0D002D7955 /* NSData+ImageContentType.m in Sources */,
@@ -3296,7 +3343,6 @@
 				4ACBB9402341FA0D002D7955 /* Target_AViewController.m in Sources */,
 				4A37DFC3236C68C1005CEF7B /* SonicJSContext.m in Sources */,
 				4ACBB8B32341FA0D002D7955 /* RACTargetQueueScheduler.m in Sources */,
-				54EAECB02D3FA2BF00D893D3 /* trampoline_armv7.S in Sources */,
 				4ACBB9102341FA0D002D7955 /* SDImageCache.m in Sources */,
 				4ACBB8DD2341FA0D002D7955 /* RACImmediateScheduler.m in Sources */,
 				4ACBB8EA2341FA0D002D7955 /* NSObject+RACPropertySubscribing.m in Sources */,
@@ -3381,7 +3427,6 @@
 				4ACBB9282341FA0D002D7955 /* IBView.m in Sources */,
 				54EAECB92D3FA2BF00D893D3 /* JPCFunction.m in Sources */,
 				4ACBB9182341FA0D002D7955 /* UIView+WebCacheOperation.m in Sources */,
-				54EAECB62D3FA2BF00D893D3 /* ffi_i386.c in Sources */,
 				4ACBB8B92341FA0D002D7955 /* RACChannel.m in Sources */,
 				4ACBB93A2341FA0D002D7955 /* IBCAGradientLayer.m in Sources */,
 				4ACBB8602341FA0D002D7955 /* IBController38.m in Sources */,
@@ -3389,8 +3434,6 @@
 				4ACBB8A22341FA0D002D7955 /* UIControl+RACSignalSupportPrivate.m in Sources */,
 				5440D30E2D54EB7700904EB1 /* IBGroup3Controller10.m in Sources */,
 				4ACBB87F2341FA0D002D7955 /* IBController10.m in Sources */,
-				54EAECB12D3FA2BF00D893D3 /* prep_cif.c in Sources */,
-				54EAECAD2D3FA2BF00D893D3 /* sysv_arm64.S in Sources */,
 				4ACBB9042341FA0D002D7955 /* SDWebImageFrame.m in Sources */,
 				4ACBB8892341FA0D002D7955 /* FMEncryptQueue.m in Sources */,
 				F3955AFF24179C17009EC505 /* MBMemoryProfiler.m in Sources */,
@@ -3405,7 +3448,6 @@
 				54B935212D27C4FD005D6A5E /* IBGroup3Controller6.m in Sources */,
 				4ACBB8A52341FA0D002D7955 /* UIDatePicker+RACSignalSupport.m in Sources */,
 				54B935182D27BDEF005D6A5E /* IBGroup3Controller3.m in Sources */,
-				54EAECB42D3FA2BF00D893D3 /* darwin_i386.S in Sources */,
 				4A64EF842369D14E00431CEA /* VVStack.m in Sources */,
 				4AF213452399F2E800EFB85D /* TPCallTrace.c in Sources */,
 				548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */,
@@ -3428,7 +3470,6 @@
 				4ACBB9072341FA0D002D7955 /* SDWebImageDownloader.m in Sources */,
 				4ACBB9372341FA0D002D7955 /* IBCAShapeLayer.m in Sources */,
 				541E82D32CC1374B00755059 /* libregexp.c in Sources */,
-				54EAECB72D3FA2BF00D893D3 /* ffi64_x86_64.c in Sources */,
 				4ACBB86E2341FA0D002D7955 /* IBController26.m in Sources */,
 				54EAECD72D3FA2BF00D893D3 /* unzip.c in Sources */,
 				4ACBB8F72341FA0D002D7955 /* AFHTTPRequestSerializer+OAuth2.m in Sources */,
@@ -3462,7 +3503,6 @@
 				4ACBB8C22341FA0D002D7955 /* RACReplaySubject.m in Sources */,
 				4ACBB9442341FA0D002D7955 /* IBCMediator+BViewController.m in Sources */,
 				4ACBB91B2341FA0D002D7955 /* UIButton+WebCache.m in Sources */,
-				54EAECAE2D3FA2BF00D893D3 /* ffi_armv7.c in Sources */,
 				4ACBB9482341FA0D002D7955 /* ViewController.m in Sources */,
 				4ACBB8672341FA0D002D7955 /* IBController18.m in Sources */,
 				4ACBB8DF2341FA0D002D7955 /* EXTRuntimeExtensions.m in Sources */,
@@ -3505,6 +3545,23 @@
 				4ACBB9262341FA0D002D7955 /* IBGroup2Controller4.m in Sources */,
 				54EAECC72D3FA2BF00D893D3 /* JPUIKit.m in Sources */,
 				4ACBB93C2341FA0D002D7955 /* IBCALayer.m in Sources */,
+				54FB65D62D81BDDF00299C90 /* debug.c in Sources */,
+				54FB65D72D81BDDF00299C90 /* prep_cif.c in Sources */,
+				54FB65D82D81BDDF00299C90 /* ffi_armv7.c in Sources */,
+				54FB65D92D81BDDF00299C90 /* ffiw64_x86_64.c in Sources */,
+				54FB65DA2D81BDDF00299C90 /* sysv_armv7.S in Sources */,
+				54FB65DB2D81BDDF00299C90 /* ffi_arm64.c in Sources */,
+				54FB65DC2D81BDDF00299C90 /* ffi_i386.c in Sources */,
+				54FB65DD2D81BDDF00299C90 /* unix64_x86_64.S in Sources */,
+				54FB65DE2D81BDDF00299C90 /* ffi64_x86_64.c in Sources */,
+				54FB65DF2D81BDDF00299C90 /* sysv_arm64.S in Sources */,
+				54FB65E02D81BDDF00299C90 /* java_raw_api.c in Sources */,
+				54FB65E12D81BDDF00299C90 /* types.c in Sources */,
+				54FB65E22D81BDDF00299C90 /* dlmalloc.c in Sources */,
+				54FB65E32D81BDDF00299C90 /* sysv_i386.S in Sources */,
+				54FB65E42D81BDDF00299C90 /* win64_x86_64.S in Sources */,
+				54FB65E52D81BDDF00299C90 /* raw_api.c in Sources */,
+				54FB65E62D81BDDF00299C90 /* closures.c in Sources */,
 				548741AD2CCA40A10088F44D /* MBEvent.m in Sources */,
 				4AF2132E2399207800EFB85D /* MBMmap.m in Sources */,
 				54EAECC32D3FA2BF00D893D3 /* JPCoreGraphics.m in Sources */,
@@ -3513,7 +3570,6 @@
 				4ACBB9212341FA0D002D7955 /* IBGroup2Controller5.m in Sources */,
 				4ACBB92F2341FA0D002D7955 /* Son+Cate.m in Sources */,
 				F3955286241608AA009EC505 /* IBGroup2Controller25.m in Sources */,
-				54EAECAF2D3FA2BF00D893D3 /* sysv_armv7.S in Sources */,
 				4ACBB8A72341FA0D002D7955 /* UITextField+RACSignalSupport.m in Sources */,
 				4ACBB8CD2341FA0D002D7955 /* RACPassthroughSubscriber.m in Sources */,
 				4ACBB8C92341FA0D002D7955 /* RACSignalProvider.d in Sources */,
@@ -3628,12 +3684,9 @@
 				4ACBB8922341FA0D002D7955 /* MASConstraint.m in Sources */,
 				4ACBB8BC2341FA0D002D7955 /* RACEmptySequence.m in Sources */,
 				4ACBB9062341FA0D002D7955 /* SDWebImageCodersManager.m in Sources */,
-				54EAECB32D3FA2BF00D893D3 /* types.c in Sources */,
 				4ACBB8EB2341FA0D002D7955 /* NSData+RACSupport.m in Sources */,
-				54EAECB22D3FA2BF00D893D3 /* raw_api.c in Sources */,
 				4AA858EB23B24D2D003D610F /* UIImage+HSB.m in Sources */,
 				548741B02CCA40B30088F44D /* MBState.m in Sources */,
-				54EAECAC2D3FA2BF00D893D3 /* ffi_arm64.c in Sources */,
 				4ACBB9032341FA0D002D7955 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4ACBB90B2341FA0D002D7955 /* SDWebImageCompat.m in Sources */,
 				4ACBB8B72341FA0D002D7955 /* RACGroupedSignal.m in Sources */,
@@ -3642,7 +3695,6 @@
 				4ACBB9362341FA0D002D7955 /* IBCATextLayer.m in Sources */,
 				4ACBB95A234D845F002D7955 /* IBGroup2Controller9.m in Sources */,
 				4ACBB8FD2341FA0D002D7955 /* AFNetworkReachabilityManager.m in Sources */,
-				54EAECB52D3FA2BF00D893D3 /* darwin64_x86_64.S in Sources */,
 				54B935272D27C50F005D6A5E /* IBGroup3Controller8.m in Sources */,
 				4ACBB93B2341FA0D002D7955 /* IBCAScrollLayer.m in Sources */,
 				4ACBB8D32341FA0D002D7955 /* RACDisposable.m in Sources */,
@@ -3948,12 +4000,18 @@
 					"\"${PODS_ROOT}/Headers/Public/lottie-ios\"",
 					"$(SRCROOT)/MBCoder/IBModule/flatbuffers",
 					"$(SRCROOT)/MBCoder/IBModule/hermes/include",
+					"$(SRCROOT)/MBCoder/IBModule/JSPatch/Extensions/JPCFunction/libffi/darwin_common/include",
+					"$(SRCROOT)/MBCoder/IBModule/JSPatch/Extensions/JPCFunction/libffi/darwin_ios/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MBCoder/other/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MBCoder/IBModule/JSPatch/Extensions/JPCFunction/libffi",
 				);
 				OTHER_CFLAGS = (
 					"$(inherited)",
@@ -4151,12 +4209,18 @@
 					"\"${PODS_ROOT}/Headers/Public/lottie-ios\"",
 					"$(SRCROOT)/MBCoder/IBModule/flatbuffers",
 					"$(SRCROOT)/MBCoder/IBModule/hermes/include",
+					"$(SRCROOT)/MBCoder/IBModule/JSPatch/Extensions/JPCFunction/libffi/darwin_common/include",
+					"$(SRCROOT)/MBCoder/IBModule/JSPatch/Extensions/JPCFunction/libffi/darwin_ios/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MBCoder/other/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MBCoder/IBModule/JSPatch/Extensions/JPCFunction/libffi",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",

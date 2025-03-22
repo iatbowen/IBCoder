@@ -328,6 +328,7 @@
 		5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */; };
 		5440D30E2D54EB7700904EB1 /* IBGroup3Controller10.m in Sources */ = {isa = PBXBuildFile; fileRef = 5440D30D2D54EB7700904EB1 /* IBGroup3Controller10.m */; };
 		5440D3112D54EB8500904EB1 /* IBGroup3Controller11.m in Sources */ = {isa = PBXBuildFile; fileRef = 5440D3102D54EB8500904EB1 /* IBGroup3Controller11.m */; };
+		547196222D89536100A95850 /* IBGroup3Controller13.m in Sources */ = {isa = PBXBuildFile; fileRef = 547196212D89536100A95850 /* IBGroup3Controller13.m */; };
 		5476433F2CFFFBB60009FB51 /* IBGroup2Controller33.m in Sources */ = {isa = PBXBuildFile; fileRef = 5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */; };
 		548741A62CCA3D8E0088F44D /* IBGroup2Controller31.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741A52CCA3D8E0088F44D /* IBGroup2Controller31.m */; };
 		548741AA2CCA40860088F44D /* MBStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741A92CCA40860088F44D /* MBStateMachine.m */; };
@@ -1164,6 +1165,8 @@
 		5440D30D2D54EB7700904EB1 /* IBGroup3Controller10.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller10.m; sourceTree = "<group>"; };
 		5440D30F2D54EB8500904EB1 /* IBGroup3Controller11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller11.h; sourceTree = "<group>"; };
 		5440D3102D54EB8500904EB1 /* IBGroup3Controller11.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller11.m; sourceTree = "<group>"; };
+		547196202D89536100A95850 /* IBGroup3Controller13.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller13.h; sourceTree = "<group>"; };
+		547196212D89536100A95850 /* IBGroup3Controller13.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller13.m; sourceTree = "<group>"; };
 		5476433D2CFFFBB60009FB51 /* IBGroup2Controller33.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller33.h; sourceTree = "<group>"; };
 		5476433E2CFFFBB60009FB51 /* IBGroup2Controller33.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller33.m; sourceTree = "<group>"; };
 		548741A42CCA3D8E0088F44D /* IBGroup2Controller31.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller31.h; sourceTree = "<group>"; };
@@ -2730,6 +2733,8 @@
 				5440D3102D54EB8500904EB1 /* IBGroup3Controller11.m */,
 				549D07232D71905E0096BED6 /* IBGroup3Controller12.h */,
 				549D07242D71905E0096BED6 /* IBGroup3Controller12.m */,
+				547196202D89536100A95850 /* IBGroup3Controller13.h */,
+				547196212D89536100A95850 /* IBGroup3Controller13.m */,
 			);
 			path = vc1;
 			sourceTree = "<group>";
@@ -3591,6 +3596,7 @@
 				54E43B9E2CE30D8B005BE78A /* idl_gen_text.cpp in Sources */,
 				4AF209252397BFE000EFB85D /* MBPresentationControllerTransition.m in Sources */,
 				4ACBB8622341FA0D002D7955 /* IBController35.m in Sources */,
+				547196222D89536100A95850 /* IBGroup3Controller13.m in Sources */,
 				4ACBB8B52341FA0D002D7955 /* RACStream.m in Sources */,
 				4ACBB90A2341FA0D002D7955 /* SDWebImageCoderHelper.m in Sources */,
 				4ACBB8A02341FA0D002D7955 /* MKAnnotationView+RACSignalSupport.m in Sources */,
@@ -4155,7 +4161,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -4289,7 +4295,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ibowen.coder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

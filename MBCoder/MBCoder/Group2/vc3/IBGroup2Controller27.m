@@ -80,7 +80,16 @@
     StatusBar 新增一种样式，默认的 default 由之前的黑色字体，变为根据系统模式自动选择展示 lightContent 或者 darkContent
  10. 使用 @available 导致旧版本 Xcode 编译出错
  
- 一、RVM
+ 
+ 一、 gem
+ gem update --system
+ gem update
+ gem install
+ gem uninstall [gemname] --version=[version]
+ gem list [--local]
+ gem clean
+ 
+ 二、RVM
  
  rvm get stable
  rvm list
@@ -88,12 +97,27 @@
  rvm install 2.7.0
  rvm use 2.7.0 --default
  rvm remove 2.4.1
+
+ 三、rbenv
  
- gem update --system
- gem update
- gem install
- gem uninstall [gemname] --version=[version]
- gem list [--local]
- gem clean
+ 1. 安装 rbenv
+ brew install rbenv
+ 
+ 安装后，将以下内容添加到 ~/.zshrc 或 ~/.bashrc：
+ eval "$(rbenv init -)"
+ 
+ 然后重新加载 Shell：
+ source ~/.zshrc  # 或 source ~/.bashrc
+ 
+ 
+ 命令                              作用
+ rbenv install --list         查看可安装的 Ruby 版本
+ rbenv install 3.3.0        安装 Ruby 3.3.0
+ rbenv versions             查看已安装的 Ruby 版本
+ rbenv global 3.3.0       设置全局 Ruby 版本
+ rbenv local 3.2.2         设置当前目录的 Ruby 版本
+ rbenv shell 3.1.4          临时切换 Ruby 版本
+ rbenv uninstall 3.1.4    卸载 Ruby 版本
+ rbenv rehash               更新 shims（安装新 gem 后可能需要）
  
  */

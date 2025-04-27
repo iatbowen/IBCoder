@@ -38,6 +38,9 @@
  
  1、项目初始化
  npx create-expo-app@latest
+ 
+ 经典结构
+ npx create-expo-app my-app -t expo-template-blank
 
  2、运行项目
  npx expo start

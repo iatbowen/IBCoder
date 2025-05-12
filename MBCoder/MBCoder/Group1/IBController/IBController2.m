@@ -238,10 +238,8 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
 
 
 /*
- 1、关于 release 之后仍然为 1 的疑问
- 参考1_3
- - 对象被其他地方持有
- - 对象被添加到自动释放池：如果你调用了一个对象的 autorelease 方法，那么这个对象会被添加到当前的自动释放池中，并且它的引用计数会增加 1
+ 1、autorelease
+ - autorelease 不会使对象的引用计数（retain count）加一。它只是把对象“标记”为稍后再 release 的对象，等到当前的 autorelease pool 被 drain（释放）时，才会调用一次 release
  
  2、什么对象自动加入到 autoreleasepool中
  当使用alloc/new/copy/mutableCopy开始的方法进行初始化时，会生成并持有对象(也就是不需要pool管理，系统会自动的帮他在合适位置release)
@@ -334,17 +332,6 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
     });
 }
 
-- (void)test1_3 {
-    NSMutableArray *array = @[].mutableCopy;
-    for (int i = 0; i < 1000000; i++) {
-            @autoreleasepool {
-                 NSNumber *num = [[NSNumber alloc] initWithInt:i]; // 避免TaggedPointer
-                 NSString *str = [NSString stringWithFormat:@"%d", i];
-                 NSString *all = [NSString stringWithFormat:@"%@%@", num, str];
-                [array addObject:all];
-            }
-        }
-}
 
 @end
 

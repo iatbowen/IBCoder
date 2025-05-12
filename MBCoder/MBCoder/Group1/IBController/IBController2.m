@@ -253,6 +253,30 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
  3）id的指针或对象的指针在没有显式指定时会被附加上__autorealeasing修饰符
     id *obj 等同于 id __autoreleasing *obj
     NSError **error 等同于 NSError *__autoreleasing *error
+ 4) atomic 的 getter 方法
+ 
+ id objc_getProperty(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic) {
+     if (offset == 0) {
+         return object_getClass(self);
+     }
+
+     // Retain release world
+     id *slot = (id*) ((char*)self + offset);
+     if (!atomic) return *slot;
+         
+     // Atomic retain release world
+     spinlock_t& slotlock = PropertyLocks[slot];
+     slotlock.lock();
+     id value = objc_retain(*slot);
+     slotlock.unlock();
+     
+     // for performance, we (safely) issue the autorelease OUTSIDE of the spinlock.
+     return objc_autoreleaseReturnValue(value);
+ }
+ - 把保存在 slot 里的值 retain 一下，保证线程安全期间不会被释放。
+ - 再送给调用者之前，做 autorelease。这相当于把“释放责任”转给 autorelease pool。
+    如果不 autorelease，调用者要写 release，调用方式就别扭：foo = [obj prop]; [foo release];不优雅且易错。
+    如果 autorelease，使用就像 foo = [obj prop];，生命周期“自动”管理。
  
  3、子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？
  在子线程你创建了 Pool 的话，产生的 Autorelease 对象就会交给 pool 去管理。

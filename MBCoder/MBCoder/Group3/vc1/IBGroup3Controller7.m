@@ -48,6 +48,14 @@
  3、预构建原生代码
  npx expo prebuild
  
+ 4、配置 TypeScript 环境
+ - 安装 TypeScript 及类型声明包
+ npm install --save-dev typescript @types/react @types/react-native
+
+ - 自动生成 TypeScript 配置
+ npx tsc --init
+
+ 
  二、Lynx
  1、项目初始化
  https://github.com/lynx-family/lynx/tree/develop/explorer/darwin/ios

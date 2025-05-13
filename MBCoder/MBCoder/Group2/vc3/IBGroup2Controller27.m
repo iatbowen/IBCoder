@@ -65,23 +65,8 @@
 @end
 
 /**
- 一、暗黑适配
- 1. KVC访问私有属性
-    textFiled的占位文字
- 2. 模态弹窗ViewController 默认样式改变
-    vc.modalPresentationStyle = UIModalPresentationFullScreen;
- 3. 黑暗模式的适配
- 4. LaunchImage即将废弃（https://www.jianshu.com/p/ef5f877b2412）
- 5. 新增一直使用蓝牙的权限申请
- 6. Sign With Apple
- 7. 推送Device Token适配
- 8. 废弃UIWebview APIs
- 9. StatusBar新增样式
-    StatusBar 新增一种样式，默认的 default 由之前的黑色字体，变为根据系统模式自动选择展示 lightContent 或者 darkContent
- 10. 使用 @available 导致旧版本 Xcode 编译出错
  
- 
- 一、 gem
+ 一、 gem 和 bundler
  gem update --system
  gem update
  gem install
@@ -89,7 +74,26 @@
  gem list [--local]
  gem clean
  
- 二、RVM
+ 命令                                                               作用说明
+ bundle install                                                   根据 Gemfile 安装所有依赖，生成/更新 Gemfile.lock
+ bundle update                                                 更新所有（或指定的）gem 到允许的最新版，并更新 Gemfile.lock
+ bundle update <gem>                                     只更新指定 gem 及其依赖
+ bundle add <gem>                                          添加指定 gem 到 Gemfile 并安装
+ bundle remove <gem>                                    从 Gemfile 中移除指定 gem 并卸载
+ bundle exec <命令>                                        用当前 bundle 环境运行命令（如 rails, rspec, rake 等）
+ bundle list                                                        显示已安装的所有 gem 及其版本
+ bundle show <gem>                                        显示指定 gem 的安装路径
+ bundle outdated                                              列出所有可升级的 gem 及最新版本
+ bundle info <gem>                                           显示指定 gem 的详细信息
+ bundle check                                                   检查所需 gem 是否已全部安装，未安装则提示
+ bundle clean [--force]                                    清理未在 Gemfile.lock 中的 gem
+ bundle config                                                   配置 Bundler 的各种设置，例如安装路径
+ bundle config set --local <key> <value>     设置本地（项目）配置项
+ 
+ gem 管理“单个”gem 包
+ Bundle（Bundler）可以自动管理和安装 Ruby 项目需要的所有 gem，确保每个人、每台机器上的环境都一样。Bundler（bundle）内部其实调用的是 gem 命令。
+ 
+ 二、RVM 和 ruby
  
  rvm get stable
  rvm list
@@ -98,7 +102,7 @@
  rvm use 2.7.0 --default
  rvm remove 2.4.1
 
- 三、rbenv
+ 三、rbenv 和 ruby（推荐）
  
  1. 安装 rbenv
  brew install rbenv
@@ -109,7 +113,6 @@
  然后重新加载 Shell：
  source ~/.zshrc  # 或 source ~/.bashrc
  
- 
  命令                              作用
  rbenv install --list         查看可安装的 Ruby 版本
  rbenv install 3.3.0        安装 Ruby 3.3.0
@@ -119,5 +122,18 @@
  rbenv shell 3.1.4          临时切换 Ruby 版本
  rbenv uninstall 3.1.4    卸载 Ruby 版本
  rbenv rehash               更新 shims（安装新 gem 后可能需要）
+ 
+ 四、nvm 和 node
+ 
+ nvm install 18.16.0          # 安装 18.16.0 版本
+ nvm use 18.16.0              # 切换到 18.16.0
+ nvm alias default 18.16.0    # 设置 18.16.0 为默认版本
+ nvm uninstall 14.17.0        # 卸载 14.17.0 版本
+ nvm ls                       # 查看所有已安装的 Node 版本
+ nvm ls-remote                # 查看所有可用“远程”版本
+ nvm use node                 # 切换到最新版本
+ nvm install --lts            # 最新 LTS
+ nvm use --lts                # 切换到最新 LTS
+
  
  */

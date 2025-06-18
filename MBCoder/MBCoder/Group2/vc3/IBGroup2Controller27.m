@@ -66,7 +66,29 @@
 
 /**
  
- 一、 gem 和 bundler
+ 一、Homebrew
+ 1. 基础命令
+ 命令                                      作用
+ brew -v 或 brew --version    查看 Homebrew 版本
+ brew help                             查看帮助信息
+ brew update                         更新 Homebrew 自身和库信息
+ brew upgrade                      升级所有已安装的软件
+ brew upgrade <包名>         升级指定的软件包
+ brew doctor                         检查 Homebrew 环境
+ brew cleanup                      清理无用的版本和缓存
+ 
+ 2. 软件包操作
+ 命令    作用
+ brew search <关键字>       搜索软件包
+ brew info <包名>               查看包的信息
+ brew install <包名>            安装指定软件包
+ brew uninstall <包名>        卸载指定软件包
+ brew list                             查看已安装的所有软件包
+ brew list <包名>                查看指定包的安装文件
+ brew --prefix <包名>         查看包安装路径
+ 
+ 
+ 二、 gem 和 bundler
  gem update --system
  gem update
  gem install
@@ -74,7 +96,7 @@
  gem list [--local]
  gem clean
  
- 命令                                                               作用说明
+ 命令                                                                 作用说明
  bundle install                                                   根据 Gemfile 安装所有依赖，生成/更新 Gemfile.lock
  bundle update                                                 更新所有（或指定的）gem 到允许的最新版，并更新 Gemfile.lock
  bundle update <gem>                                     只更新指定 gem 及其依赖
@@ -93,7 +115,7 @@
  gem 管理“单个”gem 包
  Bundle（Bundler）可以自动管理和安装 Ruby 项目需要的所有 gem，确保每个人、每台机器上的环境都一样。Bundler（bundle）内部其实调用的是 gem 命令。
  
- 二、RVM 和 ruby
+ 三、RVM 和 ruby
  
  rvm get stable
  rvm list
@@ -102,7 +124,7 @@
  rvm use 2.7.0 --default
  rvm remove 2.4.1
 
- 三、rbenv 和 ruby（推荐）
+ 四、rbenv 和 ruby（推荐）
  
  1. 安装 rbenv
  brew install rbenv
@@ -123,7 +145,7 @@
  rbenv uninstall 3.1.4    卸载 Ruby 版本
  rbenv rehash               更新 shims（安装新 gem 后可能需要）
  
- 四、nvm 和 node
+ 五、nvm 和 node
  
  nvm install 18.16.0          # 安装 18.16.0 版本
  nvm use 18.16.0              # 切换到 18.16.0

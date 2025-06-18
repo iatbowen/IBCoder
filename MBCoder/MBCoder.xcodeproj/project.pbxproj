@@ -391,6 +391,7 @@
 		54EAECDB2D3FA2BF00D893D3 /* packer.php in Resources */ = {isa = PBXBuildFile; fileRef = 54EAECA42D3FA2BF00D893D3 /* packer.php */; };
 		54EAECDC2D3FA2BF00D893D3 /* JPLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EAECA72D3FA2BF00D893D3 /* JPLoader.m */; };
 		54EAECDE2D3FA2ED00D893D3 /* demo.js in Resources */ = {isa = PBXBuildFile; fileRef = 54EAECDD2D3FA2ED00D893D3 /* demo.js */; };
+		54EAF8992E02D8BC00D10678 /* 从0到1上手 RN 开发.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 54EAF8982E02D8BC00D10678 /* 从0到1上手 RN 开发.pdf */; };
 		54EB63B62D1547BC00C4E2F2 /* IBGroup3Controller1.m in Sources */ = {isa = PBXBuildFile; fileRef = 54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */; };
 		54FB65D62D81BDDF00299C90 /* debug.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65AD2D81BDDF00299C90 /* debug.c */; };
 		54FB65D72D81BDDF00299C90 /* prep_cif.c in Sources */ = {isa = PBXBuildFile; fileRef = 54FB65B02D81BDDF00299C90 /* prep_cif.c */; };
@@ -1311,6 +1312,7 @@
 		54EAECA62D3FA2BF00D893D3 /* JPLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPLoader.h; sourceTree = "<group>"; };
 		54EAECA72D3FA2BF00D893D3 /* JPLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPLoader.m; sourceTree = "<group>"; };
 		54EAECDD2D3FA2ED00D893D3 /* demo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = demo.js; sourceTree = "<group>"; };
+		54EAF8982E02D8BC00D10678 /* 从0到1上手 RN 开发.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "从0到1上手 RN 开发.pdf"; sourceTree = "<group>"; };
 		54EB63B42D1547BC00C4E2F2 /* IBGroup3Controller1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller1.h; sourceTree = "<group>"; };
 		54EB63B52D1547BC00C4E2F2 /* IBGroup3Controller1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller1.m; sourceTree = "<group>"; };
 		54FB65A62D81BDDF00299C90 /* ffi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
@@ -2362,6 +2364,7 @@
 				4ACBB84E2341FA0D002D7955 /* Main.storyboard */,
 				4ACBB8532341FA0D002D7955 /* ViewController.h */,
 				4ACBB84B2341FA0D002D7955 /* ViewController.m */,
+				54EAF8982E02D8BC00D10678 /* 从0到1上手 RN 开发.pdf */,
 				54EAECDD2D3FA2ED00D893D3 /* demo.js */,
 				54B935122D27BD40005D6A5E /* arm64-ios.meson */,
 				54B935132D27BD40005D6A5E /* x86_64-ios.meson */,
@@ -3223,6 +3226,7 @@
 				54B935142D27BD40005D6A5E /* arm64-ios.meson in Resources */,
 				4ACBB8762341FA0D002D7955 /* class_metaclass.png in Resources */,
 				54B935152D27BD40005D6A5E /* x86_64-ios.meson in Resources */,
+				54EAF8992E02D8BC00D10678 /* 从0到1上手 RN 开发.pdf in Resources */,
 				4AB0C9B8234F5912002356B7 /* LottieLogo.json in Resources */,
 				54EAECDE2D3FA2ED00D893D3 /* demo.js in Resources */,
 				54EAECDB2D3FA2BF00D893D3 /* packer.php in Resources */,

@@ -55,6 +55,7 @@
  - 自动生成 TypeScript 配置
  npx tsc --init
 
+ 5、学习 <<从0到1上手 RN 开发.pdf>>
  
  二、Lynx
  1、项目初始化

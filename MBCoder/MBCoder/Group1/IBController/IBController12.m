@@ -182,7 +182,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self registerObserver];
+//    [self registerObserver];
 }
 
 - (void)registerObserver
@@ -227,13 +227,82 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 //    [self test1];
 //    [self test2];
-    [self test3];
+//    [self test3];
 //    [self test4];
 //    [self test5];
 //    [self test6];
+//    [self test7];
+    [self test8];
 }
 
+- (void)test8 {
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        @autoreleasepool {
+            NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+            
+            // 添加 port 保持 runloop 运行
+            NSPort *port = [NSPort port];
+            [runLoop addPort:port forMode:NSDefaultRunLoopMode];
+            
+            // 创建自定义事件源
+            CFRunLoopSourceContext context = {0};
+            context.perform = customEventCallback;
+            CFRunLoopSourceRef source = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &context);
+            CFRunLoopAddSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
+            CFRunLoopWakeUp(CFRunLoopGetCurrent());
+            
+            // 手动触发
+            CFRunLoopSourceSignal(source);
+            CFRunLoopWakeUp(CFRunLoopGetCurrent());
 
+            // 启动 runloop
+            [runLoop run];
+            
+            CFRunLoopRemoveSource(CFRunLoopGetCurrent(), source, kCFRunLoopDefaultMode);
+            CFRelease(source);
+            NSLog(@"source Runloop ended");
+        }
+    });
+}
+
+void customEventCallback(void *info) {
+    NSLog(@"Custom event fired");
+}
+
+- (void)test7 {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        @autoreleasepool {
+            NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
+            NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
+                                                     target:self
+                                                           selector:@selector(timerFired:)
+                                                   userInfo:nil
+                                                    repeats:YES];
+            [runLoop addTimer:timer forMode:NSDefaultRunLoopMode];
+            [runLoop run];
+            NSLog(@"timer Runloop ended");
+        }
+    });
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        @autoreleasepool {
+            NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+            [NSTimer scheduledTimerWithTimeInterval:1.0
+                                             target:self
+                                           selector:@selector(timerFired:)
+                                           userInfo:nil
+                                            repeats:YES];
+            [runloop run];
+            NSLog(@"scheduledTimer Runloop ended");
+        }
+    });
+}
+
+- (void)timerFired:(NSTimer *)stopTimer {
+    NSLog(@"timerFired");
+    [stopTimer invalidate];
+}
 
 - (void)test6 {
     [self performSelector:@selector(runTest) onThread:[self thread] withObject:nil waitUntilDone:NO];

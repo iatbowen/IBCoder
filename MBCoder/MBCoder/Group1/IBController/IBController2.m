@@ -10,18 +10,21 @@
 
 /**
  @property、@synthesize 、@dynamic的应用
+ 
  @property:
  是 Objective-C 中用于声明属性的关键字，它的本质是编译器指令，用于自动生成属性的存取方法（getter 和 setter）的声明和实现
  本质 @property = ivar + getter + setter；（成员变量 + getter方法 + setter方法）
- @synthesize:
- 这个关键字用于告诉编译器生成 getter 和 setter 方法的实现。在早期的 Objective-C 版本中，你需要显式地使用 @synthesize 来生成这些方法。但在现代的 Objective-C 中，如果你没有提供 getter 和 setter 方法的实现，编译器会自动为你生成，所以通常不需要显式地使用 @synthesize
- 应用场景：
- - 修改生成的成员变量名字。
- - 手动添加了 setter/getter 方法。
- - 实现了带有 property 属性的 protocol。
- @dynamic:
- 禁止自动合成getter, setter：告诉编译器属性的 setter 与 getter 方法由用户自己实现，不自动生成。
  
+ @synthesize:
+ 显式告诉编译器合成 getter/setter，并可以指定底层实例变量名
+ 应用场景：
+ - 修改生成的成员变量名字
+ - 需要同时实现 getter 和 setter
+ - 实现协议的属性。
+ 
+ @dynamic:
+ 告诉编译器不要自动生成 getter 和 setter 方法，这些方法会在运行时动态提供。
+
  */
 
 @implementation Personal
@@ -211,12 +214,63 @@
 }
 
 /**
- 1.@autoreleasepool是自动释放池，让我们更自由的管理内存
- 2.当我们手动创建了一个@autoreleasepool，里面创建了很多临时变量，当@autoreleasepool结束时，里面的内存就会回收
- 3.最重要的使用场景，应该是有大量中间临时变量产生时，避免内存使用峰值过高，及时释放内存的场景。
- 4.临时生成大量对象,一定要将自动释放池放在for循环里面，要释放在外面，就会因为大量对象得不到及时释放，而造成内存紧张，最后程序意外退出
- 5.ARC时代，系统自动管理自己的autoreleasepool，runloop就是iOS中的消息循环机制，当一个runloop结束时系统才会一次性清理掉被
-   autorelease处理过的对象
+ 1. 什么是 autoreleasepool？它的作用是什么？
+ autoreleasepool 是一个自动释放池，用于管理延迟释放的对象
+ 当对象调用 autorelease 方法时，会被添加到当前的 autoreleasepool 中
+ 当 pool 被 drain（销毁）时，会向池中所有对象发送 release 消息
+ 作用：延迟对象释放时机，降低内存峰值，防止内存暴增
+ 
+ 释放时机：
+ 场景 1：显式 @autoreleasepool 代码块结束
+ 场景 2：RunLoop 的循环周期（最重要！）
+ 
+ 2. autoreleasepool 的底层数据结构是什么？
+ 标准答案：
+ 底层是一个双向链表（AutoreleasePoolPage）
+ 每个 Page 大小为 4096 字节
+ 采用栈式结构管理（先进后出）
+ 使用哨兵对象（POOL_BOUNDARY）标记边界
+ 底层结构图：
+ +-------------------------------------+
+ |   AutoreleasePoolPage (4096 bytes)  |
+ +-------------------------------------+
+ |  parent (prev page pointer)         |
+ |  child (next page pointer)            |
+ |  thread (owner thread)                |
+ |  next (next available slot)            |
+ +-------------------------------------+
+ |  POOL_BOUNDARY (sentinel)     | <-- push() inserts this
+ |  autorelease object 1                   |
+ |  autorelease object 2                   |
+ |  ...                                                |
+ |  next ->                                        |
+ +-------------------------------------+
+ 
+ 3. 什么时候会创建 autoreleasepool？
+ 标准答案：
+ 主线程的 RunLoop：每次循环开始时创建，结束时销毁
+ 子线程：默认没有，需要手动创建
+ @autoreleasepool 代码块：显式创建
+ 
+ 4. autoreleasepool 和 RunLoop 的关系？（⭐⭐⭐ 高频）
+ 标准答案：
+ 主线程的 RunLoop 在每次循环开始时会 push 一个 autoreleasepool
+ 在循环即将休眠前 pop 这个 pool
+ 在循环结束后再次 pop（两次 pop 机制）
+ ┌───────────────────────────┐
+ │ RunLoop 启动                           │
+ ├───────────────────────────┤
+ │ 1. push autoreleasepool            │ ← Entry
+ │ 2. 处理 Timer/Source/Observer │
+ │ 3. 即将休眠前：pop + push       │ ← BeforeWaiting
+ │ 4. 唤醒后继续处理事件               │
+ │ 5. 即将退出：pop                       │ ← Exit
+ └───────────────────────────┘
+ 
+ 5. 什么情况下必须使用 @autoreleasepool？（⭐⭐⭐ 必考）
+ 场景 1：循环中创建大量临时对象
+ 场景 2：操作大文件或批量数据
+ 场景 3：在非主线程使用 UIKit/Foundation 的某些 API
  */
 
 extern void _objc_autoreleasePoolPrint(void);
@@ -278,18 +332,21 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
     如果不 autorelease，调用者要写 release，调用方式就别扭：foo = [obj prop]; [foo release];不优雅且易错。
     如果 autorelease，使用就像 foo = [obj prop];，生命周期“自动”管理。
  
- 3、子线程默认不会开启 Runloop，那出现 Autorelease 对象如何处理？不手动处理会内存泄漏吗？
- 在子线程你创建了 Pool 的话，产生的 Autorelease 对象就会交给 pool 去管理。
- 如果你没有创建 Pool ，但是产生了 Autorelease 对象，就会调用 autoreleaseNoPage 方法。
- 在这个方法中，会自动帮你创建一个 hotpage（hotPage 可以理解为当前正在使用的 AutoreleasePoolPage）
- 线程退出的时候释放
- 4、ARC与@autoreleasepool的关系
- 不管是在MRC还是ARC环境下，对象retain count为0的时候，对象都会被释放，
- 为什么我们还要使用@autoreleasepool呢，不是多此一举吗？
- 正常情况下，一个被标记为“autorelease”的对象，在retain count为0的时候，要等到当前runloop结束的时候，才会被释放。
- 而在当前runloop结束之前，可能会出现无数个等待被释放而没有被释放的对象，这时候内存占用率就会比较高。
- 恰当的使用@autoreleasepool可以及时释放这些对象，降低内存的使用率。
-
+ 3、为什么子线程需要使用 @autoreleasepool
+ - 缺乏自动管理机制：子线程默认不会开启 runloop，无法自动管理 autoreleasepool
+ - 内存管理问题：autorelease 对象会使用 autoreleaseNoPage 方法创建 hotpage（当前正在使用的 AutoreleasePoolPage）线程退出的时候释放，导致内存峰值过高
+ 
+ 4、ARC 与 @autoreleasepool 的关系
+ 分工明确：
+ ARC：决定哪些对象需要 autorelease
+ @autoreleasepool：决定何时释放这些对象
+ 相互配合：
+ ARC 自动插入 autorelease 代码
+ @autoreleasepool 管理释放时机
+ 仍需优化：
+ ARC 下仍需要手动使用 @autoreleasepool 优化内存
+ 特别是在循环、子线程、大量数据处理场景
+ 
  */
 
 - (void)test1_2

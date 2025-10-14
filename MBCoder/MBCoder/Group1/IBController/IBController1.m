@@ -171,20 +171,20 @@
 }
 
 /**
- 这种方法比较简单，代码量较少，但是操作layer肯定会影响性能，会造成离屏渲染
+ 方案一：cornerRadius + masksToBounds
+ 离屏渲染场景：
+  - 非矩形透明内容(非纯色、透明、渐变)
+  - 复合图层（多层叠加 + 圆角）
  */
-- (void)test0 {
+- (void)test1 {
     self.imgView.layer.cornerRadius = self.imgView.width/2;
     self.imgView.layer.masksToBounds = YES;
 }
 
 /**
- Core Graphics 和 UIBezierPath
- GPU损耗低内存占用大，频繁调用CPU损耗大
- 占用内存：图层宽*图层高*4字节
+ 方案二：Core Graphics 和 UIBezierPath
  */
-- (void)test1 {
-
+- (void)test2 {
     //开启上下文
     UIGraphicsBeginImageContextWithOptions(self.imgView.bounds.size, NO, 1.0);
     //设置裁剪区域
@@ -199,11 +199,14 @@
 }
 
 /**
- CAShapeLayer和UIBezierPath
- 这种方法的优点：可以操作任何一个角（左上，右上，左下，右下），并且消耗内存较小，渲染较快。
- 缺点：操作了layer，对性能有影响，mask有离屏渲染。掉帧更严重
+ 方案三：CAShapeLayer 和 UIBezierPath
+ 性能分析
+ 离屏渲染: 会触发离屏渲染
+ CPU占用: 中等（路径计算）
+ 内存占用: 较高（mask层额外内存）
+ 灵活性: 高，可以实现各种复杂形状
  */
-- (void)test2 {
+- (void)test3 {
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.imgView.bounds byRoundingCorners:UIRectCornerAllCorners cornerRadii:self.imgView.bounds.size];
     
     CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
@@ -212,62 +215,14 @@
     //设置图形样子
     maskLayer.path = maskPath.CGPath;
     self.imgView.layer.mask = maskLayer;
-    
-    // 可以尝试
-//    [self.imgView.layer addSublayer:maskLayer];
 }
 
-- (void)test3 {
-    
-    UIImage *image = [UIImage imageNamed:@"icon"];
-    UIGraphicsBeginImageContext(image.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 2);
-    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
-    CGContextAddEllipseInRect(context, rect);
-    CGContextClip(context);
-    
-    [image drawInRect:rect]; // GPU损耗低内存占用大
-    CGContextAddEllipseInRect(context, rect);
-    CGContextStrokePath(context);
-    UIImage *newimg = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    self.imgView.image = newimg;
-}
-
+/**
+ 方案四：预渲染圆角
+ 通常在图片加载后，借助 CoreGraphics 绘制圆角、再赋值到 UIImageView
+ */
 - (void)test4 {
-//    第四种方法：使用带圆形的透明图片.
     
-}
-
-// 仿照SD，目前性能最高
-- (void)test5 {
-//    UIImage *image = [UIImage imageNamed:@"icon"];
-//
-//    CGFloat wh = MIN(MAX(image.size.width, image.size.height), 160);
-//    CGSize imageSize = CGSizeMake(wh, wh);
-//    CGFloat radius = wh / 2;
-//    CGContextRef context = CGBitmapContextCreate( NULL,
-//                                                  wh,
-//                                                  wh,
-//                                                  8,
-//                                                  4 * wh,
-//                                                  CGColorSpaceCreateDeviceRGB(),
-//                                                  kCGImageAlphaPremultipliedFirst );
-//    // 绘制圆角
-//    CGContextBeginPath(context);
-//    addRoundedRectToPath(context, CGRectMake(0, 0, wh, wh), radius, radius);
-//    CGContextClosePath(context);
-//    CGContextClip(context);
-//    CGContextDrawImage(context, CGRectMake(0, 0, wh, wh), image.CGImage);
-//    CGImageRef imageMasked = CGBitmapContextCreateImage(context);
-//    image = [UIImage imageWithCGImage:imageMasked];
-//    CGContextRelease(context);
-//    CGImageRelease(imageMasked);
-//
-//    self.imgView.image = image;
-
 }
 
 

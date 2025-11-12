@@ -29,26 +29,46 @@
 /*
  https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVOImplementation.html
  一、KVO底层实现原理
- 1、KVO是基于runtime机制实现的
- 2、当某个类的属性对象第一次被观察时，系统就会在运行期动态地创建该类的一个派生类，在这个派生类中重写基类中任何被观察属性的setter 方法。派生类在被重写的setter方法内实现真正的通知机制
- 3、如果原类为Person，那么生成的派生类名为NSKVONotifying_Person（不过现在打印不显示派生类了）
- 4、每个类对象中都有一个isa指针指向当前类，当一个类对象的第一次被观察，那么系统会偷偷将isa指针指向动态生成的派生类，从而在给被监控属性赋值时执行的是派生类的setter方法
- 5、键值观察通知依赖于NSObject 的两个方法: willChangeValueForKey: 和 didChangevlueForKey:；在一个被观察属性发生改变之前， willChangeValueForKey:一定会被调用，这就 会记录旧的值。而当改变发生后，didChangeValueForKey:会被调用，继而 observeValueForKey:ofObject:change:context: 也会被调用。
- 6、补充：KVO的这套实现机制中苹果还偷偷重写了class方法，让我们误认为还是使用的当前类，从而达到隐藏生成的派生类
+ 1. KVO的底层流程
+ 注册观察者
+ 当你调用 addObserver:forKeyPath:options:context: 方法时，KVO 会做以下工作：
+ - 判断被观察对象的类（实际类型）。
+ - 动态创建一个名为 NSKVONotifying_原有类名 的子类（以被观察对象的类名为前缀）。
+ - 将被观察对象的 isa 指针，指向这个新建的子类。
+ - 子类重写对应被观察属性的 setter 方法，实现属性变化时自动通知观察者。
+ 
+ 属性改变
+ 当被观察属性的 setter 方法被调用（如 person.name = @"Tom"），实际调用的是 NSKVONotifying_Person 子类中的 setter：
+ - 子类 setter 先调用 willChangeValueForKey:。
+ - 然后执行父类的 setter 方法，真正修改值。
+ - 最后调用 didChangeValueForKey:，触发通知观察者。
+ 
+ 通知过程
+ 属性值改变后，通过调用注册的观察者回调 observeValueForKeyPath:ofObject:change:context:。
+
+ 移除观察者
+ 调用 removeObserver:forKeyPath: 后，KVO 会恢复对象的 isa 指针指向原来的类，销毁动态子类。
+
+ 2. 主要技术点解释
+ isa-swizzle
+ - KVO 把对象的类型从原类“切换”为 KVO 动态生成的子类，实现方法拦截。这是 Objective-C Runtime 的强大功能。
+
+ 动态子类
+ - 这个子类只针对当前被观察对象，具有自己的 setter、dealloc 等实现，因此能区分哪些对象在接受观察。
+
+ setter方法重写
+ - 其核心就是对 setter 方法拦截，调用通知流程。
+ 
+ 补充：KVO的这套实现机制中苹果还偷偷重写了class方法，让我们误认为还是使用的当前类，从而达到隐藏生成的派生类
  
  二、KVC底层实现原理
- KVC运用了一个isa-swizzling技术. isa-swizzling就是类型混合指针机制, 将2个对象的isa指针互相调换, 就是俗称的黑魔法.
- KVC主要通过isa-swizzling, 来实现其内部查找定位的. 默认的实现方法由NSOject提供isa指针, 如其名称所指,(就是is a kind of的意思), 指向分发表对象的类. 该分发表实际上包含了指向实现类中的方法的指针, 和其它数据。
+ KVC（Key-Value Coding，键值编码）是 iOS/Objective-C 一种可以通过字符串 key 来访问对象属性的机制，其底层实现原理涉及方法查找、成员变量查找、Runtime 动态访问等
  
- 具体主要分为三大步
- 当一个对象调用setValue方法时，方法内部会做以下操作：
- 首先会查找setKey:或者_setKey: (按顺序查找)，如果有直接调用
- 如果没有，先查看accessInstanceVariablesDirectly方法
- 如果可以访问会按照 _key、_isKey、key、iskey的顺序查找成员变量，找到直接复制
- 未找到报错NSUnkonwKeyException错误
- 
- KVC:设置不了类型为指针类型的成员变量
- 
+ 分为三大步
+ - 查找 setter 方法：优先查找是否存在 set<Key>:，其次查找 _set<Key>:，最后查找 setIs<Key>:
+ - 查找成员变量：判断 accessInstanceVariablesDirectly，返回 YES 时才允许成员变量的直接访问_key，_isKey，key，isKey
+ - 未找到则触发异常：- (void)setValue:(id)value forUndefinedKey:(NSString *)key，你重载该方法，可以自行处理
+
  注意:禁止使用KVC修改只读属性，使用如下方法
  + (BOOL)accessInstanceVariablesDirectly {
     return NO;

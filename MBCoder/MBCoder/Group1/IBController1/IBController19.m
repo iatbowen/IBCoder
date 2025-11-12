@@ -79,9 +79,7 @@
  3.1 消息转发重定向、备援接收者，调用-forwardingTargetForSelector:方法，返回值不为nil，调用objc_msgSend(返回值, SEL)
  3.2 完整的消息转发，调用-methodSignatureForSelector:方法，如果得到方法签名，调用-forwardInvocation:进行消息转发
      NSInvocation封装了方法调用，包括：方法调用者，方法名，方法参数
-            
-  
- 
+        
  4、抛出异常，调用doesNotRecognizeSelector:方法
  
  */

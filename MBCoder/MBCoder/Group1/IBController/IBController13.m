@@ -14,8 +14,7 @@
  isa：是一个Class类型的指针。
  当调用对象方法时，通过instance的isa找到class，然后调用对象方法的实现；如果没有，通过superclass找到父类的class，最后找到对象方法的实现进行调用
  当调用类方法时，通过class的isa找到meta-class，然后调用类方法的实现；如果没有，通过superclass找到父类的meta-class，最后找到类方法的实现进行调用
- 注意的是:元类(meteClass)也是类，它也是对象。元类也有isa指针,它的isa指针最终指向的是一个根元类(root meteClass)。根元类的isa指针指向本身，
-        这样形成了一个封闭的内循环。
+ 注意的是:元类(meteClass)也是类，它也是对象。元类也有isa指针,它的isa指针最终指向的是一个根元类(root meteClass)。根元类的isa指针指向本身，这样形成了一个封闭的内循环。
 
  1、isa、superclass总结
  1）instance的isa指向class
@@ -54,17 +53,13 @@
     weak_table_t weak_table; weak_table 弱引用哈希表
  }
  
- 二、Runtime实现的机制是什么，怎么用，一般用于干嘛？
- 1) 使用时需要导入的头文件 <objc/message.h> <objc/runtime.h>
- 2) Runtime 运行时机制，它是一套C语言库。
- 3) 实际上我们编写的所有OC代码，最终都是转成了runtime库的东西。
-    比如：
-    类转成了 Runtime 库里面的结构体等数据类型，
-    方法转成了 Runtime 库里面的C语言函数，
-    平时调方法都是转成了 objc_msgSend 函数（所以说OC有个消息发送机制）
-    // OC是动态语言，每个方法在运行时会被动态转为消息发送，即：objc_msgSend(receiver, selector)。
-    // [stu show];  在objc动态编译时，会被转意为：objc_msgSend(stu, @selector(show));
- 4) 因此，可以说 Runtime 是OC的底层实现，是OC的幕后执行者。
+ 二、Runtime实现的机制是什么
+ Objective-C的Runtime是一个运行时库（libobjc），它在程序运行时对类、对象、方法等信息进行管理。核心思想就是把很多编译期间确定的行为，转移到运行期间实现。比如：
+ - 方法调用是通过查找方法列表，再通过IMP指针跳转。
+ - 对象的声明、属性等在运行时都以数据结构存在。
+ - 在运行时得到类的属性、方法、协议等信息。
+ - 可以动态添加类、方法、属性、交换方法实现等。
+ 本质： Runtime是一套C语言的API，是Objective-C面向对象特性的基础。
  
  三、什么是 Method Swizzle（黑魔法），什么情况下会使用？
  1) 在没有一个类的实现源码的情况下，想改变其中一个方法的实现，除了继承它重写、和借助类别重名方法暴力抢先之外，还有更加灵活的方法 Method Swizzle。
@@ -142,8 +137,7 @@
  6.当我们发送一个消息给一个类时，这条消息会在类的Meta Class对象的方法列表里查找
 
  八、使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
-    无论在MRC下还是ARC下均不需要，被关联的对象在生命周期内要比对象本身释放的晚很多，它们会在被 NSObject -dealloc调用
- 的object_dispose()方法中释放
+    无论在MRC下还是ARC下均不需要，被关联的对象在生命周期内要比对象本身释放的晚很多，它们会在被 NSObject -dealloc调用的object_dispose()方法中释放
  
  九、简述下Objective-C中调用方法的过程（runtime）
  Objective-C是动态语言，每个方法在运行时会被动态转为消息发送，即：objc_msgSend(receiver, selector)，整个过程介绍如下：
@@ -431,21 +425,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    // 类与元类
-    NSLog(@"%d", [NSObject isKindOfClass:[NSObject class]]); // 1
-    NSLog(@"%d", [NSObject isMemberOfClass:[NSObject class]]); // 0
-    NSLog(@"%d", [IBController13 isKindOfClass:[NSObject class]]); // 1
-    NSLog(@"%d", [IBController13 isKindOfClass:[IBController13 class]]); // 0
-    NSLog(@"%d", [IBController13 isMemberOfClass:[IBController13 class]]); // 0
-    NSLog(@"%d", [IBController13 isKindOfClass:object_getClass([IBController13 class])]); // 1
-    NSLog(@"%d", [IBController13 isMemberOfClass:object_getClass([IBController13 class])]); // 1
-    
-    NSLog(@"++++++++++++++++++++++++++++++++++++++++++++++");
-    // 实例与对象
-    NSLog(@"%d", [[[NSObject alloc] init] isKindOfClass:[NSObject class]]); // 1
-    NSLog(@"%d", [[[NSObject alloc] init]  isMemberOfClass:[NSObject class]]); // 1
-
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -463,6 +442,64 @@
 //    [self createClass];
     [self forbidKVC];
     
+}
+
+/*
+ // isMemberOfClass 和 isKindOfClass 类方法和实例方法实现逻辑
+ 
+ - isMemberOfClass: 仅检查直接类关系，不遍历继承链
+ - isKindOfClass: 检查类关系并遍历完整继承链
+ - 实例方法: 操作对象的类（isa指向的类）
+ - 类方法: 操作类的元类（类对象的isa指向的元类）
+
+ // 获取对象的类
+ Class object_getClass(id obj) {
+     if (obj) {
+         return obj->isa;
+     }
+     return Nil;
+ }
+ 
+ // 实例方法 - 判断对象是否是指定类的直接实例
+ - (BOOL)isMemberOfClass:(Class)cls {
+     return [self class] == cls;
+ }
+
+ // 类方法 - 判断类对象是否是指定元类的直接实例
+ + (BOOL)isMemberOfClass:(Class)cls {
+     return object_getClass((id)self) == cls;
+ }
+
+ // 实例方法 - 判断对象是否是指定类或其子类的实例
+ - (BOOL)isKindOfClass:(Class)cls {
+     for (Class tcls = [self class]; tcls; tcls = tcls->superclass) {
+         if (tcls == cls) return YES;
+     }
+     return NO;
+ }
+
+ // 类方法 - 判断类对象是否是指定元类或其父元类的实例
+ + (BOOL)isKindOfClass:(Class)cls {
+     for (Class tcls = object_getClass((id)self); tcls; tcls = tcls->superclass) {
+         if (tcls == cls) return YES;
+     }
+     return NO;
+ }
+ */
+- (void)kindClass {
+    // 类与元类
+    NSLog(@"%d", [NSObject isKindOfClass:[NSObject class]]); // 1
+    NSLog(@"%d", [NSObject isMemberOfClass:[NSObject class]]); // 0
+    NSLog(@"%d", [IBController13 isKindOfClass:[NSObject class]]); // 1
+    NSLog(@"%d", [IBController13 isKindOfClass:[IBController13 class]]); // 0
+    NSLog(@"%d", [IBController13 isMemberOfClass:[IBController13 class]]); // 0
+    NSLog(@"%d", [IBController13 isKindOfClass:object_getClass([IBController13 class])]); // 1
+    NSLog(@"%d", [IBController13 isMemberOfClass:object_getClass([IBController13 class])]); // 1
+    
+    NSLog(@"++++++++++++++++++++++++++++++++++++++++++++++");
+    // 实例与对象
+    NSLog(@"%d", [[[NSObject alloc] init] isKindOfClass:[NSObject class]]); // 1
+    NSLog(@"%d", [[[NSObject alloc] init]  isMemberOfClass:[NSObject class]]); // 1
 }
 
 - (void)forbidKVC {

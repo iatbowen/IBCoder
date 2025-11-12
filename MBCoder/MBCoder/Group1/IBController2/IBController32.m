@@ -64,13 +64,12 @@
  };
 
  4）解释：
- a、通过传递进来的对象在AssociationsManager中的AssociationsHashMap中取出ObjectAssociationMap，
- 然后key取出这个关联表的关联属性ObjcAssociation，ObjcAssociation包含了关联策略和关联值。
- b、一个实例对象就对应一个ObjectAssociationMap，而ObjectAssociationMap中存储着多个此实例对象的关联对象的key以及
- ObjcAssociation，为ObjcAssociation中存储着关联对象的value和policy策略。
- c、关联对象并不是存储在被关联对象本身内存中，而是存储在全局的统一的一个AssociationsManager中，如果设置关联对象为nil，
- 就相当于是移除关联对象。
- d、AssociationsManager的构造函数和析构函数有自旋锁，控制存储值线程安全
+ - 映射关系
+ AssociationsHashMap：  对象地址 (id) → 关联数据存储结构 (ObjectAssociationMap)
+ ObjectAssociationMap：  key (void*，常用 selector 或静态地址) → value（包装了对象、policy 等）
+
+ - 关联对象存储在全局的统一的一个AssociationsManager中，如果设置关联对象为nil，就相当于是移除关联对象。
+ - AssociationsManager的构造函数和析构函数有自旋锁，控制存储值线程安全
  
  5）关联对象无弱引用的原因:
  关联对象的实现并没有包含跟踪对象生命周期并自动清空弱引用的机制

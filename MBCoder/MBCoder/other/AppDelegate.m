@@ -38,7 +38,7 @@ extern CFAbsoluteTime StartTime;
     
     ViewController2 *vc2 = ViewController2.new;
     UINavigationController *nav2 = [self addControler:vc2];
-    [vc2 setTabBarItem:[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemSearch tag:0]];
+    [vc2 setTabBarItem:[[UITabBarItem alloc] initWithTabBarSystemItem:UITabBarSystemItemBookmarks tag:0]];
     [tabbarVC addChildViewController:nav2];
     
     ViewController3 *vc3 = ViewController3.new;

@@ -28,9 +28,9 @@
  2）CFRunloopRef其实就是 __CFRunloop这个结构体指针（按照OC的思路我们可以将RunLoop看成一个对象），这个对象的运行才是我们通常意义上说的运行循环，核心方法是 __CFRunloopRun()
  
  二、Runloop作用
- 1、保持程序的持续运行（如：程序一启动就会开启一个主线程（主线程中的runloop是自动创建并运行），runloop保证主线程不会被销毁，也就保证了程序的持续运行）。
+ 1、保持程序的持续运行。
  2、处理App中的各种事件（如：touches 触摸事件、NSTimer 定时器事件、Selector事件（选择器performSelector））。
- 3、节省CPU资源，提高程序性能（有事情就做事情，没事情就休息 (其资源释放)）。
+ 3、节省CPU资源，提高程序性能（让线程能在有事件时及时响应，没有事件时自动休眠，实现高效的事件/消息驱动机制）。
  4、负责渲染屏幕上的所有UI。
  
  三、Runloop和线程关系
@@ -50,7 +50,8 @@
  
  1）一条线程对应一个Runloop，Runloop总是运行在某种特定的CFRunLoopModeRef（运行模式）下。
  2）每个Runloop都可以包含若干个Mode ，每个Mode又包含Source源/Timer事件/Observer观察者。
- 3）在Runloop中有多个运行模式，每次调用 RunLoop 的主函数【__CFRunloopRun()】时，只能指定其中一个Mode（称CurrentMode）运行，如果需要切换Mode，只能是退出CurrentMode切换到指定的Mode进入，目的以保证不同Mode下的Source/Timer/Observer互不影响。
+ 3）在Runloop中有多个运行模式，每次调用 RunLoop 的主函数【__CFRunloopRun()】时，
+   只能指定其中一个Mode（称CurrentMode）运行，如果需要切换Mode，只能是退出CurrentMode切换到指定的Mode进入，目的以保证不同Mode下的Source/Timer/Observer互不影响。
  4）Runloop有效，mode里面至少要有一个timer(定时器事件)或者是source(源)；
  
  五、Runloop 相关类（Mode）
@@ -79,13 +80,13 @@
  八、Runloop相关类（Observer）
  相对来说CFRunloopObserverRef理解起来并不复杂，它相当于消息循环中的一个监听器，随时通知外部当前RunLoop的运行状态（它包含一个函数指针_callout_将当前状态及时告诉观察者）。具体的Observer状态如下：
  typedef CF_OPTIONS(CFOptionFlags, CFRunLoopActivity) {
- kCFRunLoopEntry = (1UL << 0),           //即将进入Runloop
- kCFRunLoopBeforeTimers = (1UL << 1),    //即将处理NSTimer
- kCFRunLoopBeforeSources = (1UL << 2),   //即将处理Sources
- kCFRunLoopBeforeWaiting = (1UL << 5),   //即将进入休眠
- kCFRunLoopAfterWaiting = (1UL << 6),    //从休眠装填中唤醒
- kCFRunLoopExit = (1UL << 7),            //退出runloop
- kCFRunLoopAllActivities = 0x0FFFFFFFU   //所有状态改变
+    kCFRunLoopEntry = (1UL << 0),           //即将进入Runloop
+    kCFRunLoopBeforeTimers = (1UL << 1),    //即将处理NSTimer
+    kCFRunLoopBeforeSources = (1UL << 2),   //即将处理Sources
+    kCFRunLoopBeforeWaiting = (1UL << 5),   //即将进入休眠
+    kCFRunLoopAfterWaiting = (1UL << 6),    //从休眠装填中唤醒
+    kCFRunLoopExit = (1UL << 7),            //退出runloop
+    kCFRunLoopAllActivities = 0x0FFFFFFFU   //所有状态改变
  };
  
  九、RunLoop与 Autorelease Pool 有关系么？

@@ -143,19 +143,20 @@ static int count = 0;
 {
     __block char key = 0;  ///&(结构体->forwarding->key)在栈区
     
+    // 第一次设置关联对象：&key 是栈上的地址
     objc_setAssociatedObject(self, &key, @1, OBJC_ASSOCIATION_ASSIGN);
     
+    // Block 创建和复制：Block 被赋值给变量，触发从栈到堆的复制。__block key 也被复制到堆上
     void (^block)(void) = ^{
         objc_setAssociatedObject(self, &key, @2, OBJC_ASSOCIATION_ASSIGN);
     };  /// 在堆区
     
+    // 重点：现在存在两个不同的地址！
     id m = objc_getAssociatedObject(self, &key);  ///&(结构体->forwarding->key)
     block();
     id n = objc_getAssociatedObject(self, &key);
     NSLog(@"m= %@ n=%@", m,n);
 }
-
-
 
 /// obj = nil，执行之前：都有值。
 ///        执行之后：strongobj=nil（block体内弱引用），&strongobj有值（strongobj作为指针，地址是存在的，只不过指向的内存空间不存在了）。
@@ -284,7 +285,6 @@ static int count = 0;
      __NSGlobalBlock__ 全局区(静态区)的
      没访问外部变量
      ARC和MRC一样
-     
      */
     void (^block1)(void) = ^{
         NSLog(@"block1");

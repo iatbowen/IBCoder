@@ -307,7 +307,7 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
  3）id的指针或对象的指针在没有显式指定时会被附加上__autorealeasing修饰符
     id *obj 等同于 id __autoreleasing *obj
     NSError **error 等同于 NSError *__autoreleasing *error
- 4) atomic 的 getter 方法
+ 4) atomic getter 方法
  
  id objc_getProperty(id self, SEL _cmd, ptrdiff_t offset, BOOL atomic) {
      if (offset == 0) {
@@ -327,10 +327,65 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
      // for performance, we (safely) issue the autorelease OUTSIDE of the spinlock.
      return objc_autoreleaseReturnValue(value);
  }
- - 把保存在 slot 里的值 retain 一下，保证线程安全期间不会被释放。
- - 再送给调用者之前，做 autorelease。这相当于把“释放责任”转给 autorelease pool。
-    如果不 autorelease，调用者要写 release，调用方式就别扭：foo = [obj prop]; [foo release];不优雅且易错。
-    如果 autorelease，使用就像 foo = [obj prop];，生命周期“自动”管理。
+ - 加锁：防止在读取过程中，其他线程修改属性值，确保对象在读取过程中不会被释放
+ - retain：防止其他线程在我们返回对象后立即释放它。
+ - objc_autoreleaseReturnValue 和 objc_retainAutoreleasedReturnValue：是一对关键的内存管理优化函数，它们协同工作以减少不必要的引用计数操作，提升性能
+ 
+ callee中的代码（例如一个getter）：
+ id obj = ...; // 创建一个对象，引用计数为1（假设是新创建的对象）
+ return objc_autoreleaseReturnValue(obj);
+ 
+ caller中的代码：
+ id result = callee(); // 调用callee
+ // 编译器在将返回值赋值给强引用变量时插入：
+ result = objc_retainAutoreleasedReturnValue(result);
+ 
+ 具体步骤：
+
+ 在callee中，objc_autoreleaseReturnValue(obj)被调用：
+ 它检测到 caller 的代码中紧接着会有对 objc_retainAutoreleasedReturnValue 的调用，因此，它不将obj放入autorelease池，而是将obj存储在TLS中，并设置一个标志。
+ 
+ 在caller中，objc_retainAutoreleasedReturnValue(result)被调用：
+ 它检查TLS，发现callee返回的那个对象被设置标志。于是，它从TLS中取出这个对象，并清除TLS的状态，然后直接返回这个对象（而不做任何retain操作）。
+ 
+ 这样，整个过程就避免了两次额外的操作：
+ 避免了一次autorelease（在callee中）。
+ 避免了一次retain（在caller中）。
+ 
+ setter 方法
+ 
+ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL atomic, BOOL shouldCopy) {
+     bool copy = (shouldCopy && shouldCopy != MUTABLE_COPY);
+     bool mutableCopy = (shouldCopy == MUTABLE_COPY);
+     
+     // 特殊处理：当 offset 为 0 时表示设置 isa 指针
+     if (offset == 0) {
+         object_setClass(self, newValue);
+         return;
+     }
+
+     id oldValue;
+     id *slot = (id*) ((char*)self + offset);
+     
+     if (copy) {
+         newValue = [newValue copyWithZone:nil];
+     } else if (mutableCopy) {
+         newValue = [newValue mutableCopyWithZone:nil];
+     } else if (!atomic) {
+         // 非原子性直接赋值
+         oldValue = *slot;
+         *slot = newValue;
+     } else {
+         // 原子性操作使用锁
+         spinlock_t& slotlock = PropertyLocks[slot];
+         slotlock.lock();
+         oldValue = *slot;
+         *slot = newValue;
+         slotlock.unlock();
+     }
+
+     objc_release(oldValue);
+ }
  
  3、为什么子线程需要使用 @autoreleasepool
  - 缺乏自动管理机制：子线程默认不会开启 runloop，无法自动管理 autoreleasepool

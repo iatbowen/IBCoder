@@ -111,24 +111,8 @@
  7.动态添加类
  8.解档与归档
  9.字典转模型
- 
- 六、runtime如何实现weak属性？
- weak策略表明该属性定义了一种“非拥有关系” (nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。
- 此特质同assign类似;然而在属性所指的对象遭到摧毁时，属性值也会清空(nil out)
- 那么runtime如何实现weak变量的自动置nil？
- runtime对注册的类，会进行布局，会将 weak 对象放入一个hash表中。用weak指向的对象内存地址作为key，当此对象的引用计数为0的时候会调
- 用对象的dealloc方法，假设weak指向的对象内存地址是a，那么就会以a为key，在这个weak hash表中搜索，找到所有以a为key的weak对象，
- 从而设置为 nil。具体细节：http://www.cocoachina.com/ios/20170328/18962.html
- 
- (静态变量)SideTablesMap->(对象地址找到)SideTable->weak_table_t（以对象地址hash算法找索引，取出weak_entry_t）
- ->weak_entry_t（定长数组，动态数组（以弱指针的地址hash算法找索引，取出weak_referrer_t））-> weak_referrer_t
- 
- weak属性需要在dealloc中置nil么
- 在ARC环境无论是强指针还是弱指针都无需在dealloc设置为nil，ARC会自动帮我们处理
- 即便是编译器不帮我们做这些，weak也不需要在dealloc中置nil
- 在属性所指的对象遭到摧毁时，属性值也会清空！
- 
- 七、runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
+  
+ 六、runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
  1.每一个类对象中都一个对象方法列表（对象方法缓存）
  2.类方法列表是存放在类对象中isa指针指向的元类对象中（类方法缓存）
  3.方法列表中每个方法结构体中记录着方法的名称,方法实现,以及参数类型，其实selector本质就是方法名称,通过这个方法名称就可以在方法列表中找到
@@ -136,10 +120,10 @@
  5.当我们发送一个消息给一个NSObject对象时，这条消息会在对象的类对象方法列表里查找
  6.当我们发送一个消息给一个类时，这条消息会在类的Meta Class对象的方法列表里查找
 
- 八、使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
+ 七、使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
     无论在MRC下还是ARC下均不需要，被关联的对象在生命周期内要比对象本身释放的晚很多，它们会在被 NSObject -dealloc调用的object_dispose()方法中释放
  
- 九、简述下Objective-C中调用方法的过程（runtime）
+ 八、简述下Objective-C中调用方法的过程（runtime）
  Objective-C是动态语言，每个方法在运行时会被动态转为消息发送，即：objc_msgSend(receiver, selector)，整个过程介绍如下：
  
  a.实例对象发送消息（对象调用实例方法时，是在对应类对象及其继承链上找方法。）
@@ -159,7 +143,7 @@
  注意点，一般使用频繁的方法用静态方法，用的少的方法用动态的。静态的速度快，占内存。动态的速度相对慢些，
  但调用完后，立即释放类，可以节省内存，可以根据自己的需要选择是用动态方法还是静态方法。
  
- 十、类结构
+ 九、类结构
  1、
  struct objc_object {
  private:
@@ -238,7 +222,7 @@
     MethodCacheIMP _imp; // 函数的内存地址
  };
  
- 十一、super
+ 十、super
 `1、结构
  struct objc_super {
      id receiver;

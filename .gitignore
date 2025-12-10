@@ -19,6 +19,7 @@ project.xcworkspace
 
 xcuserdata/
 xcshareddata/
+.vscode/
 
 ## Other
 *.moved-aside

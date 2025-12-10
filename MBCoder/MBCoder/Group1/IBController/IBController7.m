@@ -25,54 +25,103 @@
 }
 
 - (void)test {
+    NSLog(@"===== 开始测试 WebAssembly =====");
+    
     // 1. 加载 Wasm 文件
     NSURL *wasmURL = [[NSBundle mainBundle] URLForResource:@"math" withExtension:@"wasm"];
+    NSLog(@"1. Wasm 文件路径: %@", wasmURL);
+    
+    if (!wasmURL) {
+        NSLog(@"❌ 错误: 找不到 math.wasm 文件");
+        return;
+    }
+    
     NSData *wasmData = [NSData dataWithContentsOfURL:wasmURL];
+    NSLog(@"2. Wasm 文件大小: %lu bytes", (unsigned long)wasmData.length);
+    
+    if (!wasmData || wasmData.length == 0) {
+        NSLog(@"❌ 错误: Wasm 文件数据为空");
+        return;
+    }
     
     // 2. 创建 JSContext
     JSContext *context = [[JSContext alloc] init];
     context.exceptionHandler = ^(JSContext *ctx, JSValue *exception) {
-        NSLog(@"JS 异常: %@", exception);
+        NSLog(@"❌ JS 异常: %@", exception);
     };
+    context[@"console"][@"log"] = ^(JSValue *message) {
+        NSLog(@"   [JS] %@", message);
+    };
+    NSLog(@"3. JSContext 创建成功");
     
-    // 3.判断环境是否支持
-    if ([context evaluateScript:@"typeof WebAssembly === 'undefined'"].toBool) {
-        NSLog(@"WebAssembly is not supported in this JavaScriptCore context.");
+    // 3. 判断环境是否支持 WebAssembly
+    JSValue *wasmCheck = [context evaluateScript:@"typeof WebAssembly"];
+    NSLog(@"4. WebAssembly 类型检查: %@", [wasmCheck toString]);
+    
+    if ([wasmCheck.toString isEqualToString:@"undefined"]) {
+        NSLog(@"❌ 错误: JavaScriptCore 不支持 WebAssembly");
         return;
     }
     
+    NSLog(@"✅ WebAssembly 支持检查通过");
+    
     // 4. 将 NSData 转换为 JavaScript 的 Uint8Array
     JSValue *uint8Array = [self convertNSDataToUint8Array:wasmData inContext:context];
+    NSLog(@"5. Uint8Array 创建成功，长度: %@", uint8Array[@"length"]);
     
     // 5. 定义 JavaScript 代码（使用 Promise 异步加载 Wasm）
     NSString *jsCode =
-    @"async function loadWasm(bytes) {"
-    "       const module = await WebAssembly.compile(bytes);"
-    "       const instance = await WebAssembly.instantiate(module);"
+    @"function loadWasm(bytes) {"
+    "   console.log('开始编译 WASM...');"
+    "   try {"
+    "       var module = new WebAssembly.Module(bytes);"
+    "       console.log('模块编译成功');"
+    "       var instance = new WebAssembly.Instance(module);"
+    "       console.log('实例化成功');"
     "       return instance;"
+    "   } catch (e) {"
+    "       console.log('错误: ' + e.message);"
+    "       throw e;"
+    "   }"
     "}";
+    
     [context evaluateScript:jsCode];
+    NSLog(@"6. JavaScript 函数定义完成");
     
-    // 6. 调用 JavaScript 函数加载 Wasm
+    // 6. 调用 JavaScript 函数加载 Wasm（同步方式）
     JSValue *loadWasmFunc = context[@"loadWasm"];
-    JSValue *promise = [loadWasmFunc callWithArguments:@[uint8Array]];
+    NSLog(@"7. 调用 loadWasm 函数...");
     
-    // 7. 处理 Promise 的 then/catch
-    [promise invokeMethod:@"then" withArguments:@[^(JSValue *instance) {
-        // 成功：调用 add 函数
-        JSValue *addFunc = instance[@"exports"][@"add"];
-        if (!addFunc.isUndefined) {
-            JSValue *result = [addFunc callWithArguments:@[@(5), @(3)]];
-            NSLog(@"5 + 3 = %d", [result toInt32]); // 输出 8
-        } else {
-            NSLog(@"错误: add 函数未导出");
-        }
-    }]];
+    JSValue *instance = [loadWasmFunc callWithArguments:@[uint8Array]];
     
-    [promise invokeMethod:@"catch" withArguments:@[^(JSValue *error) {
-        NSLog(@"wasm 加载失败: %@", error);
-    }]];
+    if (!instance || instance.isUndefined) {
+        NSLog(@"❌ 错误: WASM 实例化失败");
+        return;
+    }
     
+    NSLog(@"8. WASM 实例化成功");
+    
+    // 7. 调用 add 函数
+    JSValue *exports = instance[@"exports"];
+    NSLog(@"9. 导出对象: %p", exports);
+    
+    JSValue *addFunc = exports[@"add"];
+    if (!addFunc || addFunc.isUndefined) {
+        NSLog(@"❌ 错误: add 函数未导出");
+        // 列出所有导出的函数
+        JSValue *keys = [context evaluateScript:@"(function(obj) { return Object.keys(obj); })"];
+        JSValue *exportNames = [keys callWithArguments:@[exports]];
+        NSLog(@"   可用的导出: %@", exportNames);
+        return;
+    }
+    
+    NSLog(@"10. 找到 add 函数，准备调用...");
+    
+    // 调用 add(5, 3)
+    JSValue *result = [addFunc callWithArguments:@[@(5), @(3)]];
+    NSLog(@"✅ 结果: 5 + 3 = %d", [result toInt32]);
+    
+    NSLog(@"===== WebAssembly 测试完成 =====");
 }
 
 

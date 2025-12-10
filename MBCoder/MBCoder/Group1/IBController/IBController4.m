@@ -155,7 +155,7 @@ static int count = 0;
     id m = objc_getAssociatedObject(self, &key);  ///&(结构体->forwarding->key)
     block();
     id n = objc_getAssociatedObject(self, &key);
-    NSLog(@"m= %@ n=%@", m,n);
+    NSLog(@"m= %@ n=%@", m,n); // null 和 2
 }
 
 /// obj = nil，执行之前：都有值。

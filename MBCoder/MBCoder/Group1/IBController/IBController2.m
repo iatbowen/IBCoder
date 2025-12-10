@@ -24,6 +24,9 @@
  
  @dynamic:
  告诉编译器不要自动生成 getter 和 setter 方法，这些方法会在运行时动态提供。
+ 应用场景：
+ - Core Data 数据模型
+ - readonly 属性，不需要实例变量，getter方法实际返回是其他属性
 
  */
 
@@ -68,12 +71,12 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
 //    [self test1];
 //    [self test1_1];
-    [self test1_2];
+//    [self test1_2];
 //    [self test2];
 //    NSLog(@"%@",self.person.delegate);
 //    [self test3];
 //    [self test3_1];
-//    [self test3_2];
+    [self test3_2];
 }
 
 /**
@@ -137,7 +140,7 @@
         Personal *p = [[[Personal alloc] init] autorelease];
         p.name = @"猫";
     }
-    NSLog(@"@autoreleasepool之后");
+    NSLog(@"@autoreleasepool之前");
     {
         // 这个Personal什么时候调用release，是由RunLoop来控制的
         // 它可能是在某次RunLoop循环中，RunLoop休眠之前调用了release
@@ -186,7 +189,7 @@
  
  原子性：
  nonatomic：非原子的，系统生成的getter/setter方法没有加锁 线程不安全,但更快。
- atomiac 原子的，默认属性，只是保证了getter和setter存取方法的线程安全,并不能保证整个对象是线程安全的，比如操作数组，增加或移除
+ atomic 原子的，默认属性，只是保证了getter和setter存取方法的线程安全,并不能保证整个对象是线程安全的，比如操作数组，增加或移除
  读写权限：
  readwrite 读写，默认默认属性关键字，属性同时具有 set 和 get 方法。
  readonly 只读，属性只具有 get 方法

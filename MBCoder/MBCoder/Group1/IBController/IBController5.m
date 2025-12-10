@@ -61,6 +61,8 @@
  常量指针：在常量指针中，指针指向的内容是不可改变的，指针看起来好像指向了一个常量。
  
  
+ // 通知名正确写法（指针常量）
+ NSString * const MyNotificationName = @"MyNotificationName";
  
  */
 - (void)test4

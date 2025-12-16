@@ -7,67 +7,34 @@
 //
 
 #import "IBGroup2Controller28.h"
-#import <pthread.h>
-#import "MBProducerConsumerQueue.h"
-#import <Foundation/Foundation.h>
 
-@interface IBReaderWriter : NSObject
-
-- (void)startReading;
-- (void)endReading;
-- (void)startWriting;
-- (void)endWriting;
-
-@end
-
-@implementation IBReaderWriter {
-    dispatch_semaphore_t _readLock;
-    dispatch_semaphore_t _writeLock;
-    NSInteger _readCount;
-}
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _readLock = dispatch_semaphore_create(1);
-        _writeLock = dispatch_semaphore_create(1);
-        _readCount = 0;
-    }
-    return self;
-}
-
-- (void)startReading {
-    dispatch_semaphore_wait(_readLock, DISPATCH_TIME_FOREVER);
-    _readCount++;
-    if (_readCount == 1) {
-        dispatch_semaphore_wait(_writeLock, DISPATCH_TIME_FOREVER);
-    }
-    dispatch_semaphore_signal(_readLock);
-}
-
-- (void)endReading {
-    dispatch_semaphore_wait(_readLock, DISPATCH_TIME_FOREVER);
-    _readCount--;
-    if (_readCount == 0) {
-        dispatch_semaphore_signal(_writeLock);
-    }
-    dispatch_semaphore_signal(_readLock);
-}
-
-- (void)startWriting {
-    dispatch_semaphore_wait(_writeLock, DISPATCH_TIME_FOREVER);
-}
-
-- (void)endWriting {
-    dispatch_semaphore_signal(_writeLock);
-}
-
-@end
-
+/*
+ libcurl 和 cronet
+ 
+ libcurl:用于在各种平台上进行网络数据传输。它支持众多协议（HTTP、HTTPS、FTP、SMTP 等）。
+ 特点：
+ - C 语言编写，C/C++/Python/Java/等语言都有绑定。
+ - 易于集成，稳定可靠，接口简单。
+ - 支持多种协议，尤其在自动化运维、硬件嵌入设备、桌面服务等场景中非常普遍。
+ - 跨平台，支持 Windows、Linux、macOS、iOS、Android 等。
+ - 支持同步和异步请求，但异步需要自己管理线程或事件循环。
+ 
+ Cronet 库是Chrome使用的移动端网络库。支持 HTTP、HTTP/2 以及 QUIC 协议。支持 Android 和 iOS 平台。
+ 特点：
+ - 基于 Chromium 的网络栈，采用最新的网络协议和技术，如 HTTP/2、QUIC。
+ - 高性能，低延迟；专为移动设备优化。
+ - 异步 API 设计，更适合高并发场景。
+ - 自动管理连接池、缓存等优化逻辑。
+ - 只支持 HTTP/HTTPS，协议支持不如 libcurl 广泛。
+ - 现在主要在 Android、iOS 及部分桌面应用中使用，特别是 Chrome 浏览器和一些 Google 官方应用
+ 
+ 移动端(Android、iOS)接入Cronet实践
+ https://itimetraveler.github.io/2019/07/25/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8E%A5%E5%85%A5Cronet%E7%BD%91%E7%BB%9C%E5%BA%93%E5%AE%9E%E8%B7%B5/
+ 
+ 
+ */
 
 @interface IBGroup2Controller28 ()
-
-@property (nonatomic, strong) MBProducerConsumerQueue *queue;
 
 @end
 
@@ -76,147 +43,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.queue = [[MBProducerConsumerQueue alloc] init];
-    UIButton *btn = [[UIButton alloc] init];
-    btn.frame = CGRectMake(0, 100, 50, 44);
-    btn.backgroundColor = [UIColor orangeColor];
-    [btn addTarget:self action:@selector(producer) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
-    
-    UIButton *btn1 = [[UIButton alloc] init];
-    btn1.frame = CGRectMake(0, 200, 50, 44);
-    btn1.backgroundColor = [UIColor orangeColor];
-    [btn1 addTarget:self action:@selector(consumer) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn1];
-}
-
-- (void)producer {
-    [self.queue scheduleProducerQueue];
-    [self.queue scheduleConsumerQueue];
-}
-
-- (void)consumer {
-    [self.queue scheduleConsumerQueue];
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    [self testReaderWriter];
-}
-
-- (void)testReaderWriter {
-    // 示例使用
-    IBReaderWriter *readerWriter = [[IBReaderWriter alloc] init];
-
-    // 读者线程
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [readerWriter startReading];
-        // 读取共享资源
-        NSLog(@"Reading...");
-        [readerWriter endReading];
-    });
-
-    // 写者线程
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [readerWriter startWriting];
-        // 写入共享资源
-        NSLog(@"Writing...");
-        [readerWriter endWriting];
-    });
-}
-
-- (void)mutexLock{
-    //pthread_mutex
-    pthread_mutex_t mutex;
-    pthread_mutex_init(&mutex,NULL);
-    pthread_mutex_lock(&mutex);
-    pthread_mutex_unlock(&mutex);
-
-    //NSLock
-    NSLock *lock = [[NSLock alloc] init];
-    lock.name = @"lock";
-    [lock lock];
-    [lock unlock];
-    
-    //synchronized
-    @synchronized (self) {
-        
-    }
-    
-}
-
-- (void)RecursiveLock{
-    NSRecursiveLock *lock = [NSRecursiveLock alloc];
-    [lock lock];
-    [lock lock];
-    
-    [lock unlock];
-    [lock unlock];
 
 }
-
-- (void)conditionLock{
-    __block NSCondition *condition;
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        condition = [[NSCondition alloc] init];
-        [condition wait];
-        NSLog(@"finish----");
-    });
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [NSThread sleepForTimeInterval:5.0];
-        [condition signal];
-    });
-}
-
-- (void)semaphore{
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        NSLog(@"semaphoreFinish---");
-    });
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [NSThread sleepForTimeInterval:5.0];
-        dispatch_semaphore_signal(semaphore);
-    });
-}
-
-
-
-/*
- 
- 自旋锁
- NSSpinLock，有安全问题替代锁 os_unfair_lock，它的设计目标是提供一种低开销、高性能的锁机制，特别适合于那些锁持有时间非常短的场景
- 信号量
- dispatch_semaphore
- 互斥锁
- p_thread_mutex,NSLock,@synthronized
- 条件锁
- NSConditionLock
- 递归锁
- NSRecursiveLock
- 
- 自旋锁问题
- 如果一个低优先级的线程获得锁并访问共享资源，这时一个高优先级的线程也尝试获得这个锁，
- 它会处于 spin lock 的忙等状态从而占用大量 CPU。此时低优先级线程无法与高优先级线程争夺 CPU 时间，
- 从而导致任务迟迟完不成、无法释放 lock，这就是优先级反转
- 
- 自旋锁，互斥锁的选择
-
- 什么情况使用自旋锁比较划算？
- 预计线程等待锁的时间很短
- 加锁的代码（临界区）经常被调用，但竞争情况很少发生
- CPU资源不紧张
- 多核处理器
-
- 什么情况使用互斥锁比较划算？
- 预计线程等待锁的时间较长，线程处于休眠状态
- 单核处理器
- 临界区有IO操作
- 临界区代码复杂或者循环量大
- 临界区竞争非常激烈
- 
- */
 
 @end
 

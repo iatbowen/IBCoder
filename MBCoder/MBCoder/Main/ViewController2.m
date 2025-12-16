@@ -37,7 +37,7 @@
 }
 
 - (void)initialize {
-    self.tableArray = @[@"单例，进制转换，原码、反码、补码",  @"内存空间分布和结构体内存及SS1和SS2", @"OAuth2基本概念和运作流程",  @"libextobjc", @"图片解压缩、虚拟内存和内存占用", @"崩溃信息总结", @"手势", @"json解析小数丢失精度的问题", @"全局返回和滑动界面侧滑返回", @"Flexbox（YogaKit）", @"SVGA,Lottie,Spine", @"后台持续震动，语音播报", @"PromiseKit", @"行为驱动开发(BDD)-Kiwi", @"UITableView+FDTemplateLayoutCell",  @"VasSonic，SSR和SSG", @"基于面向协议MVP模式下的软件设计", @"git命令行介绍和工作流", @"设计模式六大原则", @"设计模式", @"cocoapods", @"UIPresentationController、Mac环境变量配置", @"mmap", @"系统优化处理、LLVM和优化编译", @"MLeaksFinder和FBMemoryProfiler", @"数据驱动（IGListKit）", @"gem和bundler、rbenv和ruby、nvm和node", @"iOS开发中的锁", @"YYKit", @"QuickJS和Hermes", @"有限状态机", @"Protobuf和Flatbuffers", @"泛型、协变和逆变", @"fishhook和Dobby", @"图片Avif"];
+    self.tableArray = @[@"单例，进制转换，原码、反码、补码",  @"内存空间分布和结构体内存及SS1和SS2", @"OAuth2基本概念和运作流程",  @"libextobjc", @"图片解压缩、虚拟内存和内存占用", @"崩溃信息总结", @"手势", @"json解析小数丢失精度的问题", @"全局返回和滑动界面侧滑返回", @"Flexbox（YogaKit）", @"SVGA,Lottie,Spine", @"后台持续震动，语音播报", @"PromiseKit", @"行为驱动开发(BDD)-Kiwi", @"UITableView+FDTemplateLayoutCell",  @"VasSonic，SSR和SSG", @"基于面向协议MVP模式下的软件设计", @"git命令行介绍和工作流", @"设计模式六大原则", @"设计模式", @"cocoapods", @"UIPresentationController、Mac环境变量配置", @"mmap", @"系统优化处理、LLVM和优化编译", @"MLeaksFinder和FBMemoryProfiler", @"数据驱动（IGListKit）", @"gem和bundler、rbenv和ruby、nvm和node", @"cronet和libcurl", @"YYKit", @"QuickJS和Hermes", @"有限状态机", @"Protobuf和Flatbuffers", @"泛型、协变和逆变", @"fishhook和Dobby", @"图片Avif"];
 }
 
 - (void)setupUI {

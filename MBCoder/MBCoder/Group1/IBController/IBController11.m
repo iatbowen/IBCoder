@@ -11,23 +11,31 @@
 
 /*
  一、响应者链（Responder Chain）是 iOS 中用于处理事件响应和事件传递的一种机制。由一系列的响应者对象组成的链表结构，这些对象都是继承自 UIResponder 类，用于确定事件的传递路径和响应者的顺序
- 事件传递顺序：子View -> UIView -> UIViewController -> UIWindow -> UIApplication -> AppDelegate
  
  二、事件分发（Event Delivery）
  
- - 事件的产生
- 当用户触摸屏幕，硬件会产生一个事件，系统（I/O Kit）捕获该事件，交给UIApplication处理。
-
- - 事件投递
- UIApplication会将事件分发到应用的主窗口UIWindow，调用其sendEvent:方法。
-
- - 事件分发到View层
- UIWindow会根据事件类型和触摸点的位置，找到事件对应的视图（hit-testing）。此过程如下：
- hitTest:withEvent:：从窗口（UIWindow）出发，递归检测每个子视图，找到能接收事件的那个View，然后调用该view的touchesBegan:withEvent:等触摸处理方法。
+ 完整的事件处理流程
  
- - View的响应
- 事件会按照视图层级传递：先进入响应者链（Responder Chain），如果View未处理，可以传递到父View、ViewController、UIWindow、UIApplication等。
-  
+ 1. 硬件事件产生
+     ↓
+ 2. IOKit捕获事件
+     ↓
+ 3. WindowServer/SpringBoard处理，分发到前台App
+     ↓
+ 4. App进程通过RunLoop接收事件
+     ↓
+ 5. UIApplication.sendEvent:被调用
+     ↓
+ 6. UIWindow.sendEvent:被调用
+     ↓
+ 7. Hit-Testing（查找First Responder，UIViewController -> UIView -> 子View）
+     ↓
+ 8. First Responder触发响应方法（touchesBegan:withEvent:等）
+     ↓
+ 9. 事件未被处理，沿Responder Chain向上传递，直到被处理
+     ↓
+ 10. UIApplication作为兜底处理者
+
  三、hitTest:withEvent:方法的处理流程如下
  
  - 判断自身能否响应事件
@@ -89,8 +97,7 @@
     // 2.判断下点在不在当前控件上
     if ([self pointInside:point withEvent:event] == NO) return  nil; // 点不在当前控件
     
-    // 3.从后往前遍历自己的子控件
-    // 1 0
+    // 3.从后往前遍历自己的子控件，UIKit 中后添加的视图显示在前面，应优先检测
     int count = (int)self.subviews.count;
     for (int i = count - 1; i >= 0; i--) {
         // 获取子控件
@@ -99,10 +106,10 @@
         // 把当前坐标系上的点转换成子控件上的点
         CGPoint childP =  [self convertPoint:point toView:childView];
         
-        UIView *fitView = [childView hitTest:childP withEvent:event];
+        UIView *hitView = [childView hitTest:childP withEvent:event];
         
-        if (fitView) {
-            return fitView;
+        if (hitView) {
+            return hitView;
         }
         
     }
@@ -138,44 +145,6 @@
     NSLog(@"%s",__func__);
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    NSLog(@"%s",__func__);
-
-    // 1.判断下自己能否接收事件
-    if (self.userInteractionEnabled == NO || self.hidden == YES || self.alpha <= 0.01) return nil;
-    
-    // 2.判断下点在不在当前控件上
-    if ([self pointInside:point withEvent:event] == NO) return  nil; // 点不在当前控件
-    
-    // 3.从后往前遍历自己的子控件
-    // 1 0
-    int count = (int)self.subviews.count;
-    for (int i = count - 1; i >= 0; i--) {
-        // 获取子控件
-        UIView *childView = self.subviews[i];
-        
-        // 把当前坐标系上的点转换成子控件上的点
-        CGPoint childP =  [self convertPoint:point toView:childView];
-        
-        UIView *fitView = [childView hitTest:childP withEvent:event];
-        
-        if (fitView) {
-            return fitView;
-        }
-        
-    }
-    // 4.如果没有比自己合适的子控件,最合适的view就是自己
-    return self;
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    NSLog(@"%s",__func__);
-    
-    return CGRectContainsPoint(self.bounds, point);
-}
-
-
-
 @end
 
 @interface IBViewC : UIView
@@ -196,43 +165,6 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     NSLog(@"%s",__func__);
 }
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    NSLog(@"%s",__func__);
-    
-    // 1.判断下自己能否接收事件
-    if (self.userInteractionEnabled == NO || self.hidden == YES || self.alpha <= 0.01) return nil;
-    
-    // 2.判断下点在不在当前控件上
-    if ([self pointInside:point withEvent:event] == NO) return  nil; // 点不在当前控件
-    
-    // 3.从后往前遍历自己的子控件
-    // 1 0
-    int count = (int)self.subviews.count;
-    for (int i = count - 1; i >= 0; i--) {
-        // 获取子控件
-        UIView *childView = self.subviews[i];
-        
-        // 把当前坐标系上的点转换成子控件上的点
-        CGPoint childP =  [self convertPoint:point toView:childView];
-        
-        UIView *fitView = [childView hitTest:childP withEvent:event];
-        
-        if (fitView) {
-            return fitView;
-        }
-        
-    }
-    // 4.如果没有比自己合适的子控件,最合适的view就是自己
-    return self;
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    NSLog(@"%s",__func__);
-    
-    return CGRectContainsPoint(self.bounds, point);
-}
-
 
 @end
 

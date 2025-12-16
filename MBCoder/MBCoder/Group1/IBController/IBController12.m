@@ -68,8 +68,8 @@
  
  六、CFRunloopSourceRef 事件源\输入源，有两种分类模式
  按照函数调用栈的分类source0和source1
- Source0：非基于端口Port的事件；（手动触发的事件，如：点击按钮或点击屏幕）。
- Source1：基于端口Port的事件；（系统自动触发的事件，如：处理系统信号、处理端口相关事件（网络）、处理其他线程的事件）。
+ Source0：非基于端口Port的事件；不直接依赖内核事件，如 performSelector系列。
+ Source1：基于端口Port的事件；（由内核驱动，系统事件/触摸等）
  补充：Source1事件在处理时会分发一些操作给Source0去处理。
  
  七、Runloop相关类（Timer）
@@ -108,34 +108,26 @@
  6、UI更新
  
  十二、基于RunLoop的事件处理流程
-      按键（HOME键、锁屏键、音量键等）、传感器（摇晃、加速等）、触摸屏幕等【物理事件】会触发IOKit.framework生成
- 一个IOHIDEvent对象，然后SpringBoard会接收这个对象并通过mach port发给当前App的进程；接下来进程会触发RunLoop
- 的基于port的Source1回调一个__IOHIDEventSystemClientQueueCallback()的API，这个API会相应触发Source0来调
- 用__UIApplicationHandleEventQueue()，而此API再将传递到此的IOHIDEvent处理包装成上层所熟悉的UIEvent。最后
- UIEvent会被分发给UIWindow根据Respond chain来响应事件。
+ 系统通过硬件事件捕获，交由主线程 RunLoop 持续循环检测，一旦检测到新事件即分发到响应链，完成事件处理；无事件则进入睡眠，直到再次被唤醒。
+ RunLoop 保障了主线程高效、有序地响应各种系统与用户事件。
  
-      整个事件处理流程是基于RunLoop的基本处理循环进行的。在main函数开始后，主线程的runloop对象被创建完。
- 如UIEvent、UI绘制等会统一在主线程的runloop对象的即将进入休眠前的时间点触发各自对应的代理回调方法，然后
- runloop进入休眠，直到被timer定时器或Source1发来的内核消息事件唤醒，再分别对Timer、Source0、Source1
- 发来的事件进行处理回调。
+ 十三、RunLoop的运行逻辑
  
- 十三、RunLoop的运行逻辑（打断点，bt调试查看详细信息）
- 01、通知Observers：进入Loop
- 02、通知Observers：即将处理Timers
- 03、通知Observers：即将处理Sources
- 04、处理Blocks
- 05、处理Source0（可能会再次处理Blocks）
- 06、如果存在Source1，就跳转到第8步
- 07、通知Observers：开始休眠（等待消息唤醒）
- 08、通知Observers：结束休眠（被某个消息唤醒）
-    01> 处理Timer
-    02> 处理GCD （GCD有自己的处理逻辑，只有Async To Main Queue这一个情况是runloop处理）
-    03> 处理Source1
- 09、处理Blocks
- 10、根据前面的执行结果，决定如何操作
-    01> 回到第02步
-    02> 退出Loop
- 11、通知Observers：退出Loop
+ 1. 通知 Observer：kCFRunLoopEntry
+ 2. 进入循环
+     通知 Observer：kCFRunLoopBeforeTimers
+     通知 Observer：kCFRunLoopBeforeSources
+     处理 Source0（手动添加的事件）
+     如果有要执行的 block（perform 系列），执行
+     如果有 Source1 需要处理，进入内核等待/处理
+     没有事件则进入休眠，通知 Observer：kCFRunLoopBeforeWaiting
+     被 Timer、Source1、手动唤醒后，通知 Observer：kCFRunLoopAfterWaiting
+     处理 Timer
+     处理 Source1
+     检查是否退出条件满足（如 CFRunLoopStop 被调用、线程结束等）
+ 3. 通知 Observer：kCFRunLoopExit
+ 
+ 要能用语言描述出“检查 → 处理 → 休眠 → 唤醒”的循环过程。
  
  十四、PerformSelecter
  当调用 NSObject 的 performSelecter:afterDelay: 后，实际上其内部会创建一个 Timer 并添加到当前线程的 RunLoop 中。

@@ -103,54 +103,56 @@
  iOS 图像渲染过程解析
  
  一、图形渲染过程
- 
- 1.视图渲染
- 
- UIKit是开发中最常用的框架，可以通过设置UIKit组件的布局以及相关属性来绘制界面，显示和动画都通过Core Anmation.
- 
- CoreAnimation 是一个复合引擎
- 提供强大的2D和3D动画效果
- 它可以快速组合屏幕上不同的可视内容，这些内容被分解成独立的图层(CALayer)，存储在一个图层树的体系中
- 
- Core Graphics 是基于Quartz框架的2D绘图引擎，同Quartz 2D是等价的。
- 主要用于运行时绘制图像。开发者可以使用此框架来处理基于路径的绘图，转换，颜色管理，离屏渲染，图案，渐变和阴影，图像数据管理，
- 图像创建和图像遮罩以及 PDF 文档创建，显示和分析。
- 
- UIBezierPath是对Core Graphics框架的进一步封装。
- 
- Core Image 是用来处理运行前创建的图像的。拥有一系列现成的图像过滤器，能对已存在的图像进行高效的处理。
- 大部分情况下，Core Image 会在 GPU 中完成工作，但如果 GPU 忙，会使用 CPU 进行处理。
+ 1. App 层：UIKit / Core Animation 的构建阶段
+ 1.1 视图与图层层级
+ 1.2 布局 & 绘制
 
- Metal 类似于 OpenGL ES，也是一套第三方标准，具体实现由苹果实现。大多数开发者都没有直接使用过 Metal，但其实所有开发者都在间接地使用 Metal。
- Core Animation、Core Image、SceneKit、SpriteKit 等等渲染框架都是构建于 Metal 之上的。
+ - 布局阶段（Layout）
+    Auto Layout / 手工布局
+    调用 layoutSubviews / layoutSublayers
+    计算各个 view / layer 的 frame、bounds、transform 等
  
- OpenGL-ES：主要用于游戏绘制，但它是一套编程规范，具体由设备制造商实现
+ - 绘制阶段（Drawing）
+    UIKit 类视图：drawRect:（iOS 13+ 用 draw(_ rect:)）
+    CALayer 的 drawInContext:
+    文本/图片绘制走 Core Graphics / Core Text 等
+    这些都在 CPU 上用 CGContext 绘制到一块位图（backing store）
  
- 2.显示逻辑
- CoreAnimation提交会话，包括自己和子树（view hierarchy）的layout状态等；
- RenderServer解析提交的子树状态，生成绘制指令；
- GPU执行绘制指令；
- 显示渲染后的数据；
+ - 组装图层树（Layer Tree）
+    整个界面在内存中表现为一棵 图层树（Layer Tree）
  
- 3.提交流程(Commit Transaction)
- 在 Core Animation 流水线中，app 调用 Render Server 前的最后一步 Commit Transaction 其实可以细分为 4 个步骤：
- Layout, Display, Prepare, Commit
- 
- Layout 阶段主要进行视图构建，包括：LayoutSubviews 方法的重载，addSubview: 方法填充子视图等。
- 
- Display 阶段主要进行视图绘制，这里仅仅是设置要成像的图元数据。
- 重载视图的 drawRect: 方法可以自定义 UIView 的显示，其原理是在 drawRect: 方法内部绘制寄宿图，该过程使用 CPU和内存。
- 
- Prepare 阶段属于附加步骤，一般处理图像的解码和转换等操作。
+ 2. Core Animation：准备渲染数据
+ Core Animation 的关键点：App 进程负责构建和更新图层树，渲染在另外的进程 / 线程完成（Render Server + GPU）。
 
- Commit 阶段主要将图层进行打包(序列化)，并将它们发送至 Render Server。该过程会递归执行，因为图层和视图都是以树形结构存在。
+ 2.1 Layer Tree -> Presentation Tree / Render Tree
+ Core Animation 会维护几种树：
+ - Model Tree（你看到和操作的 CALayer 树）：
+ - Presentation Tree（动画中间态）
+ - Render Tree（供 GPU 使用的渲染数据）：将图层参数（变换、透明度、遮罩等）打包成更低层次的渲染指令
  
- 4.动画渲染原理
- 一般使用 UIView Animation 实现，iOS 将其处理过程分为如下三部阶段：
- Step 1：调用 animationWithDuration:animations: 方法
- Step 2：在 Animation Block 中进行 Layout，Display，Prepare，Commit 等步骤。
- Step 3：Render Server 根据 Animation 逐帧进行渲染。
+ 2.2 动画的处理
+ 动画（CABasicAnimation、CAKeyframeAnimation 等）不会在 CPU 上逐帧回调
+ Core Animation 把动画描述（起始值、结束值、时间曲线）发给渲染服务
+ 渲染服务在每帧根据时间做插值，生成 Presentation Layer 的值进行渲染
+ 这就是为什么只写几行动画代码，却能获得高帧率且低 CPU 占用——动画主要在 GPU / Render Server 层执行
+ 
+ 3. 显示管线：和系统框架的协同
+ 3.1 VSync / RunLoop
+ 屏幕有一个固定刷新率，如 60Hz（60fps），每次垂直同步信号（VSync）到来时：
+ - 系统通过 CADisplayLink 或内部回调通知主线程 RunLoop
+ - 主线程在这次循环中处理 UI 事件、布局、动画提交等操作
+ - Core Animation 收集这一轮提交的 layer 变化，发送给 Render Server
+ 
+ 4. GPU 渲染阶段
+ 接下来是图形硬件相关部分，核心是：把 Layer Tree 转成 GPU 能理解的绘制命令并输出到帧缓冲（framebuffer）。
+ 4.1 Tiling / 合成（Compositing）
+ 4.2 Double Buffer / Triple Buffer
 
+ 5. 显示到屏幕
+ GPU 渲染完成后，图像数据在帧缓冲中
+ 显示控制器根据屏幕刷新周期，扫描帧缓冲的像素数据，驱动屏幕上的每个像素点
+ 用户看到的就是这一帧最终合成的结果
+ 
  二、UIView与CALayer的关系
  UIKit 中的每一个 UI 视图控件其实内部都有一个关联的 CALayer
  由于这种一一对应的关系，视图层级拥有 视图树 的树形结构，对应 CALayer 层级也拥有 图层树 的树形结构。

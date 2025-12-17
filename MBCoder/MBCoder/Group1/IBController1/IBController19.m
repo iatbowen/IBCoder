@@ -181,10 +181,12 @@
     });
 }
 
+@end
 
 
 /*
- 
+ 一、基础知识
+ 1. 常见的锁
  自旋锁
  NSSpinLock，有安全问题替代锁 os_unfair_lock，它的设计目标是提供一种低开销、高性能的锁机制，特别适合于那些锁持有时间非常短的场景
  信号量
@@ -196,12 +198,12 @@
  递归锁
  NSRecursiveLock
  
- 自旋锁问题
+ 2. 自旋锁问题
  如果一个低优先级的线程获得锁并访问共享资源，这时一个高优先级的线程也尝试获得这个锁，
  它会处于 spin lock 的忙等状态从而占用大量 CPU。此时低优先级线程无法与高优先级线程争夺 CPU 时间，
  从而导致任务迟迟完不成、无法释放 lock，这就是优先级反转
  
- 自旋锁，互斥锁的选择
+ 3. 自旋锁，互斥锁的选择
 
  什么情况使用自旋锁比较划算？
  预计线程等待锁的时间很短
@@ -216,8 +218,59 @@
  临界区代码复杂或者循环量大
  临界区竞争非常激烈
  
+ 二、iOS 常见的死锁问题
+ 1. 在同一个串行队列上同步再派发（GCD）
+ dispatch_queue_t queue = dispatch_queue_create("com.test.queue", DISPATCH_QUEUE_SERIAL);
+ dispatch_async(queue, ^{
+     // 在同一个 queue 上再同步派发
+     dispatch_sync(queue, ^{
+         NSLog(@"inner");
+     });
+     NSLog(@"outer");
+ });
+ 
+ 2. NSLock / pthread_mutex
+ 自己锁自己
+ NSLock *lock = [[NSLock alloc] init];
+ - (void)methodA {
+     [lock lock];
+     [self methodB];
+     [lock unlock];
+ }
+ - (void)methodB {
+     [lock lock];   // 同一线程二次加锁，非递归锁会死锁
+     // ...
+     [lock unlock];
+ }
+
+ 多线程互相等待：
+ // 线程1
+ [lockA lock];
+ [lockB lock];
+ // ...
+
+ // 线程2
+ [lockB lock];
+ [lockA lock];
+ 互相都持有一个锁，同时在等另一个锁，构成循环等待。
+ 
+ 3. 信号量死锁
+ dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
+ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+     NSLog(@"任务1获得信号量");
+     // 在主线程中等待信号量
+     dispatch_sync(dispatch_get_main_queue(), ^{
+         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER); // 死锁
+         NSLog(@"任务2获得信号量");
+         dispatch_semaphore_signal(semaphore);
+     });
+     dispatch_semaphore_signal(semaphore);
+ });
+ 
+
+ 
  */
 
-@end
 
 

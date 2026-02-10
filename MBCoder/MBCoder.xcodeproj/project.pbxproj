@@ -326,6 +326,8 @@
 		5427E26B2CC14DBF00AD59B6 /* QJSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2652CC14DBB00AD59B6 /* QJSContext.m */; };
 		5427E26C2CC14DBF00AD59B6 /* QJSRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */; };
 		5427E26D2CC14DBF00AD59B6 /* QJSConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */; };
+		5439306E2F35DE1B00C7F0D8 /* IBGroup3Controller14.m in Sources */ = {isa = PBXBuildFile; fileRef = 5439306D2F35DE1B00C7F0D8 /* IBGroup3Controller14.m */; };
+		543930712F35EECE00C7F0D8 /* IBGroup3Controller15.m in Sources */ = {isa = PBXBuildFile; fileRef = 543930702F35EECE00C7F0D8 /* IBGroup3Controller15.m */; };
 		5440D30E2D54EB7700904EB1 /* IBGroup3Controller10.m in Sources */ = {isa = PBXBuildFile; fileRef = 5440D30D2D54EB7700904EB1 /* IBGroup3Controller10.m */; };
 		5440D3112D54EB8500904EB1 /* IBGroup3Controller11.m in Sources */ = {isa = PBXBuildFile; fileRef = 5440D3102D54EB8500904EB1 /* IBGroup3Controller11.m */; };
 		547196222D89536100A95850 /* IBGroup3Controller13.m in Sources */ = {isa = PBXBuildFile; fileRef = 547196212D89536100A95850 /* IBGroup3Controller13.m */; };
@@ -337,6 +339,7 @@
 		548741B32CCA410B0088F44D /* MBTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 548741B22CCA410B0088F44D /* MBTransition.m */; };
 		549D07252D71905E0096BED6 /* IBGroup3Controller12.m in Sources */ = {isa = PBXBuildFile; fileRef = 549D07242D71905E0096BED6 /* IBGroup3Controller12.m */; };
 		54A0FC562D0BE76D00623965 /* IBGroup2Controller34.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */; };
+		54B1DB0B2F3A19EE000E7079 /* IBGroup3Controller16.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DB0A2F3A19EE000E7079 /* IBGroup3Controller16.m */; };
 		54B935112D27978D005D6A5E /* IBGroup3Controller2.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935102D27978D005D6A5E /* IBGroup3Controller2.m */; };
 		54B935142D27BD40005D6A5E /* arm64-ios.meson in Resources */ = {isa = PBXBuildFile; fileRef = 54B935122D27BD40005D6A5E /* arm64-ios.meson */; };
 		54B935152D27BD40005D6A5E /* x86_64-ios.meson in Resources */ = {isa = PBXBuildFile; fileRef = 54B935132D27BD40005D6A5E /* x86_64-ios.meson */; };
@@ -1162,6 +1165,10 @@
 		5427E2682CC14DBD00AD59B6 /* QJSRuntime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSRuntime.m; sourceTree = "<group>"; };
 		5427E2692CC14DBE00AD59B6 /* QJSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QJSContext.h; sourceTree = "<group>"; };
 		5427E26A2CC14DBF00AD59B6 /* QJSConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJSConfiguration.m; sourceTree = "<group>"; };
+		5439306C2F35DE1B00C7F0D8 /* IBGroup3Controller14.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller14.h; sourceTree = "<group>"; };
+		5439306D2F35DE1B00C7F0D8 /* IBGroup3Controller14.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller14.m; sourceTree = "<group>"; };
+		5439306F2F35EECE00C7F0D8 /* IBGroup3Controller15.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller15.h; sourceTree = "<group>"; };
+		543930702F35EECE00C7F0D8 /* IBGroup3Controller15.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller15.m; sourceTree = "<group>"; };
 		5440D30C2D54EB7700904EB1 /* IBGroup3Controller10.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller10.h; sourceTree = "<group>"; };
 		5440D30D2D54EB7700904EB1 /* IBGroup3Controller10.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller10.m; sourceTree = "<group>"; };
 		5440D30F2D54EB8500904EB1 /* IBGroup3Controller11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller11.h; sourceTree = "<group>"; };
@@ -1184,6 +1191,8 @@
 		549D07242D71905E0096BED6 /* IBGroup3Controller12.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller12.m; sourceTree = "<group>"; };
 		54A0FC542D0BE76D00623965 /* IBGroup2Controller34.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup2Controller34.h; sourceTree = "<group>"; };
 		54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller34.m; sourceTree = "<group>"; };
+		54B1DB092F3A19EE000E7079 /* IBGroup3Controller16.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller16.h; sourceTree = "<group>"; };
+		54B1DB0A2F3A19EE000E7079 /* IBGroup3Controller16.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller16.m; sourceTree = "<group>"; };
 		54B9350F2D27978D005D6A5E /* IBGroup3Controller2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller2.h; sourceTree = "<group>"; };
 		54B935102D27978D005D6A5E /* IBGroup3Controller2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller2.m; sourceTree = "<group>"; };
 		54B935122D27BD40005D6A5E /* arm64-ios.meson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arm64-ios.meson"; sourceTree = "<group>"; };
@@ -2738,6 +2747,12 @@
 				549D07242D71905E0096BED6 /* IBGroup3Controller12.m */,
 				547196202D89536100A95850 /* IBGroup3Controller13.h */,
 				547196212D89536100A95850 /* IBGroup3Controller13.m */,
+				5439306C2F35DE1B00C7F0D8 /* IBGroup3Controller14.h */,
+				5439306D2F35DE1B00C7F0D8 /* IBGroup3Controller14.m */,
+				5439306F2F35EECE00C7F0D8 /* IBGroup3Controller15.h */,
+				543930702F35EECE00C7F0D8 /* IBGroup3Controller15.m */,
+				54B1DB092F3A19EE000E7079 /* IBGroup3Controller16.h */,
+				54B1DB0A2F3A19EE000E7079 /* IBGroup3Controller16.m */,
 			);
 			path = vc1;
 			sourceTree = "<group>";
@@ -3259,9 +3274,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MBCoder/Pods-MBCoder-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MBCoder/Pods-MBCoder-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3432,6 +3451,7 @@
 				4ACBB8F42341FA0D002D7955 /* NSObject+RACSelectorSignal.m in Sources */,
 				4AF2B56F24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m in Sources */,
 				54EAECDC2D3FA2BF00D893D3 /* JPLoader.m in Sources */,
+				5439306E2F35DE1B00C7F0D8 /* IBGroup3Controller14.m in Sources */,
 				4A37DFC8236C6A6E005CEF7B /* SonicSetup.m in Sources */,
 				4ACBB9282341FA0D002D7955 /* IBView.m in Sources */,
 				54EAECB92D3FA2BF00D893D3 /* JPCFunction.m in Sources */,
@@ -3577,6 +3597,7 @@
 				4ACBB8A62341FA0D002D7955 /* UISegmentedControl+RACSignalSupport.m in Sources */,
 				4ACBB8FF2341FA0D002D7955 /* AFHTTPSessionManager+RACSupport.m in Sources */,
 				4ACBB9212341FA0D002D7955 /* IBGroup2Controller5.m in Sources */,
+				54B1DB0B2F3A19EE000E7079 /* IBGroup3Controller16.m in Sources */,
 				4ACBB92F2341FA0D002D7955 /* Son+Cate.m in Sources */,
 				F3955286241608AA009EC505 /* IBGroup2Controller25.m in Sources */,
 				4ACBB8A72341FA0D002D7955 /* UITextField+RACSignalSupport.m in Sources */,
@@ -3629,6 +3650,7 @@
 				4ACBB9192341FA0D002D7955 /* UIView+WebCache.m in Sources */,
 				4AE6D5ED23823A52006ED648 /* IBGroup2Controller18.m in Sources */,
 				4ACBB8642341FA0D002D7955 /* IBController15.m in Sources */,
+				543930712F35EECE00C7F0D8 /* IBGroup3Controller15.m in Sources */,
 				4ACBB8542341FA0D002D7955 /* IBController41.m in Sources */,
 				4ACBB8822341FA0D002D7955 /* ViewController1.m in Sources */,
 				4ACBB8942341FA0D002D7955 /* MASViewAttribute.m in Sources */,

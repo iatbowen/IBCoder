@@ -152,7 +152,7 @@ static int count = 0;
     };  /// 在堆区
     
     // 重点：现在存在两个不同的地址！
-    id m = objc_getAssociatedObject(self, &key);  ///&(结构体->forwarding->key)
+    id m = objc_getAssociatedObject(self, &key);  ///&(结构体->forwarding->key)在堆区
     block();
     id n = objc_getAssociatedObject(self, &key);
     NSLog(@"m= %@ n=%@", m,n); // null 和 2
@@ -381,7 +381,8 @@ static int count = 0;
  2、内存分布
  无外部变量：block在全局区
  有外部变量：全局变量、全局静态变量、局部静态变量、block依然在全局区
-           普通外部变量，copy、strong修饰的block在堆区，weak修饰的block在栈区
+           普通外部变量，copy、strong修饰的block在堆区
+           weak修饰的block在栈区
  
  思考：为什么对于不同类型的变量，block的处理方式不同呢？
  这是由变量的生命周期决定的。

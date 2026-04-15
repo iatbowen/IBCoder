@@ -173,8 +173,8 @@
 /**
  方案一：cornerRadius + masksToBounds
  离屏渲染场景：
-  - 非矩形透明内容(非纯色、透明、渐变)
-  - 复合图层（多层叠加 + 圆角）
+  - 非矩形透明内容(非纯色、透明、渐变、带alpha的图片)
+  - 复合图层（多层叠加 + 圆角，图片 + 背景色 ）
  */
 - (void)test1 {
     self.imgView.layer.cornerRadius = self.imgView.width/2;

@@ -108,7 +108,7 @@
  3）设置view的Frame会触发layoutSubviews，当然前提是frame的值设置前后发生了变化
  4）滚动一个UIScrollView会触发layoutSubviews
  5）旋转Screen会触发父UIView上的layoutSubviews事件
- 6）改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件
+ 6）改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件（UIKit 内部在 setFrame: 实现里自动调用了 superview 的 setNeedsLayout）
  
  2、setNeedsLayout方法： 标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，但layoutSubviews一定会被调用
     layoutIfNeeded方法：如果，有需要刷新的标记，立即调用layoutSubviews进行布局（如果没有标记，不会调用layoutSubviews）

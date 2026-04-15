@@ -153,14 +153,12 @@
     NSLog(@"%p---%p",mutablestr, self.nameCopy1);//内存复制
     
     //浅拷贝（可变 = 不可变）
-    self.mutableNameCopy2 = temp;
+    self.mutableNameCopy2 = temp; // 声明类型可变，因为copy，真实对象是不可变
     NSLog(@"%p---%p",temp, self.mutableNameCopy2);
     
     //深拷贝(可变 = 可变)
     self.mutableNameCopy2 = mutablestr;
     NSLog(@"%p---%p",mutablestr, self.mutableNameCopy2);
-    
-
     
     //浅拷贝（不可变 = 可变）(strong 会被外界修改)
     self.nameStrong3 = mutablestr;
@@ -168,12 +166,14 @@
     [mutablestr appendString:@"1"];
     NSLog(@"%@---%@",mutablestr, self.nameStrong3);
     
+    //深拷贝(可变 = 可变)
+    self.mutableNameStrong4 = [mutablestr mutableCopy];
+    NSLog(@"%p---%p",mutablestr, self.mutableNameStrong4);
+    
     //浅拷贝(可变 = 不可变)(strong 崩溃)
     self.mutableNameStrong4 = temp;
     NSLog(@"%p---%p",temp, self.mutableNameStrong4);
-    
     [self.mutableNameStrong4 appendString:@"2"];
-
 
     
 }

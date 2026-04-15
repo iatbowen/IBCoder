@@ -328,15 +328,15 @@
 }
 
 - (void)test16 {
-//    dispatch_queue_t queue = dispatch_queue_create("b", DISPATCH_QUEUE_SERIAL); // 12345
-    dispatch_queue_t queue = dispatch_queue_create("b", DISPATCH_QUEUE_CONCURRENT); //23145
+    dispatch_queue_t queue = dispatch_queue_create("b", DISPATCH_QUEUE_SERIAL); // abc134d5
+//    dispatch_queue_t queue = dispatch_queue_create("b", DISPATCH_QUEUE_CONCURRENT); //abc3124d5
     
     dispatch_async(queue, ^{
         sleep(3);
         NSLog(@"1");
-        dispatch_sync(queue, ^{
-            NSLog(@"2");
-        });
+//        dispatch_sync(queue, ^{ // 串行队列会崩溃
+//            NSLog(@"2");
+//        });
     });
     
     NSLog(@"a");
@@ -507,13 +507,16 @@ static void create_task_safely(dispatch_block_t block) {
 
 /*
  分析：
- 线程运行
+ 线程运行:
+ - 固定先后：137
+ - 相对固定：456
+ - 不确定性：2在456任意位置插入
  */
 - (void)test10 {
     dispatch_queue_t queue = dispatch_queue_create("b", DISPATCH_QUEUE_SERIAL);
     NSLog(@"----1----%@",[NSThread currentThread]);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{ // 当前loop做完任务，下一个loop运行
         for (int i = 0; i < 10; i ++) {
             NSLog(@"----2----%@",[NSThread currentThread]);
         }
@@ -540,7 +543,8 @@ static void create_task_safely(dispatch_block_t block) {
 }
 
 /**
- 不同串行队列，不死锁
+ 不同串行队列，不死锁：
+ 顺序：begin1 -> end6 -> sync2 -> sync3 -> async5 -> sync4
  */
 - (void)test9_3 {
     NSLog(@"----begin1----");
@@ -553,7 +557,7 @@ static void create_task_safely(dispatch_block_t block) {
         dispatch_sync(queue1, ^{
             NSLog(@"----sync3----%@",[NSThread currentThread]);
         });
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{ // 有个投递的流程，打印肯定在5后
             NSLog(@"----sync4----%@",[NSThread currentThread]);
         });
         NSLog(@"----async5----%@",[NSThread currentThread]);
@@ -561,6 +565,12 @@ static void create_task_safely(dispatch_block_t block) {
     NSLog(@"----end6----");
 }
 
+/*
+ 两种： 不确定的只有：sync4 与 async5 的相对顺序
+ begin1，end6，sync2，async5，sync4，sync3
+ begin1，end6，sync2，async4，sync5，sync3
+ 
+ */
 - (void)test9_21 {
     NSLog(@"----begin1----");
     dispatch_queue_t queue = dispatch_queue_create("123", DISPATCH_QUEUE_SERIAL);
@@ -610,6 +620,15 @@ static void create_task_safely(dispatch_block_t block) {
 
 /**
  考察：sync2立马到主线程中执行
+ 固定顺序
+ 主线程内：begin1 先打印；end6 一定打印 10 次（顺序不变）。
+ 全局队列 block 内：sync1 -> sync2 -> sync3 -> (投递 sync4) -> async5(×10)
+ 且 sync4 只能在 sync3 之后才可能出现。
+ 可能穿插的位置
+ sync1 可出现在 end6×10 的前/中/后（并发）。
+ sync2（主队列同步执行）可插在 end6×10 的中间或在其后出现（取决于主线程何时处理主队列）。
+ sync4 与 async5×10 无固定先后：可在 async5 前、插在中间、或在其后执行。
+
  */
 - (void)test9_1 {
     NSLog(@"----begin1----");

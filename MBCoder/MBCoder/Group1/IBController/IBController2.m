@@ -154,6 +154,84 @@
  ARC，编译器会在花括号结束之前主动调用release
  ARC有效时，用@autoreleasepool块代替NSAutoreleasePool类，用__autoreleasing修饰的变量替代autorelease方法，把对象注册到autoreleasepool中
  调用alloc，对象引用计数加一，用p指针指向这个对象引用计数不变，因为编译器没有调用retain。p1=p操作编译器会处理为p1 = [p retain];
+ 
+ 1. 对象销毁时机：（release 和 autorelease）
+ ────────────────────────────────────────────────────────
+ ① Tagged Pointer
+    销毁方式 → 无需销毁
+    销毁时机 → 自动回收 (指针即值，不在堆上)
+ ────────────────────────────────────────────────────────
+ ② NARC 方法创建 (new / alloc / copy / mutableCopy)
+    销毁方式 → 直接 release
+    销毁时机 → 离开作用域立即销毁
+ ────────────────────────────────────────────────────────
+ ③ 非NARC 方法 + ARC 优化命中
+    销毁方式 → autorelease/retain 互相抵消
+    销毁时机 → 等同直接 release，离开作用域立即销毁
+ ────────────────────────────────────────────────────────
+ ④ 非NARC 方法 + ARC 优化未命中
+    销毁方式 → autorelease
+    销毁时机 → Pool 排干时销毁
+ ────────────────────────────────────────────────────────
+ ⑤ 在 @autoreleasepool { } 内
+    销毁方式 → autorelease
+    销毁时机 → } 执行时立即排干并销毁
+ ────────────────────────────────────────────────────────
+ ⑥ 主线程 RunLoop（无手动 Pool）
+    销毁方式 → autorelease
+    销毁时机 → RunLoop BeforeSleep 时销毁
+ ────────────────────────────────────────────────────────
+ ⑧ 子线程无 Pool
+    销毁方式 → autorelease
+    销毁时机 → 线程退出
+ ────────────────────────────────────────────────────────
+
+ 两条核心规律：
+ 直接 release 的场景:
+    NARC 创建  +  ARC优化命中  +  属性覆盖  +  dealloc
+    └──────────────────────────────────────────────────
+    共同点: 编译器明确知道所有权，直接插入 release
+
+ autorelease 的场景:
+    非NARC  +  ARC优化未命中  +  手动 autorelease
+    └──────────────────────────────────────────────────
+    共同点: 所有权跨越作用域边界，需要 pool 托管
+
+ 2. ARC优化命中：
+   被调方的 objc_autoreleaseReturnValue + 调用方的 objc_retainAutoreleasedReturnValue
+ 
+ 
+ 3. Pool 排干的时机
+
+ ① @autoreleasepool { } 块
+        └── } 执行时立即排干
+
+ ② 主线程 RunLoop
+        ├── Entry        → 创建第一个 Pool
+        ├── BeforeWaiting→ 排干旧 Pool，创建新 Pool
+        └── Exit         → 排干最后的 Pool
+
+ ③ 子线程
+        ├── 没有 RunLoop，没有自动 Pool
+        └── 必须手动创建 @autoreleasepool，需要等待线程退出
+
+ 4. 销毁过程（RC=0 之后）
+ 
+     RC = 0
+     │
+    deallocating = YES (isa bit43，防止重复触发)
+     │
+    [self dealloc] (用户自定义清理，同步调用)
+     │
+    C++ 成员析构
+     │
+    关联对象清除 (被关联对象 release，可能触发连锁销毁)
+     │
+    __weak 引用全部置 nil (不会崩溃)
+     │
+    SideTable 引用计数表清除
+     │
+    free() 释放内存 → 归还 libmalloc 缓存池，(不一定立即还给 OS)
  */
 - (void)test3_1 {
     

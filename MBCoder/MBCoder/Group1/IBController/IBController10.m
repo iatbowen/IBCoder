@@ -81,11 +81,38 @@
  - AssociationsManager的构造函数和析构函数有自旋锁，控制存储值线程安全
  
  5）关联对象无弱引用的原因:
- 关联对象的实现并没有包含跟踪对象生命周期并自动清空弱引用的机制
- 关联对象完全是运行时层面的动态机制，不适合再加一套自动清零弱引用系统，成本和复杂度太高
+ - AssociationsHashMap 只支持正向查找（持有者 → key → value），不支持反向
+ - 强行实现，遍历所有ObjectAssociationMap，哈希表扩容时地址会变化，无法正确找到并置 nil
+ 
  解决办法：
  通常的做法是创建一个中间对象来持有弱引用，然后将中间对象与关联属性关联起来。
  
+ 6）关联对象查找步骤
+ 
+ objc_getAssociatedObject(object, key)
+             ↓
+     AssociationsManager
+     获取全局 HashMap + 加锁
+             ↓
+     AssociationsHashMap
+     以 object 指针 查找
+             ↓
+     ┌───────┴────────┐
+   找不到            找到
+     ↓                ↓
+   return nil    ObjectAssociationMap
+                 以 key 查找
+                      ↓
+               ┌──────┴──────┐
+            找不到           找到
+               ↓              ↓
+           return nil    ObjcAssociation
+                         取出 value
+                              ↓
+                            解锁
+                              ↓
+                         return value
+
  
  三、weak 底层实现
  “真正 weak”需要编译器 + runtime 合作维护弱引用表
@@ -141,7 +168,7 @@
  
  
  四、对比
- weak —— 强调的是“我被谁引用”，并且我销毁时，所有引用立刻失效（自动归零）。强调自己
+ weak对象 —— 强调的是“我被谁引用”，并且我销毁时，所有引用立刻失效（自动归零）。强调自己
  关联对象 —— 强调“我能动态扩展什么属性”，随时可给对象加功能。宿主对象销毁，关联对象才会销毁。强调宿主对象
  
  

@@ -76,7 +76,7 @@
  2.4 注意如果动态解析没有实现相关方法，也会标记为动态解析，goto到1.2步骤，再进行动态解析判断，这次走消息转发流程。
  
  3、消息转发（无源码，参考国外牛人伪代码__forwarding__.c）
- 3.1 消息转发重定向、备援接收者，调用-forwardingTargetForSelector:方法，返回值不为nil，调用objc_msgSend(返回值, SEL)
+ 3.1 快速消息转发，调用-forwardingTargetForSelector:方法，返回值不为nil，调用objc_msgSend(返回值, SEL)
  3.2 完整的消息转发，调用-methodSignatureForSelector:方法，如果得到方法签名，调用-forwardInvocation:进行消息转发
      NSInvocation封装了方法调用，包括：方法调用者，方法名，方法参数
         
@@ -137,7 +137,7 @@ void newRun(id self,SEL sel,NSString *str) {
 */
 
 
-#pragma mark - 消息转发重定向、备援接收者
+#pragma mark - 快速消息转发
 - (id)forwardingTargetForSelector:(SEL)aSelector{
     NSLog(@"forwardingTargetForSelector = %@",NSStringFromSelector(aSelector));
     if (aSelector == @selector(eat)) {
@@ -146,7 +146,7 @@ void newRun(id self,SEL sel,NSString *str) {
     return [super forwardingTargetForSelector:aSelector];
 }
 
-#pragma mark - 完整的消息转发
+#pragma mark - 完整消息转发
 
 //方法签名
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector OBJC_SWIFT_UNAVAILABLE(""){

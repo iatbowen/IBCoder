@@ -328,9 +328,22 @@ static int count = 0;
  Block不允许修改外部变量的值，这里所说的外部变量的值，指的是栈中指针的内存地址
  嵌套block使用self，__weak, __strong.自己测试没影响
  
- 解析：strongSelf只存在于Block体内里，它的生命周期只在这个block执行的过程中，block执行前它不会存在，block执行完它立刻就被释放了。
- ①、如果block执行前self变为nil了，那么block不会执行，没有任何引用循环发生；
- ②、如果block执行过程中self变为nil了，那么block一开始声明的strongSelf会暂时持有着self，此时会有一个暂时的引用循环。当block执行完（即是Block执行完），strongSelf超出作用域被释放，引用循环从这里开始打破。接下来，由于没有任何强引用持有self了，于是self被释放，最后Block也因为没有任何强引用持有它也被释放了。所有对象就都被顺利释放了。
+ 解析：strongSelf 只在 block 执行期间临时持有 self，执行完立即释放，不会造成循环引用。
+ 两种情况：
+ ① block 执行前 self 已释放
+ weakSelf → nil
+ strongSelf = nil → block 直接 return
+ ✅ 无任何问题
+ 
+ ② block 执行中 self 被释放
+ block 开始 → strongSelf 临时持有 self（暂时强引用）
+ block 执行中 → 即使外部 self 释放，对象仍存活，保证 block 安全执行
+ block 结束 → strongSelf 出作用域销毁 → self 释放 → block 释放
+ ✅ 全部正常释放
+ 
+ 一句话总结
+ weakSelf 防循环引用，strongSelf 防执行中途释放。 临时强引用只活在 block 内部，结束即销毁，所以安全且无循环。
+
  */
 - (void)testBlock {
     int i = 5;

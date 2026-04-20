@@ -246,13 +246,13 @@
     考点：条件变量、队列、信号量。
  
  二十、NSOperation 与 GCD 的主要区别？
- 1. GCD 的核心是 C 语言写的系统服务，执行和操作简单高效
-    NSOperation 是对 GCD 更高层次的抽象，这是他们之间最本质的区别。因此如果希望自定义任务，建议使用 NSOperation；
+ 1. 本质，GCD 的核心是 C 语言写的系统服务，执行和操作简单高效，函数式编程
+         NSOperation 对 GCD 的封装，面向对象编程
 
  2. 依赖关系，NSOperation 可以设置两个 NSOperation 之间的依赖，第二个任务依赖于第一个任务完成执行，
             GCD 无法设置依赖关系，不过可以通过dispatch_barrier_async来实现这种效果；
 
- 3. KVO(键值对观察)，NSOperation 和容易判断 Operation 当前的状态(是否执行，是否取消)，对此 GCD 无法通过 KVO 进行判断；
+ 3. 任务状态监听，NSOperation 和容易判断 Operation 当前的状态(是否执行，是否取消)，对此 GCD 无法通过 KVO 进行判断；
 
  4. 优先级，NSOperation 可以设置自身的优先级，但是优先级高的不一定先执行，
           GCD 只能设置队列的优先级，无法在执行的 block 设置优先级；
@@ -262,7 +262,8 @@
 
  6. 效率，直接使用 GCD 效率确实会更高效，NSOperation 会多一点开销，
          但是通过 NSOperation 可以获得依赖，优先级，继承，键值对观察这些优势，相对于多的那么一点开销确实很划算
- 7、NSOperation可以设置暂停，挂起等操作。
+ 7、任务取消，NSOperation可以设置暂停，挂起，取消等操作。
+ 8、最大并发数控制，NSOperationQueue设置简单，GCD 通过 semaphore 模拟
  
  二十一：线程和 CPU 的关系：
  物理限制：

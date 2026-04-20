@@ -92,63 +92,53 @@
     这样很可能就会和我们手动添加的其它约束有冲突。此属性设置成false时，AutoresizingMask就不会变成约束。也就是说 当前 视图的 AutoresizingMask失效了。
  
  四、AutoLayout与Frame篇
- 
-    解决父视图是约束适配，子视图是frame适配问题
-    1、把子视图frame设置写到layoutSubviews中或者写到viewDidLayoutSubviews中即可。因为父视图约束生效时view的center或者bounds就会被修改，center或者bounds被修改时layoutSubview,就会被调用，随后viewDidLayoutSubviews就回被调用。这个时候，设置约束的视图frame就不再是(0,0,0,0)了
-    2、在设置完约束之后手动调用layoutIfNeeded方法，让视图立即layout，更新frame。在这之后就可以拿到设置约束的视图的尺寸了。
-    3、假如父视图设置frame，子视图约束时，需要父视图先调用[superview setNeedsUpdateConstraints]和
-       [superview updateConstraintsIfNeeded]两个方法
-    4、在viewDidLoad中得到的view的frame不一定是最终的frame，比如导航栏设置不透明就不准
+ 问题：父视图用约束，子视图用 frame，子视图拿到的 frame 是 0
+ 解决方案：
+ - 把子视图 frame 设置写在 layoutSubviews 或 viewDidLayoutSubviews 中
+ - 设置完约束后调用 [view layoutIfNeeded] 立即刷新，再读 frame
+ - 父视图 frame + 子视图约束时，可调用 setNeedsUpdateConstraints + updateConstraintsIfNeeded
+ - viewDidLoad 中拿到的 frame 不可靠（未最终布局）
  
  五、刷新子布局
  
- 1、layoutSubviews在以下情况下会被调用：(刷新子布局，需要重写)
- 1）init初始化不会触发layoutSubviews，但是是用initWithFrame 进行初始化时，当rect的值不为CGRectZero时,也会触发
- 2）addSubview会触发layoutSubviews
- 3）设置view的Frame会触发layoutSubviews，当然前提是frame的值设置前后发生了变化
- 4）滚动一个UIScrollView会触发layoutSubviews
- 5）旋转Screen会触发父UIView上的layoutSubviews事件
- 6）改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件（UIKit 内部在 setFrame: 实现里自动调用了 superview 的 setNeedsLayout）
+ 1. layoutSubviews 触发时机：
+ - layoutSubviews 触发时机
+ - initWithFrame: 且 frame ≠ CGRectZero（普通 init 不触发）
+ - addSubview: 时
+ - 修改自身 frame（值有变化）
+ - 滚动 UIScrollView
+ - 旋转屏幕（触发父视图）
+ - 改变子视图大小（触发父视图）（UIKit 内部在 setFrame: 实现里自动调用了 superview 的 setNeedsLayout）
  
- 2、setNeedsLayout方法： 标记为需要重新布局，异步调用layoutIfNeeded刷新布局，不立即刷新，但layoutSubviews一定会被调用
-    layoutIfNeeded方法：如果，有需要刷新的标记，立即调用layoutSubviews进行布局（如果没有标记，不会调用layoutSubviews）
+ 2、布局相关
+ 方法               作用
+ setNeedsLayout    标记需要布局，下个 runloop 异步调用 layoutSubviews
+ layoutIfNeeded    立即布局（有标记才会调用 layoutSubviews）
+ layoutSubviews    实际布局，重写用于自定义子视图布局
+ 
+ viewWillLayoutSubviews → layoutSubviews → viewDidLayoutSubviews
  
  3、重绘
- 1）setNeedsDisplay方法：标记为需要重绘，异步调用drawRect
- 2）drawRect:(CGRect)rect方法：重写此方法，执行重绘任务
- 3）setNeedsDisplayInRect:(CGRect)invalidRect方法：标记为需要局部重绘
+ 方法                       作用
+ setNeedsDisplay           标记需要重绘，下个绘制周期异步调用 drawRect:
+ setNeedsDisplayInRect:    标记局部重绘
+ drawRect:                 重写实现绘制（能拿到 context）
  
  4、sizeToFit和sizeThatFits
- sizeToFit:会计算出最优的size，而且会改变自己的size
- sizeThatFits:会计算出最优的size，但是不会改变自己的size
- 场景：
- 1）navigationBar中对navigationItem的设置，（添加两个视图以上的控件到Item）
- 2）toolBar中的对UIBarButtonItem的设置（一般我们还要添加弹簧控件）
- 上述两种场合就可以用sizeToFit这个方法，来让系统给我们做自动布局。（注意：如果就添加一个控件的话，我们直接设置frame也是可以的）
- 3）在tabBar中我们不能手动的添加的子控件，因为tabBar是根据控制器系统默认自动添加的tabBarItem。（猜想系统可能也会自动调用了这个方法）
- 4）UILabel中添加文字，然后让调整label的大小来适应文字，我们也调用sizeToFit的方法。
- 
- 
-5、注意:
- 0）先调用layoutSubviews，在调用viewcontroller中的viewWillLayoutSubviews和viewDidLayoutSubviews
- 1）如果要立即刷新，要先调用[view setNeedsLayout]，把标记设为需要布局，然后马上调用[view layoutIfNeeded]，实现布局
- 2）在视图第一次显示之前，标记总是“需要刷新”的，可以直接调用[view layoutIfNeeded]
- 3）layoutSubviews对subviews重新布局
- 4）layoutSubviews方法调用先于drawRect
- 5）setNeedsLayout在receiver标上一个需要被重新布局的标记，在系统runloop的下一个周期自动调用layoutSubviews
- 6）layoutIfNeeded方法如其名，UIKit会判断该receiver是否需要layout.根据Apple官方文档,layoutIfNeeded方法应该是这样的
- 7）layoutIfNeeded遍历的不是superview链，应该是subviews链
- 8）drawRect是对receiver的重绘，能获得context
- 9）setNeedDisplay在receiver标上一个需要被重新绘图的标记，在下一个draw周期自动重绘，iphone device的刷新频率是60hz，也就是1/60秒后重绘
- 
+ 方法              区别
+ sizeToFit        计算最优 size 并修改自己的 size
+ sizeThatFits:    只返回最优 size，不修改
+  
  六、updateViewConstraints与updateConstraints篇
- 1、setNeedsUpdateConstraints当一个自定义view的某个属性发生改变，并且可能影响到constraint时，需要调用此方法去标记constraints需要在未来的某个点更新，系统然后调用updateConstraints.
- 2、needsUpdateConstraints 使用此返回值去决定是否需要调用updateConstraints作为正常布局过程的一部分。
- 3、updateConstraintsIfNeeded 立即触发约束更新，自动更新布局。
- 4、updateConstraints 自定义view应该重写此方法在其中建立constraints. 注意：要在实现在最后调用[super updateConstraints]，在完成自己组件的autolayout约束设定后，需要调用父类的更新设定以保证约束生效。
+ API                          类型       作用
+ setNeedsUpdateConstraints    方法       标记：告诉系统下个周期更新约束（异步）
+ needsUpdateConstraints       只读属性    查询：当前是否被标记为需要更新
+ updateConstraintsIfNeeded    方法       立即：如果有标记，马上执行 updateConstraints
+ updateConstraints            方法       执行：实际更新约束的地方（重写），最后调用 [super updateConstraints]
  
- updating constraints->layout->display
- 
+ updateConstraints → layoutSubviews → drawRect:
+ （约束更新）      （布局）          （绘制）
+
  七、intrinsicContentSize和invalidateIntrinsicContentSize
     intrinsicContentSize：内置大小，控件本身内容控制控件大小
     invalidateIntrinsicContentSize：内置大小变化后，需重新计算尺寸，调用invalidateIntrinsicContentSize刷新

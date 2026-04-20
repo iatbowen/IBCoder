@@ -187,8 +187,26 @@
 /*
  一、基础知识
  1. 常见的锁
+ 不公平锁，本质是互斥锁
+ os_unfair_lock：是苹果用来替代 OSSpinLock 的轻量级互斥锁，它通过休眠等待 + 优先级继承解决了自旋锁的优先级反转问题；同时保持不公平、不可递归的简洁设计，确保了极致性能。
+ 
+ Q1：为什么用 os_unfair_lock 替代 OSSpinLock？
+ A：OSSpinLock 存在优先级反转问题（高优先级忙等占 CPU，低优先级持锁线程无法调度）。os_unfair_lock 通过休眠等待 + 优先级继承解决了该问题。
+
+ Q2：os_unfair_lock 是自旋锁吗？
+ A：不是。虽然它是 OSSpinLock 的替代品，但本质是互斥锁，等待时会让出 CPU 休眠。
+
+ Q3：为什么叫"不公平"？
+ A：等待线程不按 FIFO 顺序唤醒，由内核调度决定，可能出现饥饿。这种设计是为了性能（避免维护等待队列）。
+
+ Q4：os_unfair_lock 性能为什么高？
+ A：① 数据结构仅 4 字节；② 无竞争时仅一次 CAS 原子操作；③ 不支持递归，无重入判断；④ 直接 C 接口无 OC 开销。
+ 
+ Q5：优先级继承
+ A：当高优先级线程等待低优先级线程持有的锁时，系统临时将低优先级线程的优先级提升到与高优先级线程相同，使其尽快执行完释放锁
+
  自旋锁
- NSSpinLock，有安全问题替代锁 os_unfair_lock，它的设计目标是提供一种低开销、高性能的锁机制，特别适合于那些锁持有时间非常短的场景
+ NSSpinLock：自旋锁忙等浪费 CPU，且存在优先级反转问题——高优先级线程一直占 CPU 自旋，低优先级线程拿到锁后无法被调度执行释放，导致死锁式等待。
  信号量
  dispatch_semaphore
  互斥锁
@@ -217,6 +235,27 @@
  临界区有IO操作
  临界区代码复杂或者循环量大
  临界区竞争非常激烈
+ 
+ 4. 信号量
+ // 1. 创建信号量，value 为初始计数值（必须 >= 0）
+ dispatch_semaphore_t dispatch_semaphore_create(long value);
+ // 2. 等待信号量：计数 -1，若 < 0 则阻塞当前线程
+ long dispatch_semaphore_wait(dispatch_semaphore_t dsema, dispatch_time_t timeout);
+ // 3. 释放信号量：计数 +1，若 <= 0 则唤醒一个等待线程
+ long dispatch_semaphore_signal(dispatch_semaphore_t dsema);
+ 
+ 5. 性能排序：
+ os_unfair_lock > OSSpinLock > dispatch_semaphore > pthread_mutex >
+ NSCondition > NSLock > pthread_mutex(recursive) > NSRecursiveLock > NSConditionLock > @synchronized
+ 
+ Q1：dispatch_semaphore 为什么性能高？
+ A：① semaphore 数据结构更简单；② 直接 C 接口无 OC 消息发送开销；③ 无竞争时仅一次原子操作。
+
+ Q2：为什么 @synchronized 最慢？
+ A：① 全局哈希表查找 SyncData；② 双重锁结构；③ 递归锁判断；④ @try/@finally 异常处理；⑤ 引用计数维护。
+
+ Q3：自旋锁和互斥锁本质区别？
+ A：自旋锁等待时忙等（while 循环消耗 CPU），适合短临界区；互斥锁等待时休眠（让出 CPU 进内核），适合长临界区。现代 os_unfair_lock 属于互斥锁。
  
  二、iOS 常见的死锁问题
  1. 在同一个串行队列上同步再派发（GCD）

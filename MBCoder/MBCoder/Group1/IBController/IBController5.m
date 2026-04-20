@@ -180,3 +180,13 @@
 
 
 @end
+
+/*
+ 源对象                    方法            结果对象类型         拷贝类型
+ NSString（不可变）         copy           NSString           浅拷贝（指针拷贝）
+ NSString（不可变）         mutableCopy    NSMutableString    深拷贝（内容拷贝）
+ NSMutableString（可变）    copy           NSString           深拷贝（内容拷贝）
+ NSMutableString（可变）    mutableCopy    NSMutableString    深拷贝（内容拷贝）
+ 🔑 口诀：不可变 + copy = 浅拷贝，其他都是深拷贝
+ 
+ */

@@ -22,8 +22,6 @@
  3）meta-class的isa指向基类的meta-class
  4）class的superclass指向父类的class，如果没有父类，superclass指针为nil
  5）meta-class的superclass指向父类的meta-class，基类的meta-class的superclass指向基类的class
- 6）instance调用对象方法的轨迹：isa找到class，方法不存在，就通过superclass找父类
- 7）class调用类方法的轨迹：isa找meta-class，方法不存在，就通过superclass找父类
 
  注意：从64bit开始，isa需要进行一次位运算（&ISA_MASK），才能计算出真实地址
  
@@ -62,14 +60,15 @@
  本质： Runtime是一套C语言的API，是Objective-C面向对象特性的基础。
  
  三、什么是 Method Swizzle（黑魔法），什么情况下会使用？
- 1) 在没有一个类的实现源码的情况下，想改变其中一个方法的实现，除了继承它重写、和借助类别重名方法暴力抢先之外，还有更加灵活的方法 Method Swizzle。
- 2) Method Swizzle 指的是改变一个已存在的选择器对应的实现的过程。OC中方法的调用能够在运行时通过改变，通过改变类的调度表中选择器到最终函数间的映射关系。
- 3) 在OC中调用一个方法，其实是向一个对象发送消息，查找消息的唯一依据是selector的名字。利用OC的动态特性，可以实现在运行时偷换selector对应的方法实现。
- 4) 每个类都有一个方法列表，存放着selector的名字和方法实现的映射关系。IMP有点类似函数指针，指向具体的方法实现。
- 5) 我们可以利用 method_exchangeImplementations 来交换2个方法中的IMP。
- 6) 我们可以利用 class_replaceMethod 来修改类。
- 7) 我们可以利用 method_setImplementation 来直接设置某个方法的IMP。
- 8) 归根结底，都是偷换了selector的IMP。
+ Method Swizzling 是利用 Runtime 动态交换两个方法的 IMP（实现） 的技术
+ 核心思想：Method Swizzling 本质是 AOP（面向切面编程） 思想的体现，在不修改原有代码的情况下，动态插入新的逻辑。
+ 常用方法：
+            method_exchangeImplementations     class_replaceMethod    method_setImplementation
+操作         互换两个方法IMP                      替换指定SEL的IMP         直接设置Method的IMP
+参数         两个 Method                         Class + SEL + 新IMP    Method + 新IMP
+旧IMP        自动保留（互换）                      返回旧IMP               返回旧IMP
+类没有该方法   ❌ 不适用                           ✅ 自动添加             ❌ 不适用
+常用场景     标准 Swizzling                       动态添加/替换方法        底层直接修改
  
  四、_objc_msgForward 函数是做什么的，直接调用它将会发生什么？
  答：_objc_msgForward是 IMP 类型，用于消息转发的：当向一个对象发送一条消息，但它并没有实现的时候，_objc_msgForward会尝试做消息转发。

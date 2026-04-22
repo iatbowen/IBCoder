@@ -243,28 +243,48 @@
  缺点：V层和P层关联，V层更新P层也需要更新
  
  三、MVVM（比MVP多了双向绑定）
- 相互关系：
- 1、核心：如果我们违背了下述述规则,那么我们将会无法正常使用MVVM
- 1）view 可以引用viewModel,但反过来却是不行，因为产生了耦合，不方便复用和测试
- 2）viewModel 可以引用model,但是反过来也不行
- 2、view controller拥有view model
- 3、viewModel之间可以有依赖。
- 通讯方式：
- 1、viewController 尽量不涉及业务逻辑，让 viewModel 去做这些事情。
- 2、viewController 只是一个中间人，接收 view 的事件、调用 viewModel 的方法、响应 viewModel 的变化。
- 3、model的update，驱动viewmodel的update，然后再驱动view和view controller变化，这个中间的加工逻辑也可以写在view model中。
- 4、view接受事件响应，通知viewController，再通知viewModel进行数据处理。
- 优缺点：
+ 1. 三大核心组件
+ - Model(模型)：负责数据和业务逻辑，不关心 UI 如何展示
+ - View(视图)：负责界面展示，只关注用户界面和交互，通过数据绑定与 ViewModel 交互,不直接调用业务逻辑
+ - ViewModel(视图模型)：View 与 Model 之间的桥梁，暴露数据和命令(Command)给 View，处理 View 的展示逻辑,但不持有 View 的引用
+ 
+ 2.架构关系图
+ ┌─────────┐  数据绑定    ┌────────────┐  调用    ┌─────────┐
+ │  View   │ ←────────→  │ ViewModel  │ ───────→ │  Model  │
+ │  (UI)   │  命令绑定    │ (状态/逻辑) │ ←─────── │ (数据)  │
+ └─────────┘             └────────────┘  数据返回 └─────────┘
+ 
+ 3. 核心规则
+ 规则                                 说明
+ ✅ View → ViewModel                 View 可引用 ViewModel,反之不可
+ ✅ ViewModel → Model                ViewModel 可引用 Model,反之不可
+ ✅ ViewController 拥有 ViewModel     VC 持有 VM 实例
+ ✅ ViewModel 之间可依赖               支持组合复用
+ 
+ 4. ViewModel 的双向绑定
+ ViewModel 是 View 与 Model 的桥梁,通过 Observer(观察者) 实现双向通信:
+ 
+ ┌──────────────────────────────────┐
+ │          ViewModel               │
+ │  ┌────────────────────────────┐  │
+ │  │  Observable 可观察数据       │  │
+ │  └────────────────────────────┘  │
+ └────▲──────────────────────▲──────┘
+      │ 监听数据变化           │ 监听UI事件
+      │ (数据绑定)            │ (事件监听)
+ ┌────┴──────────┐      ┌────┴──────────┐
+ │     View      │      │    Model      │
+ │  (UI 显示)     │      │  (数据存储)    │
+ └───────────────┘      └───────────────┘
+
+
+ 方向             含义                  实现方式
+ Model → View    数据变化驱动 UI 更新    数据绑定
+ View → Model    UI 操作驱动数据变化     事件监听
+
+ 5. 优缺点：
  优点：低耦合，可重用性，可测试
  缺点：数据绑定使得 MVVM 变得复杂和难用
-
-   ViewModel是MVVM模式的核心，它是连接view和model的桥梁。它有两个方向：一是将【模型】转化成【视图】，
- 即将后端传递的数据转化成所看到的页面。实现的方式是：数据绑定。二是将【视图】转化成【模型】，即将所看
- 到的页面转化成后端的数据。实现的方式是：DOM 事件监听。这两个方向都实现的，我们称之为数据的双向绑定。
- 总结：在MVVM的框架下视图和模型是不能直接通信的。它们通过ViewModel来通信，ViewModel通常要实现一个
- observer观察者，当数据发生变化，ViewModel能够监听到数据的这种变化，然后通知到对应的视图做自动更新，
- 而当用户操作视图，ViewModel也能监听到视图的变化，然后通知数据做改动，这实际上就实现了数据的双向绑定。
- 并且MVVM中的View 和 ViewModel可以互相通信
 
  四、MVI
  强调单一数据流和不可变状态。MVI 的核心思想是通过 Intent 驱动状态变化，并用单一的状态对象来描述整个 UI。

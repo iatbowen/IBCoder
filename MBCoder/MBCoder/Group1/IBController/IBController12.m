@@ -17,15 +17,15 @@
 @end
 
 /*
- Runloops是线程相关底层基础的一部分。它的本质和字面意思一样运行着的循环（事件处理的循环），
+ Runloops是线程相关底层基础的一部分，本质上是一个事件处理循环
  作用：接受循环事件和安排线程的工作。
  目的：让线程在有任务的时候忙于工作，而没任务的时候处于休眠状态。
  使用：Runloop的管理并非完全自动。在主线程中runloop是自动创建并运行（在子线程开启RunLoop需要手动创建且手动开启）。
  
  一、Runloop概念
  1、运行循环，其实内部就是do-while循环
- 1）iOS中通常所说的RunLoop指的是NSRunloop(Foundation框架)或者CFRunloopRef(CoreFoundation框架) ，CFRunloopRef是纯C的函数，而 NSRunloop仅仅是CFRunloopRef的一层OC封装，并未提供额外的其他功能，因此要了解RunLoop内部结构，需要多研究CFRunLoopRef API（Core Foundation\更底层）。
- 2）CFRunloopRef其实就是 __CFRunloop这个结构体指针（按照OC的思路我们可以将RunLoop看成一个对象），这个对象的运行才是我们通常意义上说的运行循环，核心方法是 __CFRunloopRun()
+ 1）常用 NSRunLoop（Foundation）：OC 封装，CFRunLoopRef（CoreFoundation）：纯 C 实现，更底层。理解原理研究 CFRunLoopRef
+ 2）CFRunloopRef其实就是 __CFRunloop这个结构体指针，核心方法是 __CFRunloopRun()
  
  二、Runloop作用
  1、保持程序的持续运行。
@@ -38,8 +38,8 @@
  2.主线程的RunLoop已经自动创建，子线程的RunLoop需要主动创建。
  3.RunLoop在第一次获取时创建，在线程结束时销毁。
  4.如何创建子线程对应的 Runloop
- 【解决】：开一个子线程创建 runloop ，不是通过[alloc init]方法创建，而是直接通过调用currentRunLoop 方法来创建。
- 【原因】：currentRunLoop本身是懒加载的，当第一次调用currentRunLoop方法获得该子线程对应的Runloop的时候,它会先去判断(去字典中查找)这个线程的Runloop是否存在,如果不存在就会自己创建并且返回,如果存在直接返回。
+ 【解决】：RunLoop 的创建和销毁由系统管理，不能手动 alloc/init，而是直接通过调用currentRunLoop 方法来创建。
+ 【原因】：第一次调用时初始化全局字典，并为主线程创建 RunLoop，currentRunLoop 本身是懒加载的，子线程调用首先从字典里查当前线程的 RunLoop，没有就创建一个，存入字典
  
  四、Runloop相关类
  1、CFRunloopRef【RunLoop本身】
@@ -50,8 +50,7 @@
  
  1）一条线程对应一个Runloop，Runloop总是运行在某种特定的CFRunLoopModeRef（运行模式）下。
  2）每个Runloop都可以包含若干个Mode ，每个Mode又包含Source源/Timer事件/Observer观察者。
- 3）在Runloop中有多个运行模式，每次调用 RunLoop 的主函数【__CFRunloopRun()】时，
-   只能指定其中一个Mode（称CurrentMode）运行，如果需要切换Mode，只能是退出CurrentMode切换到指定的Mode进入，目的以保证不同Mode下的Source/Timer/Observer互不影响。
+ 3）RunLoop 有多种运行模式，但一次只能在一种 Mode 下运行。每次调用 __CFRunLoopRun() 时，只会处理当前指定的 CurrentMode 中的 Source、Timer 和 Observer，如果要切换到另一个 Mode，必须先退出当前 Mode，再进入新的 Mode，让不同 Mode 中的事件彼此隔离，避免互相影响
  4）Runloop有效，mode里面至少要有一个timer(定时器事件)或者是source(源)；
  
  五、Runloop 相关类（Mode）

@@ -2275,14 +2275,14 @@
 		4ACBB8122341FA0D002D7955 /* load */ = {
 			isa = PBXGroup;
 			children = (
-				4ACBB8132341FA0D002D7955 /* Son.h */,
-				4ACBB8142341FA0D002D7955 /* Son+Cate.m */,
-				4ACBB8152341FA0D002D7955 /* Father+Cate.h */,
+				4ACBB8192341FA0D002D7955 /* Father.h */,
 				4ACBB8162341FA0D002D7955 /* Father.m */,
+				4ACBB8152341FA0D002D7955 /* Father+Cate.h */,
+				4ACBB81A2341FA0D002D7955 /* Father+Cate.m */,
+				4ACBB8132341FA0D002D7955 /* Son.h */,
 				4ACBB8172341FA0D002D7955 /* Son.m */,
 				4ACBB8182341FA0D002D7955 /* Son+Cate.h */,
-				4ACBB8192341FA0D002D7955 /* Father.h */,
-				4ACBB81A2341FA0D002D7955 /* Father+Cate.m */,
+				4ACBB8142341FA0D002D7955 /* Son+Cate.m */,
 			);
 			path = load;
 			sourceTree = "<group>";

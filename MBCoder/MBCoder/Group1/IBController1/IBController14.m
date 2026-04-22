@@ -44,10 +44,17 @@
     struct property_list_t *_classProperties;
  };
  
- 2、Category的加载处理过程(按需加载，程序启动先加载实现load方法，或者静态实例的分类，后面调用方法在加载某一个分类）
- 1）从__DATA 或者 __DATA_CONST 或者 __DATA_DIRTY 数据段中取出和mach_header_64类型匹配的sectname为__objc_catlist的数据
- 2）把所有Category的方法、属性、协议数据，合并到一个大数组中，后面参与编译的Category数据，会在数组的前面
- 3）将合并后的分类数据（方法、属性、协议），插入到类原来数据的前面
+ 2、Category的加载处理过程
+
+ 2.1、加载时机
+ 按需加载
+ ├── 有 +load 或 静态实例  →  启动时加载（非懒加载）
+ └── 其他情况             →  第一次调用方法时加载（懒加载）
+
+ 2.2、 加载步骤
+ 1）从 __DATA 读取 __objc_catlist 中的 Category 数据
+ 2）将所有 Category 的方法、属性、协议合并到大数组（后编译的排在数组前面）
+ 3）将合并后的数据插入到类原始数据的前面
  
  3、源码解读顺序
  objc-os.mm
@@ -63,7 +70,7 @@
  
  4、分类的实现原理涉及到 Objective-C 的编译和运行时机制：
  编译时：
- 编译器会为每个分类生成独立的数据结构，主要包括方法列表、属性列表（仅声明不会生成 set/get）、协议列表等，不会直接改变原有类的结构。
+ 编译器会为每个分类生成独立的数据结构（category_t），主要包括方法列表、属性列表（仅声明不会生成 set/get）、协议列表等，不会直接改变原有类的结构，存储在 __DATA 段的 __objc_catlist 中
  
  运行时：
  运行时系统会根据符号表将分类的方法和属性添加到原始类的方法列表和属性列表的前面。当调用方法时，运行时在查找方法的时候是顺着方法列表的顺序查找的，找到匹配的方法后进行调用。
@@ -105,6 +112,28 @@
  +load方法是根据方法地址直接调用，并不是经过objc_msgSend函数调用
  
  三、+initialize方法
+ 
+ //  核心源码
+ void _class_initialize(Class cls) {
+     
+     // 1. 递归先初始化父类
+     Class supercls = cls->superclass;
+     if (supercls && !supercls->isInitialized()) {
+         _class_initialize(supercls); // 递归调用父类
+     }
+     
+     // 2. 通过消息发送调用 +initialize
+     callInitialize(cls);
+     
+     // 3. 标记类已初始化
+     cls->setInitialized();
+ }
+
+ void callInitialize(Class cls) {
+     // 本质是消息发送！
+     ((void(*)(Class, SEL))objc_msgSend)(cls, @selector(initialize));
+ }
+ 
  1、概括
  +initialize方法会在类第一次接收到消息时调用
  
@@ -112,9 +141,17 @@
  1）先调用父类的+initialize，再调用子类的+initialize
  (先初始化父类，再初始化子类，每个类只会初始化1次)
  
- 2）+initialize和+load的很大区别是，+initialize是通过objc_msgSend进行调用的，所以有以下特点
- 如果子类没有实现+initialize，会调用父类的+initialize（所以父类的+initialize可能会被调用多次）
+ 2）+initialize和+load的很大区别是，+initialize是通过objc_msgSend进行调用的，特点:
+ 无论子类是否实现，父类 +initialize 必定调用（所以父类的+initialize可能会被调用多次）
  如果分类实现了+initialize，就覆盖类本身的+initialize调用
+ 
+ // 保证只执行一次
+ + (void)initialize {
+     // 判断当前类是否是本类
+     if (self == [类名 class]) {
+         NSLog(@"Person +initialize");
+     }
+ }
  
  3、objc4源码解读过程
  objc-msg-arm64.s

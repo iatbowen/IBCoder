@@ -1,5 +1,5 @@
 //
-//  IBController9.m
+//  IBController10.m
 //  IBCoder1
 //
 //  Created by Bowen on 2018/5/3.
@@ -25,157 +25,102 @@
 
 
 /*
- 
- 一、关联策略（objc_AssociationPolicy）
- 常用选项：
- OBJC_ASSOCIATION_ASSIGN（弱引用/unsafe_unretained）
- OBJC_ASSOCIATION_RETAIN_NONATOMIC（强引用，非原子）
- OBJC_ASSOCIATION_COPY_NONATOMIC（拷贝，非原子）
- OBJC_ASSOCIATION_RETAIN（强引用，原子）
- OBJC_ASSOCIATION_COPY（拷贝，原子）
+ 一、关联对象 API
 
- 
- 二、底层实现原理
- 
- 1、实现关联对象技术的核心对象
- 
- 1）AssociationsManager
- 
+ // 设置
+ objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)
+ // 获取
+ objc_getAssociatedObject(id object, const void *key)
+ // 移除所有关联（通常在 dealloc 里不需要手动调，对象销毁时 runtime 自动清理）
+ objc_removeAssociatedObjects(id object)
+
+ 关联策略（objc_AssociationPolicy）：
+ 策略                              语义
+ OBJC_ASSOCIATION_ASSIGN           弱引用（unsafe_unretained，不置 nil，慎用）
+ OBJC_ASSOCIATION_RETAIN_NONATOMIC strong，非原子（最常用）
+ OBJC_ASSOCIATION_COPY_NONATOMIC   copy，非原子
+ OBJC_ASSOCIATION_RETAIN           strong，原子
+ OBJC_ASSOCIATION_COPY             copy，原子
+
+ 二、关联对象底层数据结构
+
+ // 全局唯一管理器，内含自旋锁保证线程安全
  class AssociationsManager {
-     static AssociationsHashMap *_map;
- public:
-     AssociationsManager()   { AssociationsManagerLock.lock(); }
-     ~AssociationsManager()  { AssociationsManagerLock.unlock(); }
-     
-     AssociationsHashMap &associations() {
-         if (_map == NULL)
-             _map = new AssociationsHashMap();
-         return *_map;
-     }
+     static AssociationsHashMap *_map;  // 全局哈希表（单例）
  };
- 
- 2）AssociationsHashMap
- 
- class AssociationsHashMap : public unordered_map<disguised_ptr_t, ObjectAssociationMap *> {
- };
- 
- 3）ObjectAssociationMap
- 
- class ObjectAssociationMap : public std::map<void *key, ObjcAssociation> {
 
- };
- 
- 4）ObjcAssociation
- 
+ // 对象地址 → 该对象的关联数据表
+ class AssociationsHashMap : public unordered_map<disguised_ptr_t, ObjectAssociationMap *> {};
+
+ // key（void*，通常是静态变量地址/selector）→ 关联值包装
+ class ObjectAssociationMap : public std::map<void *, ObjcAssociation> {};
+
+ // 单条关联数据：存 policy + value
  class ObjcAssociation {
      uintptr_t _policy;
      id _value;
  };
 
- 4）解释：
- - 映射关系
- AssociationsHashMap：  对象地址 (id) → 关联数据存储结构 (ObjectAssociationMap)
- ObjectAssociationMap：  key (void*，常用 selector 或静态地址) → value（包装了对象、policy 等）
+ 查找路径（objc_getAssociatedObject）：
+   AssociationsManager（加锁）
+     → AssociationsHashMap（以 object 地址查）
+       → ObjectAssociationMap（以 key 查）
+         → ObjcAssociation.value（解锁，返回）
+   任一层找不到则返回 nil
 
- - 关联对象存储在全局的统一的一个AssociationsManager中，如果设置关联对象为nil，就相当于是移除关联对象。
- - AssociationsManager的构造函数和析构函数有自旋锁，控制存储值线程安全
- 
- 5）关联对象无弱引用的原因:
- - AssociationsHashMap 只支持正向查找（持有者 → key → value），不支持反向
- - 强行实现，遍历所有ObjectAssociationMap，哈希表扩容时地址会变化，无法正确找到并置 nil
- 
- 解决办法：
- 通常的做法是创建一个中间对象来持有弱引用，然后将中间对象与关联属性关联起来。
- 
- 6）关联对象查找步骤
- 
- objc_getAssociatedObject(object, key)
-             ↓
-     AssociationsManager
-     获取全局 HashMap + 加锁
-             ↓
-     AssociationsHashMap
-     以 object 指针 查找
-             ↓
-     ┌───────┴────────┐
-   找不到            找到
-     ↓                ↓
-   return nil    ObjectAssociationMap
-                 以 key 查找
-                      ↓
-               ┌──────┴──────┐
-            找不到           找到
-               ↓              ↓
-           return nil    ObjcAssociation
-                         取出 value
-                              ↓
-                            解锁
-                              ↓
-                         return value
+ 对象销毁时（dealloc）：
+   runtime 自动遍历该对象的 ObjectAssociationMap，按 policy 对每个 value 执行 release/free，无需手动清理
 
- 
- 三、weak 底层实现
- “真正 weak”需要编译器 + runtime 合作维护弱引用表
- 
- 1. 编译器层：把 weak 操作改写成 runtime 函数
- 原始代码：
- __weak id obj = someObject;
- obj = nil;
- id tmp = obj;
- 
- 编译后不会直接是简单的指针赋值，而会被 Clang 改写成对 runtime 的调用，大致类似：
- id obj;
- objc_initWeak(&obj, someObject);   // 初始化 weak 变量
- objc_storeWeak(&obj, nil);         // 赋值（包括置 nil）
- id tmp = objc_loadWeak(&obj);      // 读 weak 值
- objc_destroyWeak(&obj);            // 变量销毁时调用
- 常见的 weak 相关 runtime API（在 objc-weak.h/NSObject.mm 里）：
+ 三、关联对象为何不支持 weak 策略
 
- objc_initWeak(id *location, id value)
- objc_storeWeak(id *location, id value)
- objc_loadWeak(id *location)
- objc_destroyWeak(id *location)
- 结论：
- 编译器负责识别哪些变量是 weak，并在所有赋值/销毁位置插入这些函数调用； runtime 负责具体维护数据结构和清零指针。
- 
- 
- 2. Runtime 层：全局 weak 表（weak table）
- weak策略表明该属性定义了一种“非拥有关系” (nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。
+ - AssociationsHashMap 只支持「持有者 → key → value」正向查找
+ - weak 需要反向：当 value 对象销毁时，找到所有指向它的弱引用并置 nil
+ - 哈希表扩容时对象地址会变化，无法可靠做反向遍历
 
- struct weak_table_t {
-     weak_entry_t *weak_entries; // 哈希表数组
-     size_t num_entries;
-     spinlock_t lock;
- };
+ 四、weak 底层实现
 
- struct weak_entry_t {
-     DisguisedPtr<objc_object> referent; // 被弱引用的对象
-     union {
-         objc_object **referrers; // 指向这个对象的 weak 指针地址数组
-         struct { ... } inline_referrers;
-     };
-     // referrers + referrers_count + capacity 等
- };
- 
- 存储映射关系
- (静态变量)SideTablesMap->(对象地址找到)SideTable->weak_table_t（以对象地址hash算法找索引，取出weak_entry_t）
- ->weak_entry_t（定长数组，动态数组（以弱指针的地址hash算法找索引，取出weak_referrer_t））-> weak_referrer_t
- 
- 3. 那么runtime如何实现weak变量的自动置nil？
- runtime对注册的类，会将 weak 对象放入一个hash表中。用weak指向的对象内存地址作为key，当此对象的引用计数为0的时候会调
- 用对象的dealloc方法，假设weak指向的对象内存地址是a，那么就会以a为key，在这个weak hash表中搜索，找到所有以a为key的weak对象，
- 从而设置为 nil。
- 
- 
- 四、对比
- weak对象：关注“谁在引用我”。当我（被引用者）被销毁时，所有指向我的 weak 引用立即变为 nil。强调对象本身的生命周期，不影响引用者的释放。
+ 1. 编译器层：Clang 把 weak 操作改写为 runtime 调用
+   __weak id obj = someObject;   → objc_initWeak(&obj, someObject)
+   obj = other;                  → objc_storeWeak(&obj, other)
+   id tmp = obj;                 → id tmp = objc_loadWeak(&obj)
+   // 变量超出作用域时       → objc_destroyWeak(&obj)
 
- 关联对象：关注“我能加什么新属性”。是把额外数据动态添加到宿主对象上。只有宿主对象销毁时，关联对象才会跟着销毁。强调宿主对象的生命周期。
+ 2. Runtime 层：全局 weak 表（SideTable → weak_table_t）
 
- 因此，内存地址查找方式也不同：
- weak 查找引用自己的人；关联对象查找依附的宿主对象。
- 
- */
+   // 全局 SideTable 数组（64 个），以对象地址哈希分桶
+   struct SideTable {
+       spinlock_t slock;
+       RefcountMap refcnts;    // 引用计数表
+       weak_table_t weak_table;
+   };
+
+   struct weak_table_t {
+       weak_entry_t *weak_entries; // 哈希数组
+       size_t num_entries;
+   };
+
+   struct weak_entry_t {
+       DisguisedPtr<objc_object> referent; // 被弱引用的对象
+       // 指向该对象的所有 weak 指针地址（定长内联数组 or 动态数组）
+       union { objc_object **referrers; struct { ... } inline_referrers; };
+   };
+
+   查找路径：
+     SideTablesMap → SideTable（对象地址哈希）→ weak_table_t → weak_entry_t → weak 指针地址列表
+
+ 3. 自动置 nil 流程（对象 dealloc 时）
+   ① objc_object::rootDealloc → weak_clear_no_lock
+   ② 以对象地址为 key，在 weak_table 中找到 weak_entry_t
+   ③ 遍历所有 weak 指针地址，逐一置 *ptr = nil
+   ④ 从 weak_table 中移除该 entry
+
+ 五、weak 与关联对象对比
+
+ 维度         weak                             关联对象
+ 关注点        谁在引用我                        我能挂载什么额外数据
+ 生命周期      不影响被引用者；被引用者销毁后置 nil   随宿主对象销毁而自动释放
+ 查找方向      反向（被引用者 → 所有引用者）         正向（宿主 → key → value）
+ 线程安全      SideTable 自旋锁保护               AssociationsManager 自旋锁保护
+*/
 
 @end
-

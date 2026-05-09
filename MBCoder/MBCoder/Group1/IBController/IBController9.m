@@ -36,7 +36,46 @@
 @end
 
 /**
- 一、objc_msgSend执行流程 – 源码跟读
+ 一、objc_msgSend 整体流程
+ [obj method] → objc_msgSend(obj, @selector(method))
+
+ 阶段 1：消息发送（Message Send）
+   ① isa → 找到所属类
+   ② 查方法缓存 cache_t（哈希表，命中则直接调用）
+   ③ 未命中 → 遍历 class_rw_t 方法列表（已排序二分查找，否则线性遍历）
+   ④ 找到 → 写入缓存 → 调用
+   ⑤ 未找到 → superClass 逐级向上重复 ②③
+   ⑥ 到 NSObject 仍未找到 → 进入动态解析
+        |
+ 阶段 2：动态方法解析（Dynamic Method Resolution）
+   ① 调用 +resolveInstanceMethod: / +resolveClassMethod:
+   ② 可用 class_addMethod 动态添加 IMP
+   ③ 添加成功 → 标记已解析 → 重新走消息发送流程
+   ④ 未添加 → 标记已解析（防止死循环）→ 进入消息转发
+        |
+ 阶段 3：消息转发（Message Forwarding）
+   ① 快速转发：-forwardingTargetForSelector:
+      返回非 nil 对象 → objc_msgSend(新对象, SEL)
+   ② 完整转发：-methodSignatureForSelector: 返回方法签名
+      → -forwardInvocation:（NSInvocation 封装 target/SEL/参数/返回值）
+      可任意转发给其他对象或修改参数
+   ③ 签名返回 nil → 直接崩溃
+        |
+ 阶段 4：抛出异常 -doesNotRecognizeSelector: → crash
+
+ 二、关键 API 说明
+
+ class_addMethod(Class cls, SEL sel, IMP imp, const char *types)
+   types 类型编码：v=void  @=id  :=SEL  *=char*  i=int  d=double  B=BOOL
+   示例："v@:*" → 返回 void，参数为 (id self, SEL _cmd, char *str)
+   注意：只在方法不存在时才添加；已存在用 class_replaceMethod
+
+ 快速转发 vs 完整转发：
+   快速转发：只能换 target，无法修改参数/返回值，开销小
+   完整转发：可修改参数、合并多消息、记录日志等，开销大
+   两者均未处理才走 doesNotRecognizeSelector:
+
+ 源码路径（objc4）：
  objc-msg-arm64.s
  ENTRY _objc_msgSend
  b.le    LNilOrTagged
@@ -61,27 +100,6 @@
 
  Core Foundation
  __forwarding__（不开源）
- 
- 二、objc_msgSend执行流程
- 1、消息发送
- 1.1 runtime会根据对象的isa指针找到该对象实际所属的类
- 1.2 然后在该类中的方法缓存列表中查找，找不到的话，会从class_rw_t方法列表中查找，找到方法，调用方法，加入方法cache中。
- 1.3 找不到的话会通过superClass找到父类，并在父类中查找。
- 1.4 如果在最顶层的父类（一般也就NSObject）中依然找不到相应的方法时，会走动态解析流程
- 
- 2、动态方法解析
- 2.1 首先判断是否动态解析
- 2.2 如果没有，调用+resolveInstanceMethod:或者+resolveClassMethod:方法动态解析方法。
- 2.3 动态解析过后，标记已经动态解析，再次重新走“消息发送”的流程，也就是1.2这一步。
- 2.4 注意如果动态解析没有实现相关方法，也会标记为动态解析，goto到1.2步骤，再进行动态解析判断，这次走消息转发流程。
- 
- 3、消息转发（无源码，参考国外牛人伪代码__forwarding__.c）
- 3.1 快速消息转发，调用-forwardingTargetForSelector:方法，返回值不为nil，调用objc_msgSend(返回值, SEL)
- 3.2 完整的消息转发，调用-methodSignatureForSelector:方法，如果得到方法签名，调用-forwardInvocation:进行消息转发
-     NSInvocation封装了方法调用，包括：方法调用者，方法名，方法参数
-        
- 4、抛出异常，调用doesNotRecognizeSelector:方法
- 
  */
 
 @implementation IBController9

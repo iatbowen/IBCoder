@@ -71,64 +71,68 @@
 
 
 /*
- 
- 一、tableview优化
- 1、cell复用
- 2、预先计算缓存高度
- 3、渲染（异步绘制框架）
- 4、视图层级优化（不要动态创建视图，善用hidden；减少视图层级）
- 5、减少透明view: 透明需要图层混合计算
- 6、不要阻塞主线程
- 7、内存优化
- 1）cell按需加载
- 2）使用Autorelease Pool（避免内存峰值）
- 3）gzip/zip压缩
- 4）懒加载控件、页面
- 5）不要使用太多的xib/storyboard
- 6）重大开销对象，比如NSDateFormatter和 NSCalendar用属性存储
- 7）减少离屏渲染
- 
- OpenGL中，GPU屏幕渲染有以下两种方式：
-    On-Screen Rendering即当前屏幕渲染，指的是GPU的渲染操作是在当前用于显示的屏幕缓冲区中进行。
-    Off-Screen Rendering即离屏渲染，指的是GPU在当前屏幕缓冲区以外新开辟一个缓冲区进行渲染操作。
- 
- 为什么离屏渲染会发生卡顿？
- - 创建新的缓冲区（内存开销）
- GPU 要额外分配一块内存作为离屏缓冲区，频繁创建/销毁带来开销。
- - 上下文切换昂贵（最致命）
- GPU 渲染流水线被打断： 屏幕缓冲区 → 切换到离屏缓冲区 → 渲染 → 切回屏幕缓冲区 → 合成 每次切换都要重新建立 GPU 状态，代价很高。
- - 多次渲染（正常渲染1次：图层内容 ──直接渲染──▶ 屏幕缓冲区 ──▶ 显示）
- 同一图层要先渲染到离屏缓冲区，再合成回屏幕，渲染次数翻倍。
- - CPU 与 GPU 同步等待
- 两者无法并行工作，互相等待，浪费时间。
- - 超出每帧时间预算
- iOS 屏幕 60Hz，每帧只有 16.67ms。离屏渲染让 GPU 工作量倍增，一旦超时就掉帧，用户感知为卡顿
- 
- 设置了以下属性时，都会触发离屏渲染：
- - 圆角 + masksToBounds/clipsToBounds（同时满足）
- - layer.mask 遮罩
- - shadow 阴影（未指定 shadowPath）
- - 光栅化 shouldRasterize = YES
- - 抗锯齿 allowsEdgeAntialiasing
- - layer.shouldRasterize，光栅化
+ 一、UITableView 性能优化
 
- 离屏渲染的优化建议
- 使用ShadowPath指定layer阴影效果路径。
- 使用异步进行layer渲染（Facebook开源的异步绘制框架AsyncDisplayKit）。
- 设置layer的opaque值为YES，减少复杂图层合成。
- 尽量使用不包含透明（alpha）通道的图片资源。
- 尽量设置layer的大小值为整形值。
- 直接让美工把图片切成圆角进行显示，这是效率最高的一种方案。
- 很多情况下用户上传图片进行显示，可以在客户端处理圆角。
- 使用代码手动生成圆角image设置到要显示的View上，利用UIBezierPath（Core Graphics框架）画出来圆角图片。
- 
- 8）合理使用光栅化 shouldRasterize（把 layer 渲染结果缓存为位图，下次直接复用，避免重复渲染）
- 使用原则：✅ 适合：静态、不变的复杂视图（如带阴影的卡片） ❌ 不适合：频繁变化的视图（每次变都要重做缓存，更慢）
-   
- 异步渲染
- 在子线程绘制，主线程渲染。例如 VVeboTableViewDemo
- 
- */
+ 1. cell 复用
+    - dequeueReusableCellWithIdentifier: 避免重复创建
+
+ 2. 高度缓存
+    - 提前计算并缓存行高，避免每次 heightForRow 重新计算
+    - iOS 8+ 可用 estimatedRowHeight + UITableViewAutomaticDimension 自适应高度
+
+ 3. 视图层级优化
+    - 减少视图嵌套层级；使用 hidden 而非动态 addSubview/removeFromSuperview
+    - 避免透明视图（透明触发 GPU 图层混合计算，opaque = YES 可关闭）
+
+ 4. 图片优化
+    - 子线程解码图片（SDWebImage 默认已做），避免主线程卡顿
+    - 图片尺寸与 imageView 匹配，避免实时缩放
+    - 圆角图片：服务端裁好 > UIBezierPath 预生成 > masksToBounds（后者触发离屏渲染，性能最差）
+
+ 5. 按需/分时加载（RunLoop 空闲加载）
+    - 监听 kCFRunLoopBeforeWaiting，滚动停止后的空闲时机执行耗时任务（本文件演示此方案）
+    - 快速滚动时跳过图片加载，indexPath 不匹配则忽略回调
+
+ 6. 避免主线程阻塞
+    - 网络、I/O、图片解码、JSON 解析均放子线程
+    - 不在 cellForRow 中做复杂计算
+
+ 7. 内存优化
+    - 使用 @autoreleasepool 包裹大量对象创建，降低内存峰值
+    - NSDateFormatter / NSCalendar 用属性存储（创建代价高）
+    - 懒加载非必要控件；不滥用 xib/storyboard（解析耗时）
+
+ 二、离屏渲染（Off-Screen Rendering）
+
+ 正常渲染：图层内容 → 屏幕缓冲区 → 显示（一次 pass）
+ 离屏渲染：图层内容 → 离屏缓冲区 → 合成 → 屏幕缓冲区 → 显示（多次 pass）
+
+ 卡顿原因：
+ - GPU 需额外分配离屏缓冲区（内存开销）
+ - GPU 上下文切换代价高（最致命），渲染流水线被打断
+ - CPU 与 GPU 需同步等待，无法并行
+ - 60Hz 屏幕每帧仅 16.67ms，工作量翻倍容易超时掉帧
+
+ 触发条件：
+ - 圆角 + masksToBounds/clipsToBounds（两者同时才触发）
+ - layer.mask 遮罩
+ - shadow 阴影（未设置 shadowPath）
+ - shouldRasterize = YES（主动触发，但可缓存复用）
+ - allowsEdgeAntialiasing 抗锯齿
+
+ 优化建议：
+ - 阴影：指定 layer.shadowPath，避免 GPU 自动计算轮廓
+ - 圆角：服务端/预处理裁好圆角图片；或用 UIBezierPath + Core Graphics 生成圆角 image
+ - 设置 layer.opaque = YES，减少图层合成
+ - 图片不含 alpha 通道
+ - 异步绘制：AsyncDisplayKit / VVeboTableViewDemo
+
+ 三、光栅化 shouldRasterize
+ - 将 layer 渲染结果缓存为位图，下次直接复用，跳过重复渲染（主动离屏渲染换取复用收益）
+ - 适合：静态、不频繁变化的复杂视图（带阴影的卡片、固定内容 cell）
+ - 不适合：内容频繁变化的视图（每次变化都要重新生成缓存，反而更慢）
+ - 缓存有 100ms 超时，超时未使用自动丢弃
+*/
 
 
 @interface IBController8 ()<UITableViewDelegate,UITableViewDataSource>

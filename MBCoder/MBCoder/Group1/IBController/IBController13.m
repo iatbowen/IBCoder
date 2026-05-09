@@ -14,7 +14,7 @@
  isa：是一个Class类型的指针。
  当调用对象方法时，通过instance的isa找到class，然后调用对象方法的实现；如果没有，通过superclass找到父类的class，最后找到对象方法的实现进行调用
  当调用类方法时，通过class的isa找到meta-class，然后调用类方法的实现；如果没有，通过superclass找到父类的meta-class，最后找到类方法的实现进行调用
- 注意的是:元类(meteClass)也是类，它也是对象。元类也有isa指针,它的isa指针最终指向的是一个根元类(root meteClass)。根元类的isa指针指向本身，这样形成了一个封闭的内循环。
+ 注意的是:元类(metaClass)也是类，它也是对象。元类也有isa指针,它的isa指针最终指向的是一个根元类(root metaClass)。根元类的isa指针指向本身，这样形成了一个封闭的内循环。
 
  1、isa、superclass总结
  1）instance的isa指向class
@@ -37,10 +37,10 @@
         uintptr_t has_cxx_dtor      : 1; 是否有C++的析构函数（.cxx_destruct），如果没有，释放时会更快
         uintptr_t shiftcls          : 44;存储着Class、Meta-Class对象的内存地址信息
         uintptr_t magic             : 6; 用于在调试时分辨对象是否未完成初始化
-        uintptr_t weakly_referenced : 1; 用于在调试时分辨对象是否未完成初始化
+        uintptr_t weakly_referenced : 1; 是否有被弱引用指向，如果没有，释放时会更快
         uintptr_t deallocating      : 1; 对象是否正在释放
-        uintptr_t has_sidetable_rc  : 1; 引用计数器是否过大无法存储在isa中,如果为1，那么引用计数会存储在一个叫SideTable的类的属性中
-        uintptr_t extra_rc          : 8  里面存储的值是引用计数
+        uintptr_t has_sidetable_rc  : 1; 引用计数器是否过大无法存储在isa中，如果为1，那么引用计数会存储在SideTable中
+        uintptr_t extra_rc          : 8  存储的值是引用计数减1（实际引用计数 = extra_rc + 1）
     };
  };
  
@@ -71,45 +71,26 @@
 常用场景     标准 Swizzling                       动态添加/替换方法        底层直接修改
  
  四、_objc_msgForward 函数是做什么的，直接调用它将会发生什么？
- 答：_objc_msgForward是 IMP 类型，用于消息转发的：当向一个对象发送一条消息，但它并没有实现的时候，_objc_msgForward会尝试做消息转发。
-    函数：id _Nullable _objc_msgForward(id _Nonnull receiver, SEL _Nonnull sel, ...)
- 
- 拓展：_objc_msgForward_stret 代替 _objc_msgForward 两者区别
- 
- 大多数 CPU 在执行 C 函数时会把前几个参数放进寄存器里，对 obj_msgSend 来说前两个参数固定是 self / _cmd，
- 它们会放在寄存器上，在最后执行完后返回值也会保存在寄存器上，取这个寄存器的值就是返回值：
- -(int) method:(id)arg;
-     r3 = self
-     r4 = _cmd, @selector(method:)
-     r5 = arg
-     (on exit) r3 = returned int
- 
- 普通的返回值(int/pointer)很小，放在寄存器上没问题，但有些 struct 是很大的，寄存器放不下，所以要用另一种方式，
- 在一开始申请一段内存，把指针保存在寄存器上，返回值往这个指针指向的内存写数据，所以寄存器要腾出一个位置放这个指针，self / _cmd 在寄存器的位置就变了：
-  -(struct st) method:(id)arg;
-     r3 = &struct_var (in caller's stack frame)
-     r4 = self
-     r5 = _cmd, @selector(method:)
-     r6 = arg
-     (on exit) return value written into struct_var
- 
- objc_msgSend 不知道 self / _cmd 的位置变了，所以要用另一个方法 objc_msgSend_stret 代替
- 
- 遇到的问题：
- 如果替换方法的返回值是某些 struct，在 iOS 架构中非 arm64，使用 _objc_msgForward 会 crash
- 
- 旧的 32 位架构（armv7、x86_64-32 等）上，一般：
- 返回结构体体积较大（> 8 / 16 字节，具体依 ABI 定义）→ 用 _objc_msgForward_stret
- 小结构体或标量 → _objc_msgForward
- 
- 64 位 iOS 上（arm64）：
- 苹果在新 ABI 中对结构体返回有调整，很多情况下都不再区分 _stret；
- 在现代 iOS（arm64）上，通常可以直接使用 _objc_msgForward，_objc_msgForward_stret 甚至可能被标记为废弃实现或别名。
- 但为了兼容老架构 / 老系统，很多框架仍保留「根据返回类型判断是否用 _stret」的逻辑。
+
+ 是什么：
+ _objc_msgForward 是一个 IMP（函数指针），作用是触发消息转发流程。
+ 正常情况下，当对象找不到方法实现时，Runtime 会自动把 IMP 替换为 _objc_msgForward，进入转发流程：
+   forwardingTargetForSelector: -> methodSignatureForSelector: -> forwardInvocation:
+
+ 直接调用会怎样：
+ 直接调用等于手动跳过消息查找，强制进入转发流程。
+ 如果没有实现转发方法，最终会调用 doesNotRecognizeSelector: 抛出异常崩溃。
+ 实际应用：JSPatch / Aspects 等框架用它来拦截方法，把调用统一转发到自定义处理逻辑。
+
+ _objc_msgForward vs _objc_msgForward_stret（了解即可）：
+ - 返回普通值（int / 指针）：用 _objc_msgForward
+ - 返回大结构体（32位架构）：需用 _objc_msgForward_stret，否则 crash
+   原因：大结构体返回时寄存器布局不同，self/_cmd 位置发生偏移，普通版本读错参数
+ - arm64 起：ABI 统一，两者基本等价，_stret 版本已废弃
  
  五、应用
  总结起来，iOS中的RunTime的作用有以下几点：
- 1.发送消息(obj_msgSend)
+ 1.发送消息(objc_msgSend)
  2.方法交换(method_exchangeImplementations)
  3.消息转发
  4.动态添加方法
@@ -119,17 +100,22 @@
  8.解档与归档
  9.字典转模型
   
- 六、runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
- 实例方法 IMP 查找：
- - 从对象的 isa 指向的类对象开始，沿 superclass（父类）链，查找 selector 对应的方法，并返回其 IMP（函数指针）。
- 类方法 IMP 查找：
- - 从类对象的 isa 指向的元类开始，沿元类的 superclass 链查找 selector 的方法，找到后返回 IMP。
- 
- 方法列表：数组，不是哈希表，用于存储所有方法定义。
- 方法缓存（cache）：哈希表，用于加速 selector 到 IMP 的查找。
+ 六、runtime如何通过selector找到对应的IMP地址？
+
+ 两种方法的查找入口不同，流程一致：
+ 实例方法：从 对象.isa -> 类对象 开始查找
+ 类方法：  从 类对象.isa -> 元类 开始查找
+
+ 查找流程（每一级都重复以下步骤）：
+ 1. 先查当前类的 cache_t（哈希表）   命中 -> 直接返回 IMP
+ 2. 未命中 -> 遍历当前类的 method_list_t（方法列表）
+            已排序 -> 二分查找；未排序 -> 线性遍历
+ 3. 找到 -> 写入 cache_t 缓存 -> 返回 IMP
+ 4. 未找到 -> 沿 superclass 指针到父类，重复 1~3
+ 5. 到 NSObject 仍未找到 -> 进入动态解析 / 消息转发流程
  
  七、使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
-    无论在MRC下还是ARC下均不需要，被关联的对象在生命周期内要比对象本身释放的晚很多，它们会在被 NSObject -dealloc调用的object_dispose()方法中释放
+    无论在MRC下还是ARC下均不需要。宿主对象 dealloc 时，Runtime 会在 object_dispose() 中自动遍历并按 policy 释放所有关联对象，与宿主对象同步销毁，并非"晚很多"。
  
  八、Method / IMP / SEL
  SEL：方法选择器，本质上是方法名的唯一标识（C 字符串映射）
@@ -216,14 +202,14 @@
  };
  
  十、super
-`1、结构
+ 1、结构
  struct objc_super {
-     id receiver;
+     id receiver;     // 消息接收者，仍是 self（子类对象）
      Class super_class;
  };
  objc_msgSendSuper2(struct objc_super * _Nonnull super, SEL _Nonnull op, ...)
 
- 1、[super class]为什么打印当前类？
+ 2、[super class]为什么打印当前类？
  1）消息接收者仍是子类对象
  2）从父类开始查找方法的实现
  3）class实现：
@@ -232,19 +218,22 @@
  }
  
  十一、为什么实例变量不允许运行时添加，方法可以
- 对象的内存布局在编译期就基本确定了，而方法分发是在运行时通过表结构查找完成的，两者的机制完全不同
- 实例变量（ivar）
- - 是对象内存布局的一部分；
- - 偏移在编译期 / 类注册前就确定；
- - 类一旦注册并创建实例，布局就不能变，所以不能在运行时随意添加。
- 
- 方法
- - 存在类对象/元类对象的方法列表中，不占实例内存；
- - 查找在运行时通过 objc_msgSend 动态完成；
- - 修改方法列表只改“类的数据”，不动对象内存，所以可以在运行时添加/替换。
- 
- 如果你想“运行时给对象加属性”，正确做法是：关联对象（Associated Object），本质上是 runtime 维护的一个额外哈希表，而不是改对象自身的 ivar 布局。
- 
+
+ 核心原因：两者的存储位置完全不同。
+
+ 实例变量（ivar）存在对象内存里
+ - 每个对象的大小 = 所有 ivar 的大小之和，编译期就固定
+ - 访问 ivar 依赖偏移量（offset），偏移在类注册时写死
+ - 类注册后一旦有实例存在，再改内存布局会破坏已有实例 -> 禁止添加
+
+ 方法存在类对象/元类的方法列表里，与实例内存无关
+ - 无论有多少实例，方法列表只有一份，存在类对象上
+ - 添加/替换方法只修改类对象的数据，不影响任何实例的内存
+ - objc_msgSend 每次动态查找，改了列表下次自然生效 -> 允许添加
+
+ 想运行时给对象"加属性"：用关联对象（Associated Object）
+ - 本质是 Runtime 维护的全局哈希表，与对象内存完全独立，不改 ivar 布局
+
  */
 
 @interface Mother: NSObject

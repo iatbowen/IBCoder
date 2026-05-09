@@ -49,8 +49,8 @@
  
  常量指针和指针常量区别：
  1、本质
- 指针常量：本质上一个常量，指针用来说明常量的类型，表示该常量是一个指针类型的常量。
- 常量指针：本质上是一个指针，常量表示指针指向的内容，说明该指针指向一个“常量”。
+ 指针常量：本质上一个常量，表示该常量是一个指针类型的常量。
+ 常量指针：本质上是一个指针，说明该指针指向一个“常量”。
 
  2、地址
  指针常量：在指针常量中，指针自身的值是一个常量，不可改变，始终指向同一个地址。在定义的同时必须初始化。
@@ -63,6 +63,9 @@
  
  // 通知名正确写法（指针常量）
  NSString * const MyNotificationName = @"MyNotificationName";
+ 
+ 常量指针：指针指向常量（内容不可改，指针可改）
+ 指针常量：指针本身是常量（指针不可改，内容可改）
  
  */
 - (void)test4
@@ -182,11 +185,15 @@
 @end
 
 /*
- 源对象                    方法            结果对象类型         拷贝类型
- NSString（不可变）         copy           NSString           浅拷贝（指针拷贝）
- NSString（不可变）         mutableCopy    NSMutableString    深拷贝（内容拷贝）
- NSMutableString（可变）    copy           NSString           深拷贝（内容拷贝）
- NSMutableString（可变）    mutableCopy    NSMutableString    深拷贝（内容拷贝）
- 🔑 口诀：不可变 + copy = 浅拷贝，其他都是深拷贝
+ 拷贝规律：不可变 + copy = 浅拷贝，其余均为深拷贝
  
+ 源对象           方法           结果类型            拷贝类型
+ NSString        copy           NSString           浅拷贝
+ NSString        mutableCopy    NSMutableString    深拷贝
+ NSMutableString copy           NSString           深拷贝
+ NSMutableString mutableCopy    NSMutableString    深拷贝
+ 
+ 最佳实践：
+ - NSString   → copy   修饰（防止被可变字符串污染）
+ - NSMutable  → strong 修饰 + 赋值时手动 mutableCopy（保证独立可变副本）
  */

@@ -1,0 +1,55 @@
+MBCoder/MBCoder/Group1/IBController/IBController8.m
+  s_c90e3004d3a71e::t_84893e34747c88 74-117,119-135
+MBCoder/MBCoder/Group1/IBController/IBController5.m
+  s_c90e3004d3a71e::t_6f678583d9bb7b 188-194,196-198
+MBCoder/MBCoder/Group1/IBController/IBController10.m
+  s_c90e3004d3a71e::t_59357e47c20abf 2,28-47,49,52-58,64-69,71-72,74-86,88-124
+MBCoder/MBCoder/Group1/IBController/IBController6.m
+  s_c90e3004d3a71e::t_2597afa452c17e 23-34,36-45,47-84,87-93,96,98-119
+MBCoder/MBCoder/Group1/IBController/IBController9.m
+  s_c90e3004d3a71e::t_0b55209c637cfd 40-64,69-71,74-76
+  s_c90e3004d3a71e::t_f0ba967be36cc4 39,66-68,72-73,77-78
+MBCoder/MBCoder/Group1/IBController/IBController13.m
+  s_c90e3004d3a71e::t_2018f9ee822e3d 74-89
+  s_c90e3004d3a71e::t_8653797c3d62d8 205,207,212
+  s_c90e3004d3a71e::t_8bc15f2a0e67ed 17
+  s_c90e3004d3a71e::t_938f7a03259aa5 103-115
+  s_c90e3004d3a71e::t_208a4489a5ca1e 93
+  s_c90e3004d3a71e::t_3ebb23ccec8405 221-236
+  s_c90e3004d3a71e::t_7dbcb4bc010bff 118
+  s_c90e3004d3a71e::t_0b5ddb3e2126ec 40,42-43
+MBCoder/MBCoder/Group1/IBController/IBController12.m
+  s_c90e3004d3a71e::t_5e5af8ea285dd0 26,52-53,99,101,121,358,360,365-367
+  s_c90e3004d3a71e::t_35b921be257eb9 115
+  s_c90e3004d3a71e::t_77b614692c7aee 74
+  s_c90e3004d3a71e::t_4da437750b6077 20,39-46,48-51,54-57,59-64,66-73,75,97-98,100,102-103,106-107,110-114,116-120,122,137-138,157-163,187,200,217,222,232,252-256,258-259,261,268-271,275,278,284-285,291,300-304,306,324-325,329,332-333,335,342-343,346-347,349,352-355,357,359,362,364,368,370-371,373-375
+  s_c90e3004d3a71e::t_d5628fb38f3885 96
+  s_c90e3004d3a71e::t_bb020ce5f3766c 31-35
+  s_c90e3004d3a71e::t_8aac6a85cab845 47
+  s_c90e3004d3a71e::t_0c04cd4875ffa5 58
+  s_c90e3004d3a71e::t_1507247017690a 109
+  s_c90e3004d3a71e::t_91d951cef8652c 21-25,27-30,36-37
+  s_c90e3004d3a71e::t_728f6e9b85c60f 76-92
+  s_c90e3004d3a71e::t_991ee977c42b88 104
+  s_c90e3004d3a71e::t_1c1e25e6efd357 65
+MBCoder/MBCoder/Group1/IBController/IBController11.m
+  s_c90e3004d3a71e::t_1716b803051131 50-69
+  s_c90e3004d3a71e::t_3a420d2fd0dc50 14,17
+  s_c90e3004d3a71e::t_b87b631d496912 13,15-16,18-49,70-87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "d8cbdc03f7a01101a16988aa58f7935b3c238060",
+  "prompts": {},
+  "sessions": {
+    "s_c90e3004d3a71e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "f6e74158-37b9-41bf-8043-12dcbc8c01e2",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "正北飞 <1214569257@qq.com>"
+    }
+  }
+}

@@ -132,6 +132,29 @@
  - 适合：静态、不频繁变化的复杂视图（带阴影的卡片、固定内容 cell）
  - 不适合：内容频繁变化的视图（每次变化都要重新生成缓存，反而更慢）
  - 缓存有 100ms 超时，超时未使用自动丢弃
+
+ 四、RunLoop 空闲加载（本文件实现方案）
+
+ 原理：监听主线程 RunLoop 的 kCFRunLoopBeforeWaiting 观察者，
+       当 RunLoop 即将进入休眠（无用户事件、无动画）时，执行任务队列中的一个任务。
+       每次只执行一个任务，保证单帧预算不超出，用户交互仍然流畅。
+
+ 核心步骤：
+ 1. CFRunLoopObserverCreate 注册 kCFRunLoopBeforeWaiting 观察者（order = 0xFFFFFF 低优先级）
+ 2. 维护任务队列（NSMutableArray），cellForRow 时 addTask:
+ 3. 观察者回调中取出队首任务执行（通常是图片加载、文本渲染等耗时操作）
+ 4. 快速滚动时 indexPath 不匹配则忽略回调，防止错误显示
+
+ 优势：比 dispatch_async(main) 更细粒度，严格对齐帧边界；
+       比 dispatch_after 更准确，不依赖固定延迟时间。
+
+ 五、UITableViewDataSourcePrefetching（iOS 10+）
+
+ - 遵守 UITableViewDataSourcePrefetching 协议，提前加载即将出现的 cell 数据
+ - tableView:prefetchRowsAtIndexPaths:：提前加载数据/图片（在此发起网络/IO）
+ - tableView:cancelPrefetchingForRowsAtIndexPaths:：滚动方向改变时取消不需要的预取
+ - 与 cellForRowAtIndexPath: 解耦，使 cell 出现时数据已就绪，无需等待
+
 */
 
 

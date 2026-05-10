@@ -205,122 +205,260 @@
 @end
 
 /*
- 一、MVC:
- 视图（View）：用户界面.
- 控制器（controller）：业务逻辑
- 模型（Model）： 数据保存
- 
- 1、理想化的MVC
- 相互联系：
- Controller持有Model和View，
- Model和View相互独立，都不持有Controller。
- 通信方式：
- Model改变通过Notification和KVO的方式传递给Controller，Controller跟新View。
- View接受响应事件则通过delegate，target-action，block等方式告诉Controller，Controller跟新Model。
- 优缺点：
- 优点：View和Model可以重复利用，可以独立使用
- 缺点：Controller的代码过于臃肿
- 
- 2、变种的MVC
- 相互联系：
- View持有了Model，View依据Model来展示数据，VC组装Model，组装展示是在View中实现。
- 优缺点：
- 优点：对Controller进行瘦身，将View的内部细节封装起来了，外界不知道View内部的具体实现
- 缺点：View依赖于Model
- 解决办法：
- 通过让View分类持有Model，组装数据
 
+ ============================================================
+ iOS 架构模式 面试题总结
+ ============================================================
+
+ 一、MVC
+ ──────────────────────────────────────────
+
+ 【三层职责】
+ - View       ：用户界面，负责展示内容和接收用户交互
+ - Controller ：业务逻辑，持有 Model 和 View，负责协调两者通信
+ - Model      ：数据层，负责数据存储、网络请求和业务规则
+
+ 【通信方式】
+ - Model → Controller ：Notification / KVO
+ - Controller → View  ：直接调用 / 属性赋值
+ - View → Controller  ：delegate / target-action / block
+
+ 【理想化 MVC】
+ Controller 持有 Model 和 View，Model 与 View 相互独立、互不持有 Controller。
+ 优点：View 和 Model 可独立复用
+ 缺点：Controller 容易承担过多职责，代码臃肿（Massive View Controller）
+
+ 【变种 MVC（iOS 常见写法）】
+ View 持有 Model，直接根据 Model 渲染内容；VC 只负责组装和传递 Model。
+ 优点：对 Controller 瘦身，View 内部封装渲染细节，外界不感知实现
+ 缺点：View 与 Model 耦合，复用性降低
+ 解决：通过 Category（分类）让 View 持有 Model，将组装逻辑内聚在 View 内部
+
+
+ ============================================================
  二、MVP
- V层：UIView和UIViewController以及子类
- P层：中介(关联M和V)，业务逻辑，负责调用数据加载，然后再通过界面接口，将数据模型组合传递给V去展示
- M层：数据层(数据:数据库,网络,文件等等)
- 
- 相互关系：
- V层和P层之间是相互持有的关系，P层单向持有M层
- 
- 优缺点：
- 优点：模型与视图完全分离；presenter可以被多个视图复用
- 缺点：V层和P层关联，V层更新P层也需要更新
- 
- 三、MVVM（比MVP多了双向绑定）
- 1. 三大核心组件
- - Model(模型)：负责数据和业务逻辑，不关心 UI 如何展示
- - View(视图)：负责界面展示，只关注用户界面和交互，通过数据绑定与 ViewModel 交互,不直接调用业务逻辑
- - ViewModel(视图模型)：View 与 Model 之间的桥梁，暴露数据和命令(Command)给 View，处理 View 的展示逻辑,但不持有 View 的引用
- 
- 2.架构关系图
+ ============================================================
+
+ 【三层职责】
+ - View      ：UIView + UIViewController，只负责 UI 展示和转发用户事件，不含业务逻辑
+ - Presenter ：中介层，持有 View（通过 Protocol）和 Model，处理所有业务逻辑
+ - Model     ：数据层（网络 / 数据库 / 文件）
+
+ 【持有关系】
+ View ←──── Presenter ────→ Model
+ （View 和 Presenter 互相持有；Presenter 单向持有 Model）
+
+ 【与 MVC 的关键区别】
+ MVC 中 ViewController 既是 Controller 又持有 View，业务与 UI 难以分离。
+ MVP 中 ViewController 归属于 View 层，Presenter 通过 Protocol 与 View 通信，
+ 不持有具体 View 对象，Presenter 可单独做单元测试。
+
+ 优点：Model 与 View 完全分离；Presenter 可被多个 View 复用；易于单元测试
+ 缺点：View 每次变动需同步维护对应的 Protocol 接口，接口膨胀时维护成本高
+
+
+ ============================================================
+ 三、MVVM
+ ============================================================
+
+ 【三层职责】
+ - Model     ：数据和业务逻辑，不关心 UI 展示
+ - View      ：界面展示，通过数据绑定与 ViewModel 交互，不直接调用业务逻辑
+ - ViewModel ：View 与 Model 的桥梁，暴露可观察数据和命令给 View，不持有 View 的引用
+
+ 【架构关系】
  ┌─────────┐  数据绑定    ┌────────────┐  调用    ┌─────────┐
  │  View   │ ←────────→  │ ViewModel  │ ───────→ │  Model  │
  │  (UI)   │  命令绑定    │ (状态/逻辑) │ ←─────── │ (数据)  │
  └─────────┘             └────────────┘  数据返回 └─────────┘
- 
- 3. 核心规则
- 规则                                 说明
- ✅ View → ViewModel                 View 可引用 ViewModel,反之不可
- ✅ ViewModel → Model                ViewModel 可引用 Model,反之不可
- ✅ ViewController 拥有 ViewModel     VC 持有 VM 实例
- ✅ ViewModel 之间可依赖               支持组合复用
- 
- 4. ViewModel 的双向绑定
- ViewModel 是 View 与 Model 的桥梁,通过 Observer(观察者) 实现双向通信:
- 
- ┌──────────────────────────────────┐
- │          ViewModel               │
- │  ┌────────────────────────────┐  │
- │  │  Observable 可观察数据       │  │
- │  └────────────────────────────┘  │
- └────▲──────────────────────▲──────┘
-      │ 监听数据变化           │ 监听UI事件
-      │ (数据绑定)            │ (事件监听)
- ┌────┴──────────┐      ┌────┴──────────┐
- │     View      │      │    Model      │
- │  (UI 显示)     │      │  (数据存储)    │
- └───────────────┘      └───────────────┘
+
+ 【核心规则】
+ ✅ View 可引用 ViewModel，反之不可（ViewModel 不持有 View）
+ ✅ ViewModel 可引用 Model，反之不可
+ ✅ ViewController 持有 ViewModel 实例
+
+ 【双向绑定原理】
+ ViewModel 暴露可观察的数据，View 订阅变化后自动刷新 UI；
+ View 的用户操作通过事件传递给 ViewModel 驱动 Model 更新。
+
+ 方向             含义                  实现机制
+ Model → View    数据变化驱动 UI 更新    数据绑定（观察者）
+ View → Model    UI 操作驱动数据变化     事件绑定 / 命令模式
+
+ 优点：低耦合；ViewModel 不依赖 UIKit，易于单元测试；数据绑定减少胶水代码
+ 缺点：数据绑定学习成本高；数据流链路长时难以追踪；小项目引入成本偏高
 
 
- 方向             含义                  实现方式
- Model → View    数据变化驱动 UI 更新    数据绑定
- View → Model    UI 操作驱动数据变化     事件监听
-
- 5. 优缺点：
- 优点：低耦合，可重用性，可测试
- 缺点：数据绑定使得 MVVM 变得复杂和难用
-
+ ============================================================
  四、MVI
- 强调单一数据流和不可变状态。MVI 的核心思想是通过 Intent 驱动状态变化，并用单一的状态对象来描述整个 UI。
- 1、Model 职责：处理数据逻辑，包括从网络或数据库获取数据。
- 2、View 职责：展示 UI 并响应用户交互，渲染单一的状态对象。
- 3、Intent 职责：用户意图的封装，触发状态变化。
- 4、State 职责：表示 UI 的单一状态。
- 
- MVI 强调数据的单向流动，主要分为以下几步：
- 1、用户操作以 Intent 的形式通知 Model
- 2、Model 基于 Intent 更新 State
- 3、View 接收到 State 变化刷新 UI。
- 
- 与MVVM主要区别在 于 Model 与 View 层交互的部分
- Model 层承载 UI 状态，并暴露出 ViewState 供 View 订阅，ViewState 是个 data class,包含所有页面状态
- View 层通过 Intent 更新 ViewState，替代 MVVM 通过调用 ViewModel 方法交互的方式
- 通过 Intent 通信，有利于 View 与 ViewModel 之间的进一步解耦，同时所有调用以 Intent 的形式汇总到一处，也有利于对行为的集中分析和监控
- 
- 五、Flux
- 基本概念
- View： 应用视图，可展示Store数据，并实时响应Store的更新。
- Action（动作）：动作消息，包含动作类型与动作描述。
- Dispatcher（派发器）：接收到Action，并将它们发送给Store
- Store（数据层）：数据中心，持有应用程序的数据，并会响应Action消息
- 
- Flux 的最大特点，就是数据的"单向流动"。
- 1、视图产生动作消息，将动作传递给调度器
- 2、调度器将动作消息发送给每一个数据中心
- 3、数据中心再将数据传递给视图
+ ============================================================
 
+ 【核心思想】单一数据流 + 不可变状态
+
+ 【四个核心概念】
+ - View   ：渲染 ViewState，将用户交互封装为 Intent 发出，不含任何逻辑
+ - Intent ：用户意图的封装，描述"用户想做什么"，是状态变化的唯一入口
+ - Model  ：承载完整的 UI 状态（ViewState），每次更新生成新的不可变状态对象
+ - State  ：描述某一时刻 UI 的完整快照，包含页面所需的全部数据
+
+ 【单向数据流】
+ Intent → Model（处理 Intent，生成新 State）→ View（渲染 State）→ Intent…
+
+ 【与 MVVM 的关键区别】
+ - MVVM：View 直接调用 ViewModel 方法；状态可能分散在多个属性中
+ - MVI ：View 只能发出 Intent，禁止直接调用方法；所有状态集中在单一 ViewState 对象
+ - MVI 的状态不可变，每次更新生成新 State，支持历史状态回放，便于调试
+ - 所有 Intent 汇总到一处，有利于行为监控和埋点分析
+
+ iOS 实现：可结合 Combine / RxSwift 实现，Swift 中常配合 async/await 使用
+
+
+ ============================================================
+ 五、Flux
+ ============================================================
+
+ 【四个核心概念】
+ - View       ：展示 Store 数据，响应 Store 更新触发重新渲染
+ - Action     ：动作消息，包含 type（动作类型）和 payload（携带数据）
+ - Dispatcher ：接收所有 Action，将其广播给所有 Store
+ - Store      ：数据中心，响应 Action 更新状态，通知 View 重新渲染
+
+ 【单向数据流】
+ View → Action → Dispatcher → Store → View（更新）
+
+ Flux 解决了传统 MVC 中 Model 与 View 双向依赖导致的数据流混乱问题，
+ 强制所有状态变更必须经过 Dispatcher，使数据流向清晰可追踪。
+
+
+ ============================================================
  六、Redux
- Flux的基本原则是“单向数据流”，Redux在此基础上强调三个基本原则：
- 1、唯一数据源（Single Source of Truth）：整个应用只保持一个Store，所有组件的数据源就是这个Store上的状态。
- 2、保持状态只读（State is read-only）：不直接修改状态，要修改Store的状态，必须要通过派发一个action对象完成。
- 3、数据改变只能通过纯函数完成（Changes are made with pure funtions）：这里所说的纯函数是指reducer。reducer函数接受两个参数：reducer(state,action)。
-   第一个参数state是当前的状态，第二个参数action是收受到的action对象，
-   reducer函数要做个事情就是根据state和action的值产生一个新的对象返回（返回的结果必须完全由参数state和action决定，而且不应产生任何副作用）。
- 
+ ============================================================
+
+ Flux 的演进版本，在单向数据流基础上强调三个原则：
+
+ 1. 唯一数据源（Single Source of Truth）
+    整个应用只有一个 Store，所有状态存在同一棵状态树中，便于调试和持久化。
+
+ 2. 状态只读（State is read-only）
+    不直接修改 State，只能通过 dispatch(action) 触发状态变更，保证变更可追踪。
+
+ 3. 纯函数变更（Pure Reducer）
+    reducer(state, action) → newState
+    Reducer 是纯函数：相同输入必然产生相同输出，无副作用，极易测试和回放。
+    入参 state 是当前状态，action 是动作对象；必须返回全新 state，不能修改原有对象。
+
+ iOS 实现：ReSwift 库是 Redux 思想的 Swift 实现，适合需要全局状态管理的应用。
+
+
+ ============================================================
+ 七、VIPER
+ ============================================================
+
+ 【五层职责】
+ - View       ：展示 UI，将用户事件转发给 Presenter，不含任何业务/数据逻辑
+ - Interactor ：业务逻辑层，处理 Use Case（用例），与 Entity 交互获取数据，不依赖 UIKit
+ - Presenter  ：协调层，从 Interactor 取数据后格式化，驱动 View 展示；调用 Router 跳转
+ - Entity     ：纯数据模型，只有数据结构，不含业务逻辑
+ - Router     ：路由层，负责模块间页面跳转，Presenter 通过 Router 触发导航
+
+ 【数据流向（严格单向）】
+ 用户交互 → View → Presenter → Interactor → Entity（获取数据）
+                      ↑              ↓（回调结果）
+                   View 刷新 ←── Presenter（格式化数据后驱动 View）
+                      ↓
+                   Router（需要跳转时触发）
+
+ 【与 MVC/MVVM 的关键区别】
+ - 单一职责彻底落地：每一层只做一件事，职责边界极其清晰
+ - Interactor 纯 Swift/ObjC 逻辑，完全不依赖 UIKit，单元测试极为友好
+ - Router 层解耦模块跳转，各模块互不依赖，适合大型团队多人并行开发
+
+ 优点：职责单一，可测试性最强，适合大型复杂项目
+ 缺点：一个页面通常需要 5+ 个文件 + 多个 Protocol，小项目成本极高
+
+
+ ============================================================
+ 八、MVC 的 Massive ViewController 问题与瘦身方案
+ ============================================================
+
+ 【问题根源】
+ iOS 中 UIViewController 承担了过多职责：
+ 网络请求、数据解析、业务逻辑、布局计算、事件响应、生命周期管理……
+ 导致 VC 动辄数千行，难以维护和测试。
+
+ 【常见瘦身方案】
+ 1. 抽取独立的 DataSource / Delegate 对象
+    将 UITableView 的 dataSource 封装为单独的类，VC 只负责创建和持有
+
+ 2. 抽取业务逻辑到 Service / Manager / UseCase 层
+    网络请求、本地存储、数据加工逻辑从 VC 中抽离
+
+ 3. 使用 Category（分类）拆分 VC 功能模块
+    按功能域拆分（如 +Network、+TableView、+Layout），一个 VC 多个文件
+
+ 4. 升级为 MVP / MVVM
+    将展示逻辑移入 Presenter / ViewModel，VC 只剩 UI 组装和绑定
+
+
+ ============================================================
+ 九、MVVM 在 iOS 中的双向绑定实现方式
+ ============================================================
+
+ 1. KVO + KVOController（Facebook 开源）
+    手动注册 keyPath 观察；KVOController 解决了原生 KVO 忘记 removeObserver 导致崩溃的问题。
+    本文件代码即采用此方式监听 viewModel.selectedData：
+    [self.KVOController observe:self.viewModel keyPath:@"selectedData" ...]
+
+ 2. ReactiveCocoa（RAC）
+    函数响应式编程（FRP）框架，通过 RACSignal 实现声明式数据流绑定：
+    RAC(self.label, text) = RACObserve(self.viewModel, title);
+
+ 3. RxSwift
+    Swift 版 FRP 框架，通过 Observable / Subject 实现绑定：
+    viewModel.title.bind(to: label.rx.text).disposed(by: bag)
+
+ 4. Combine（Apple 官方，iOS 13+）
+    原生 FRP 框架，通过 Publisher / Subscriber 实现绑定：
+    viewModel.$title.receive(on: RunLoop.main).assign(to: \.text, on: label)
+
+ 5. 手动 Closure 回调（轻量级，无三方依赖）
+    ViewModel 暴露 var onTitleChanged: ((String) -> Void)?
+    数据变化时执行 closure，View 层在 closure 中更新 UI
+
+
+ ============================================================
+ 十、各架构横向对比
+ ============================================================
+
+ ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐
+ │  维度    │   MVC    │   MVP    │   MVVM   │  VIPER   │   MVI    │
+ ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+ │ 复杂度   │  低      │  中      │  中      │  高      │  中高    │
+ ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+ │ 可测试性  │  低      │  高      │  高      │  最高    │  高      │
+ ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+ │ 耦合度   │  高      │  低      │  低      │  最低    │  低      │
+ ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+ │ 文件数量  │  少      │  较多    │  较多    │  很多    │  较多    │
+ ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+ │ 数据流向  │  双向    │  双向    │  双向绑定 │  单向    │  严格单向 │
+ ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+ │ 适用场景  │ 小型项目  │ 中型项目  │ 中大型   │ 大型项目  │ 复杂状态  │
+ └──────────┴──────────┴──────────┴──────────┴──────────┴──────────┘
+
+
+ ============================================================
+ 十一、如何选择架构
+ ============================================================
+
+ - 小型 / 快速迭代项目  → MVC，开发速度最快，团队上手成本低
+ - 需要单元测试        → MVP 或 MVVM，Presenter / ViewModel 不依赖 UIKit，易于独立测试
+ - 数据驱动 UI 较重    → MVVM + Combine / RxSwift，数据绑定减少模板代码
+ - 大型团队 / 多人协作  → VIPER，职责边界明确，各层可并行开发，互不阻塞
+ - 复杂页面状态管理    → MVI，状态不可变、可回放，便于调试历史状态
+ - 全局状态共享场景    → Redux（ReSwift），集中状态管理，适合多模块共享数据
+
+ ⚠️ 没有最好的架构，只有最适合当前团队和项目规模的架构。
+    过度设计（如小项目用 VIPER）比 MVC 臃肿更难维护。
+
 */

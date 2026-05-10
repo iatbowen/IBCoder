@@ -20,231 +20,246 @@
 }
 
 /*
- 一、系统的优化
- 1、__builtin_expect(EXP, N)的作用[意思是：EXP==N的概率很大]
- 帮助程序处理分支预测，达到优化程序。
- a、处理器一般采用流水线模式，有些里面有多个逻辑运算单元，系统可以提前取多条指令进行并行处理，
-    但遇到跳转时，则需要重新取指令，这相对于不用重新去指令就降低了速度。
- b、作用优化分支（比如if）处理。
- 
- 例子：
- if (__builtin_expect(x, 0)) {
-    return 1;
+
+ ============================================================
+ 编译原理、LLVM、Mach-O 与编译优化 面试题总结
+ ============================================================
+
+ 一、__builtin_expect 与分支预测优化
+ ──────────────────────────────────────────
+
+ 【原理】
+ 现代 CPU 采用流水线（Pipeline）技术：在一条指令未执行完时，就预取后续指令并行处理。
+ 遇到条件跳转（if/else）时，CPU 需要预测走哪个分支，若预测失败则必须清空流水线重新取指，
+ 造成 10~20 个时钟周期的惩罚（Pipeline Flush）。
+
+ __builtin_expect(EXP, N) 是 GCC/Clang 提供的编译器提示，告知编译器 EXP == N 的概率很大，
+ 让编译器将"高概率路径"的代码排在前面（减少跳转），提升 CPU 分支预测准确率。
+
+ 【示例】
+ if (__builtin_expect(x, 0)) {   // 告知编译器：x 为 0 的概率很大
+     return 1;
  } else {
-    return 2;
+     return 2;
  }
- 
- x的期望值为0，也就是x有很大概率为0， 所以走if分支的可能性较小，所以编译会这样编译
- 
- if (!x) {
-    return 2;
- } else {
-    return 1;
- }
- 
- 每次cpu都能大概率的执行到预取的编译后的if分支，从而提高了分支的预测准确性，从而提高了cpu指令的执行速度
- 
- 2、总结：
- likely(x)也叫fastpath __builtin_expect(!!(x), 1) 该条件多数情况下会发生
- unlikely(x)也叫slowpath  __builtin_expect(!!(x), 0) 该条件下极少发生
- 
- 二、LLVM架构
- 
- 1、LLVM架构
- Language       Frontend               Optimizer               Backend             机器
-  C/C++..    Clang Frontend                                  LLVM X86 Backend      X86
-  Fortran   llvm-gcc Frontend        LLVM Optimizer        LLVM PowerPC Backend   PowerPC
-  Haskell     GHC Frontend                                   LLVM ARM Backend      ARM
- 
- 不同的前端后端使用统一的中间代码LLVM Intermediate Representation (LLVM IR)
- a.如果需要支持一种新的编程语言，那么只需要实现一个新的前端
- b.如果需要支持一种新的硬件设备，那么只需要实现一个新的后端
- c.优化阶段是一个通用的阶段，它针对的是统一的LLVM IR，不论是支持新的编程语言，还是支持新的硬件设备，都不需要对优化阶段做修改
- d.相比之下，GCC的前端和后端没分得太开，前端后端耦合在了一起。所以GCC为了支持一门新的语言，或者为了支持一个新的目标平台，就 变得特别困难
- e.LLVM现在被作为实现各种静态和运行时编译语言的通用基础结构
- 
- 2、各端作用
- Frontend：前端，词法分析、语法分析、语义分析、生成中间代码(LLVM IR)
- 在这个过程中，会进行类型检查，如果发现错误或者警告会标注出来在哪一行。
- 
- Optimizer：优化器，中间代码优化
- 
- 
- Backend：后端，生成机器码
- LVVM优化器会进行BitCode的生成，链接期优化等等。
- LLVM机器码生成器会针对不同的架构，比如arm64等生成不同的机器码。
- 
- 3、Clang
- LLVM项目的一个子项目，LLVM架构的C/C++/Objective-C编译器前端，官网:http://clang.llvm.org/
- 
- 相比于GCC，Clang具有如下优点
- 编译速度快:在某些平台上，Clang的编译速度显著的快过GCC(Debug模式下编译OC速度比GGC快3倍)
- 占用内存小:Clang生成的AST所占用的内存是GCC的五分之一左右
- 模块化设计:Clang采用基于库的模块化设计，易于 IDE 集成及其他用途的重用
- 诊断信息可读性强:在编译过程中，Clang 创建并保留了大量详细的元数据 (metadata)，有利于调试和错误报告
- 设计清晰简单，容易理解，易于扩展增强
- 
- 4、OC源文件的编译过程，测试文件（llvm.c）
- 
- 4.1 命令行查看编译的过程:$ clang -ccc-print-phases llvm.c
- 
- 0: input, "llvm.c", c
- 1: preprocessor, {0}, cpp-output
- 2: compiler, {1}, ir
- 3: backend, {2}, assembler
- 4: assembler, {3}, object
- 5: linker, {4}, image
- 6: bind-arch, "x86_64", {5}, image
- 
- 1）预处理：
- 这阶段的工作主要是头文件导入，宏展开/替换，预编译指令处理，以及注释的去除。
+ 编译器会将 else 分支（x==0）生成为顺序执行路径，if 分支生成为跳转路径，
+ CPU 直接顺序执行的概率大幅提升。
 
- 2）编译：
- 这阶段做的事情比较多，主要有：
- a. 词法分析（Lexical Analysis）：将代码转换成一系列单词（token）
- b. 语法分析（Semantic Analysis）：将 token 流组成抽象语法树 AST；
- c. 静态分析（Static Analysis）：检查代码错误，例如参数类型是否错误，调用对象方法是否有实现；
- d. 中间代码生成（Code Generation）：将语法树自顶向下遍历逐步翻译成 LLVM IR。
+ 【宏封装（Linux 内核常见用法）】
+ #define likely(x)   __builtin_expect(!!(x), 1)   // 该条件大概率为真（fastpath）
+ #define unlikely(x) __builtin_expect(!!(x), 0)   // 该条件极少为真（slowpath）
 
- 3）生成汇编代码：
- LLVM 将 LLVM IR 生成当前平台的汇编代码，期间 LLVM 根据编译设置的优化级别 Optimization Level 做对应的优化（Optimize）
+ 使用场景：错误处理路径（错误极少发生）、热点循环中的边界检查等。
 
- 4）生成目标文件：
- 汇编器（Assembler）将汇编代码转换为机器代码，它会创建一个目标对象文件，以 .o 结尾。
- 
- 5）链接：
- 链接器（Linker）把若干个目标文件链接在一起，生成可执行文件。
- 
- 6）机器码
- 通过不同的架构生成对应的可执行文件（机器码Match-o）
- 
- 4.2 查看preprocessor(预处理)的结果:$ clang -E llvm.c
- 
- 4.3 词法分析，生成Token: $ clang -fmodules -E -Xclang -dump-tokens llvm.c
 
- 4.4 语法分析，生成语法树(AST，Abstract Syntax Tree): $ clang -fmodules -fsyntax-only -Xclang -ast-dump llvm.c
- 
- 4.4 中间代码（LLVM IR）
- 
- LLVM IR有3种表示形式
- text:便于阅读的文本格式，类似于汇编语言，拓展名.ll
-    未优IR：$ clang -S -emit-llvm llvm.c
-    优化IR：$ clang -O3 -S -emit-llvm llvm.c
- memory:内存格式
- bitcode:二进制格式，拓展名.bc， $ clang -c -emit-llvm llvm.c
+ ============================================================
+ 二、LLVM 三段式架构
+ ============================================================
 
- 官方语法参考：
- https://llvm.org/docs/LangRef.html
- 
- 
- 三、iOS项目编译过程
- 
- 3.1、子工程编译过程
- 1）Write auxiliary files
-    生成一些辅助文件，主要是 .hmap、LinkFileList 文件，用于辅助执行编译用的，可以提高二次编译速度。
- 2）编译 .m 文件
-   .m 是主要的源文件，经过预编译操作后，这里的 .m 是展开后的，可以独立编译生成最后的 .o 文件。这里 CompileC 命令和 clang 命令
- 3）编译 xxx-dummy.m 文件
-    xxx-dummy.m 文件是 CocoaPods 使用的用于区分不同 pod 的编译文件，每个第三方库有不同的 target，
-    所以每次编译第三方库时，都会新增几个文件：包含编译选项的.xcconfig文件，
-    同时拥有编译设置和 CocoaPods 配置的私有 .xcconfig 文件，编译所必须的prefix.pch文件以及编译必须的文件 dummy.m
- 4）写入LinkFileList，列出了编译后的每一个.o目标文件的信息
- 5）创建当前架构的静态库.a文件
- 
- 3.2、主工程编译过程
- 1）创建.app包
- 2）创建Entitlements.plist，为你的App授予特定的能力以及一些安全方面的权限
- 3）Process Product Packaging
- 4）Write Auxiliary File，主要是script.sh(Check Pods Manifest.lock)、header.hmap、LinkFileList、all-product-headers.yaml 文件
- 5）Run custom shell script '[CP] Check Pods Manifest.lock'
- 6）Precompile xxx.pch （9s）
- 7）编译文件：针对每一个文件进行编译，生成可执行文件 Mach-O，这过程 LLVM 的完整流程，前端、优化器、后端（具体分析）
- 8）链接文件：链接器做的事就是把这些目标文件和所用的一些库链接在一起形成一个完整的可执行文件（33s）
- 9）Compile AssetCatalog（36s）
- 10）拷贝资源文件：将项目中的资源文件拷贝到目标包（耗时很大）
- 11）Process Info.plist
- 12）Run custom shell script '[CP] Copy Pods Resources' （5s）
- 13）Generate app.dSYM
- 14）Run custom shell script '[CP] Embed Pods Frameworks'（32s）
- 15）Run custom shell script 'Run Script' （4s）
- 16）Sign xxx.app
+ 【架构设计】
+ 传统编译器（如 GCC）前后端耦合严重，支持新语言或新平台需要大量修改。
+ LLVM 采用三段式设计，以 LLVM IR 为通用中间表示，彻底解耦：
 
- 四、替换Clang：
- 操作步骤：
- 1. 下载llvm进行编译，下载网页：http://releases.llvm.org/download.html。
-    也可以在Pre-Built Binaries目录下下载已经编译好的
- 2. 解压后，在 Xcode 的 Build Settings 下的 User-Defined 添加键 CC,值就就是你刚解压的clang的位置 {解压路径}/bin/clang
- 3. 在 Build Settings 里搜索 OTHER_CFLAGS 添加参数 -ftime-trace
- 4. 这个时候编译会报这个错误，Unknown argument: '-index-store-path'，在Build Setting 中搜索index并将Enable Index-While-Building Functionality选项设置为NO
- 5. chrome://tracing
- 这个时候就可以编译了，如果当前工程依赖其他工程，比如Pods工程，如果编译出现一些链接错误的话，那就也把这些工程改为下载的clang编译，重复上面的2、3、4步。
- 
- 脚本修改：
- post_install do |installer|
-   
-   puts "##### post_install start #####"
-   
-   installer.pod_targets.each do |target|
-     installer.generated_projects.flat_map { |p| p.targets }.each do |target|
-       puts "targetName: #{target.name}"
-       target.build_configurations.each do |config|
-         config.build_settings['CC'] = '/Users/bowencoder/Desktop/llvm_release/bin/clang'
-         config.build_settings['CXX'] = '/Users/bowencoder/Desktop/llvm_release/bin/clang'
-         config.build_settings['OTHER_CFLAGS'] = '-ftime-trace'
-         config.build_settings['COMPILER_INDEX_STORE_ENABLE'] = 'NO'
-       end
-     end
-   end
-   
-   puts "##### post_install end #####"
-   
- end #installer
+   前端（Frontend）→ LLVM IR → 优化器（Optimizer）→ LLVM IR → 后端（Backend）→ 机器码
 
- 
- 五、编译速度优化
- 
- 1、修改工程配置
- 1.1 编译时长优化Architectures：多余
- a、Architectures 是指定工程支持的指令集的集合，如果设置多个architecture，则生成的二进制包会包含多个指令集代码，提及会随之变大。
- b、Valid Architectures 有效的指令集集合，Architectures与Valid Architectures的交集来确定最终的数据包含的指令集代码。
- c、Build Active Architecture Only 指定是否只对当前连接设备所支持的指令集编译，默认Debug的时候设置为YES，Release的时候设为NO。
-    Debug设置为YES时只编译当前的architecture版本，生成的包只包含当前连接设备的指令集代码；
-    设置为NO时，则生成的包包含所有的指令集代码（上述的V艾力达Architecture与Architecture的交集）
- 
- 1.2、编译时长优化 Precompile Prefix Header 预编译头文件
-    将Precompile Prefix Header设为YES时，pch文件会被预编译，预编译后的pch会被缓存起来，从而提高编译速度。
-    需要编译的pch文件在Prefix Header中注册即可。
- 
- 1.3、编译时长优化 Compile - Code Generation Optimization Level，无用
-    注意：在设置编译优化之后，XCode断点和调试信息会不正常，所以一般静态库或者其他Target这样设置
- 
- 1.4、将Debug Information Format改为DWARF
-    这一项设置的是是否将调试信息加入到可执行文件中，改为DWARF后，如果程序崩溃，将无法输出崩溃位置对应的函数堆栈，
-    但由于Debug模式下可以在XCode中查看调试信息，所以改为DWARF影响并不大。这一项更改完之后，可以大幅提升编译速度。
- 
- 1.5、Debug模式关闭 Link Time Optimization
-    注意：编译优化的代价是损失build时间，参考：https://www.jianshu.com/p/58fef052291a
- 
- 1.6、采用新构建系统（New Build System）
-      参考：https://blog.csdn.net/tugele/article/details/84885211
- 
- 1.7、增加XCode执行的线程数
- 
- 
- 2、项目优化（开发者密切相关）
- 
- 2.1、减少编译文件和资源：无用的类，库，图片去掉
- 
- 2.2、静态库
-      基础组件和三方库打成二进制，就编译时间就会减少。但是这样一来 调试就不方便了，所以这是个取舍问题。
- 
- 2.3、去掉无效引用和头文件使用@class
-     OC的优化，重点在于减少无效引用，对编译时长的优化提升非常明显。 通过 log 看哪些文件编译时间比较长的文件，进行优化。
+   前端举例：Clang（C/C++/OC）、llvm-gcc（Fortran）、GHC（Haskell）、swiftc（Swift）
+   后端举例：LLVM X86 Backend、LLVM ARM Backend、LLVM PowerPC Backend
 
- 2.4、优化pch文件，删除用的不多的引用
- 
- 2.5、去掉nib文件
- 
+ 【三段各自职责】
+
+ 1. 前端（Frontend）
+    词法分析 → 语法分析 → 语义分析 → 类型检查 → 生成 LLVM IR
+    负责将源代码转换为与平台无关的中间表示，同时输出编译错误/警告及其行号。
+
+ 2. 优化器（Optimizer）
+    对 LLVM IR 进行平台无关的通用优化，包括：
+    - 常量折叠（Constant Folding）
+    - 死代码消除（Dead Code Elimination）
+    - 内联展开（Function Inlining）
+    - 循环优化（Loop Unrolling / Loop Vectorization）
+    - 全局值编号（GVN）等
+    优化级别：-O0（不优化）/ -O1 / -O2 / -O3（最激进）/ -Os（优化代码尺寸）
+
+ 3. 后端（Backend）
+    将优化后的 LLVM IR 转换为目标平台的汇编代码，再经汇编器生成机器码（.o 文件）。
+    不同架构（arm64、x86_64）各自有独立的后端实现。
+
+ 【LLVM IR 的三种形式】
+ text（.ll）   ：文本格式，类汇编语言，人类可读
+                 未优化：$ clang -S -emit-llvm source.m
+                 优化后：$ clang -O3 -S -emit-llvm source.m
+ memory        ：内存中的数据结构，编译器内部使用
+ bitcode（.bc）：二进制格式，用于分发和 Apple Bitcode 提交
+                 $ clang -c -emit-llvm source.m
+
+
+ ============================================================
+ 三、Clang 与 GCC 对比
+ ============================================================
+
+ Clang 是 LLVM 的 C/C++/Objective-C 编译器前端，相比 GCC 的优势：
+
+ 编译速度    ：Debug 模式下编译 OC 代码比 GCC 快约 3 倍
+ 内存占用    ：生成的 AST 内存占用约为 GCC 的 1/5
+ 诊断信息    ：错误提示更精准（指出具体列号、提供 Fix-it 提示）
+ 模块化设计  ：基于库的模块化设计，易于 IDE 集成（Xcode SourceKit）和工具复用
+ 静态分析    ：内置强大的 Clang Static Analyzer，支持路径敏感分析
+ 可扩展性    ：支持 Clang Plugin 机制，可自定义 AST 检查和代码转换
+
+
+ ============================================================
+ 四、OC 源文件完整编译流程
+ ============================================================
+
+ 查看完整编译阶段：$ clang -ccc-print-phases source.m
+
+ 【阶段 1：预处理（Preprocessor）】
+ 处理所有以 # 开头的指令：
+ - 头文件展开（#import / #include）
+ - 宏展开与替换（#define）
+ - 条件编译（#ifdef / #ifndef）
+ - 注释删除
+ 查看结果：$ clang -E source.m
+
+ 【阶段 2：编译（Compiler）— 前端主要工作】
+ a. 词法分析（Lexical Analysis）
+    将源码字符流转换为 Token 序列（标识符、关键字、运算符、字面量等）
+    查看：$ clang -fmodules -E -Xclang -dump-tokens source.m
+
+ b. 语法分析（Syntax Analysis）
+    将 Token 序列按语法规则组织成抽象语法树（AST）
+    查看：$ clang -fmodules -fsyntax-only -Xclang -ast-dump source.m
+
+ c. 语义分析（Semantic Analysis）
+    类型检查、方法调用验证、变量未声明检查，产生编译警告/错误
+
+ d. 中间代码生成（IR Generation）
+    将 AST 自顶向下遍历翻译为 LLVM IR
+
+ 【阶段 3：优化（Optimizer）】
+ 对 LLVM IR 进行平台无关优化（由 -O0/-O1/-O2/-O3/-Os 控制优化程度）
+
+ 【阶段 4：后端生成汇编（Backend）】
+ 将优化后的 LLVM IR 转换为目标架构汇编代码（.s 文件）
+
+ 【阶段 5：汇编（Assembler）】
+ 汇编器（as）将汇编代码转换为机器码，生成可重定位目标文件（.o 文件）
+ .o 文件本质上是一个 Mach-O 格式的文件（可重定位类型）
+
+ 【阶段 6：链接（Linker）】
+ 链接器（ld）将多个 .o 文件及静态库/动态库链接，生成最终可执行的 Mach-O 文件
+ 主要工作：符号解析（Symbol Resolution）、重定位（Relocation）
+
+
+ ============================================================
+ 五、Mach-O 文件格式
+ ============================================================
+
+ （Mach-O 文件结构、Load Commands、Segments/Sections、符号表、dSYM、ASLR 详见 IBController23）
+
+
+ ============================================================
+ 六、iOS 项目 Xcode 编译流程
+ ============================================================
+
+ 【子工程（Pod/Framework）编译】
+ 1. Write Auxiliary Files：生成 .hmap（头文件映射）、LinkFileList（.o 文件列表）等辅助文件
+ 2. 预编译 PCH 文件（若开启 Precompile Prefix Header）
+ 3. 逐文件编译（CompileC）：每个 .m 文件经 Clang 完整前端→优化→后端流程生成 .o
+ 4. 写入 LinkFileList：汇总所有 .o 路径
+ 5. 打包静态库（libtool）：将 .o 合并为 .a 静态库
+
+ 【主工程编译】
+ 1. 创建 .app 目录包
+ 2. 生成 Entitlements.plist（授予 App 能力和沙盒权限）
+ 3. 处理 Package（证书、Provisioning Profile 验证）
+ 4. 运行 Pre-Build 脚本（如 CocoaPods Check Pods Manifest.lock）
+ 5. 预编译 PCH 文件
+ 6. 逐文件编译：所有 .m 文件生成 .o（最耗时阶段之一）
+ 7. 链接（ld）：将所有 .o 及静态库合并，解析符号，生成 Mach-O 可执行文件（最耗时）
+ 8. 编译 Asset Catalog（xcassets → Assets.car）
+ 9. 拷贝资源文件（图片、字体、Storyboard、xib 等）
+ 10. 处理 Info.plist
+ 11. 嵌入动态 Frameworks（[CP] Embed Pods Frameworks）
+ 12. 生成 dSYM 符号文件
+ 13. 运行 Post-Build 脚本
+ 14. 代码签名（codesign）
+
+
+ ============================================================
+ 七、Bitcode
+ ============================================================
+
+ 【概念】
+ Bitcode 是 LLVM IR 的二进制序列化形式（.bc 文件），是前端编译输出的中间产物。
+ 开启 Bitcode 后，提交到 App Store 的不是最终机器码，而是 Bitcode，
+ Apple 服务器会针对不同设备架构重新编译生成最优机器码。
+
+ 【优点】
+ - App Store 可针对新指令集（如未来的 arm 扩展）重新优化，无需开发者重新提交
+ - 按需下载（App Thinning）：用户只下载其设备对应的架构包
+
+ 【注意】
+ - 开启 Bitcode 要求所有依赖库也必须包含 Bitcode
+ - Apple 在 Xcode 14 之后默认关闭了 Bitcode 提交（已不再被 App Store 使用）
+
+
+ ============================================================
+ 八、编译速度优化
+ ============================================================
+
+ 【工程配置优化】
+
+ 1. Build Active Architecture Only
+    Debug 设为 YES，只编译当前连接设备的架构（如 arm64），不生成 Fat Binary，
+    大幅减少编译产物体积和链接时间。Release 设为 NO 以支持所有架构。
+
+ 2. Precompile Prefix Header
+    将 Precompile Prefix Header 设为 YES，PCH 文件预编译后缓存复用，
+    避免每个编译单元重复解析公共头文件。需在 Prefix Header 中配置 PCH 路径。
+
+ 3. Debug Information Format
+    Debug 模式改为 DWARF（不生成 .dSYM），减少调试信息写入时间。
+    DWARF with dSYM 用于 Release，方便崩溃符号化。
+    ⚠️ 改为 DWARF 后，崩溃无法在设备上还原符号，调试时影响不大。
+
+ 4. 关闭 Debug 模式下的 Link Time Optimization（LTO）
+    LTO 在链接阶段进行全局优化，大幅增加链接耗时，Release 使用，Debug 关闭。
+
+ 5. Optimization Level
+    Debug 设为 None（-O0），关闭编译优化，保证断点和调试信息准确。
+    Release 设为 Fastest, Smallest（-Os），在速度和体积间取最优。
+
+ 6. 采用新构建系统（New Build System）
+    Xcode 10+ 默认启用，支持增量编译和并行任务调度，编译速度明显优于旧系统。
+
+ 7. 增加 Xcode 并行编译线程数
+    defaults write com.apple.Xcode PBXNumberOfParallelBuildSubtasks 8
+
+ 【代码与项目结构优化】
+
+ 8. 减少无用文件：删除无用的类、资源、图片，降低编译单元数量
+
+ 9. 二进制化第三方库
+    将基础组件和不常修改的三方库打成静态 .a 或 XCFramework 二进制，
+    跳过其源码编译，显著缩短增量编译时间（代价是调试不方便）。
+
+ 10. 减少头文件引用，使用 @class 前向声明
+     头文件中尽量使用 @class 替代 #import，避免头文件链式展开。
+     减少一个头文件变动引起大量文件重新编译的级联效应。
+
+ 11. 优化 PCH 文件
+     PCH 中只放真正全局使用的头文件（UIKit、Foundation 等），
+     减少 PCH 过大造成预编译缓存频繁失效。
+
+ 12. 减少 Storyboard / XIB 文件
+     Storyboard 编译（ibtool）通常耗时较长，拆分大 Storyboard 或改用纯代码布局。
+
+ 【增量编译原理】
+ Xcode 会对每个编译单元（.m 文件）计算"输入文件 + 编译选项"的指纹，
+ 若指纹与上次编译相同，则直接复用缓存的 .o 文件，跳过重新编译。
+ 因此：头文件变动影响范围越广（被大量 .m 引用），增量编译收益越低。
+
 */
 
 @end

@@ -32,15 +32,15 @@
     Class cls;
     uintptr_t bits;
     struct {
-        uintptr_t nonpointer        : 1; 0代表普通指针，存储类，元类对象的内存地址；1代表优化过，使用位域存储引用计数，析构状态等信息
-        uintptr_t has_assoc         : 1; 是否有设置过关联对象，如果没有，释放时会更快
-        uintptr_t has_cxx_dtor      : 1; 是否有C++的析构函数（.cxx_destruct），如果没有，释放时会更快
-        uintptr_t shiftcls          : 44;存储着Class、Meta-Class对象的内存地址信息
-        uintptr_t magic             : 6; 用于在调试时分辨对象是否未完成初始化
-        uintptr_t weakly_referenced : 1; 是否有被弱引用指向，如果没有，释放时会更快
-        uintptr_t deallocating      : 1; 对象是否正在释放
-        uintptr_t has_sidetable_rc  : 1; 引用计数器是否过大无法存储在isa中，如果为1，那么引用计数会存储在SideTable中
-        uintptr_t extra_rc          : 8  存储的值是引用计数减1（实际引用计数 = extra_rc + 1）
+        uintptr_t nonpointer        : 1;  // 0=普通指针，存类/元类地址；1=优化位域，存引用计数等信息
+        uintptr_t has_assoc         : 1;  // 是否设置过关联对象，没有则释放时更快
+        uintptr_t has_cxx_dtor      : 1;  // 是否有 C++ 析构函数（.cxx_destruct），没有则释放更快
+        uintptr_t shiftcls          : 44; // 存储 Class/Meta-Class 的内存地址（需 & ISA_MASK 取出）
+        uintptr_t magic             : 6;  // 调试用，判断对象是否完成初始化
+        uintptr_t weakly_referenced : 1;  // 是否有弱引用指向，没有则释放更快
+        uintptr_t deallocating      : 1;  // 对象是否正在释放
+        uintptr_t has_sidetable_rc  : 1;  // 引用计数是否溢出到 SideTable
+        uintptr_t extra_rc          : 8;  // 引用计数 - 1（实际引用计数 = extra_rc + 1）
     };
  };
  
@@ -234,6 +234,35 @@
  想运行时给对象"加属性"：用关联对象（Associated Object）
  - 本质是 Runtime 维护的全局哈希表，与对象内存完全独立，不改 ivar 布局
 
+ 十二、class_rw_t 与 class_ro_t
+
+ class_ro_t（read-only，Clean Memory，编译期固定）
+ - 存储编译期确定的原始信息：基础方法列表、协议、ivar、属性等
+ - 映射到只读段，系统需要时可丢弃并从磁盘重新读取（节省内存）
+
+ class_rw_t（read-write，Dirty Memory，运行期可修改）
+ - 运行时创建，包含 class_ro_t 的指针以及可扩展的方法/属性/协议数组
+ - Category 加载、动态添加方法均写入 rw_t，而非 ro_t
+ - iOS 14+ 引入 class_rw_ext_t（仅在需要时才创建扩展表），减少 Dirty Memory 占用
+
+ 关系：class_rw_t.ro = &class_ro_t（运行时读取 ro 中的基础数据，按需拷贝到 rw 可扩展数组）
+
+ ============================================================
+ 十五、常见面试问答
+ ============================================================
+
+ Q：[super class] 返回什么？原理？
+ A：返回当前类（子类）。
+    super 只改变方法查找起点（从父类开始），但消息接收者 receiver 仍是 self。
+    class 方法实现为 return object_getClass(self)，self 是子类实例，故返回子类。
+    底层：[super class] → objc_msgSendSuper({self, [super class]}, @selector(class))
+
+ Q：Method Swizzle 为什么要先 class_addMethod 再 class_replaceMethod？
+ A：若本类没有该方法（实现在父类），直接 method_exchangeImplementations 会修改父类的 Method，
+    导致所有子类调用该方法时都走 swizzled 版本，影响范围超出预期。
+    先 class_addMethod：若本类无该方法，直接将 swizzled IMP 注册为本类该 SEL 的实现，
+    再 class_replaceMethod 将 swizzled SEL 指向原 IMP，相当于只在本类范围内完成交换。
+    若本类已有该方法（addMethod 返回 NO），再 method_exchangeImplementations 是安全的。
  */
 
 @interface Mother: NSObject
@@ -489,7 +518,8 @@
     object_setIvar(mother, _birthday, @"1992");
     NSLog(@"母亲生日:%@", mother.birthday);
     
-    [mother setValue:@"2012" forKey:mother.birthday];
+    // birthday 是 readonly，且 accessInstanceVariablesDirectly = NO，KVC 会抛出 NSUnknownKeyException
+    [mother setValue:@"2012" forKey:@"birthday"];
     NSLog(@"母亲生日:%@", mother.birthday);
 }
 

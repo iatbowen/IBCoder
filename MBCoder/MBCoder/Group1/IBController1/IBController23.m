@@ -195,9 +195,42 @@
  在 macOS 中也是如此，外部函数引用在 __DATA 段的 __la_symbol_ptr 区域先生产一个占位符，
  当第一个调用启动时，就会进入符号的动态链接过程，一旦找到地址后，
  就将 __DATA Segment 中的 __la_symbol_ptr Section 中的占位符修改为方法的真实地址，
- 这样就完成了只需要一个符号绑定的执行过程。fishhook使用此原理
- 
- 
+ 这样就完成了只需要一个符号绑定的执行过程。fishhook 使用此原理。
+
+ 4、符号表（Symbol Table）
+ 符号表记录了二进制文件中所有符号（函数、全局变量、ObjC 类等）的名称与地址，
+ 由 Load Command LC_SYMTAB 指向，位于 __LINKEDIT Segment 中。
+
+ 符号分类：
+ - 全局符号（Global / External）：可被其他模块引用（普通函数、导出符号）
+ - 本地符号（Local）：仅在当前编译单元可见（static 修饰的函数/变量）
+ - 未定义符号（Undefined）：引用了其他模块提供的符号，链接时由链接器解析
+
+ 链接器（ld）工作流程：
+ 1）符号解析（Symbol Resolution）：遍历所有 .o 文件，将未定义符号与定义符号匹配
+ 2）重定位（Relocation）：将 .o 中的相对地址替换为最终虚拟内存地址
+ 3）Dead Code Stripping：删除未被引用的函数和数据（需在 Build Settings 中开启）
+
+ 5、dSYM 符号文件
+ Release 构建时，Xcode 默认将调试符号从 Mach-O 中剥离（Strip），
+ 单独保存到 .app.dSYM 文件中，以减小发布包体积。
+
+ dSYM 文件作用：
+ - 崩溃日志（Crash Log）中只含十六进制内存地址，必须通过 dSYM 文件"符号化"才能还原为函数名 + 文件名 + 行号
+ - 每次构建生成唯一 UUID，dSYM 与 Mach-O 通过 UUID 一一绑定，版本不匹配无法符号化
+
+ 符号化工具：
+ - Xcode Organizer：自动符号化（需本地有对应 dSYM）
+ - symbolicatecrash 命令行工具
+ - atos -arch arm64 -o xxx.dSYM/Contents/Resources/DWARF/xxx -l <加载地址> <崩溃地址>
+
+ 6、ASLR（地址空间布局随机化）
+ iOS 系统对每次启动的 Mach-O 加载地址添加随机偏移（slide），
+ 防止攻击者预判固定内存地址。通过 MH_PIE flag 标识启用 ASLR。
+ dyld 在 Rebase 阶段修正文件内所有内部指针（加上 slide 偏移），
+ 在 Bind 阶段解析所有指向外部符号的指针。
+
+
  二、pre-main阶段的优化
  要对pre-main阶段的耗时做优化，需要再学习下dyld加载的过程，根据Apple在WWDC上的介绍，dyld的加载主要分为4步：
  

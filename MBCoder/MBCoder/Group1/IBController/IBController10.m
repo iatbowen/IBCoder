@@ -121,6 +121,46 @@
  生命周期      不影响被引用者；被引用者销毁后置 nil   随宿主对象销毁而自动释放
  查找方向      反向（被引用者 → 所有引用者）         正向（宿主 → key → value）
  线程安全      SideTable 自旋锁保护               AssociationsManager 自旋锁保护
+
+ 六、关联对象 key 的四种常见写法
+
+ 1. 静态变量地址（推荐）
+    static const void *kKey = &kKey;
+    优点：唯一性强，编译期确定
+
+ 2. @selector(propertyName)
+    objc_setAssociatedObject(obj, @selector(name), value, ...)
+    优点：简洁，利用 SEL 地址作 key，name 即 getter selector
+
+ 3. _cmd（在方法内部）
+    - (id)property { return objc_getAssociatedObject(self, _cmd); }
+    优点：极简，_cmd 就是当前方法的 SEL，无需额外变量
+
+ 4. &_cmd / 字符串字面量地址
+    不推荐，字符串常量地址可能被优化合并，存在风险
+
+ ============================================================
+ 七、常见面试问答
+ ============================================================
+
+ Q：关联对象存储在哪里？对象销毁时如何释放？
+ A：存储在全局的 AssociationsHashMap（AssociationsManager 持有），以对象地址为 key，
+    不在对象本身的内存中。对象调用 dealloc 时，runtime 会调用 _object_remove_assocations，
+    遍历该对象的 ObjectAssociationMap，按 policy 对每个 value 执行对应的 release/free，
+    无需在 dealloc 中手动调 objc_removeAssociatedObjects。
+
+ Q：为什么关联对象没有 weak 策略？如何实现 weak 关联？
+ A：AssociationsHashMap 是正向查找（宿主 → key → value），不支持反向追踪。
+    weak 要求被引用对象销毁时反向找到所有引用并置 nil，结构上无法做到。
+    实现 weak 关联的方案：用中间 WeakBox 容器包装 weak 指针，
+    将容器以 RETAIN 策略关联到宿主，通过 box.weakObj 间接获得 weak 语义。
+
+ Q：weak 变量为何能在对象销毁后自动置 nil？
+ A：objc_storeWeak 将 weak 指针地址（**ptr）注册到对象对应的 weak_table_t 中。
+    对象 dealloc 时，objc_clearDeallocating 遍历 weak_entry_t 中所有 weak 指针地址，
+    依次执行 *ptr = nil，然后从 weak_table 中移除该 entry。
+    关键点：置的是指针本身所在的内存（**ptr），而不是指针指向的对象。
+
 */
 
 @end

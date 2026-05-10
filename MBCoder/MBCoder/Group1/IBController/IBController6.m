@@ -117,6 +117,85 @@
  - 异步预合成：子线程解码图片、CoreText 绘制文本，生成位图缓存，避免主线程卡顿
  - CATransaction 批量提交：减少主线程 UI 提交次数
  - 最终 UI 更新仍严格在主线程，并未绕过 UIKit 线程安全限制
+
+ 十一、Safe Area
+ - safeAreaInsets：表示视图被系统遮挡的安全区域（状态栏、Home Indicator、刘海、工具栏等）
+ - safeAreaLayoutGuide：Auto Layout 锚点版本，优先使用 guide 而非硬编码 insets
+ - 读取时机：viewSafeAreaInsetsDidChange / viewDidLayoutSubviews，viewDidLoad 中为零
+ - additionalSafeAreaInsets：自定义追加的安全区域（如导航栏自定义高度）
+ - iOS 11 以前用 topLayoutGuide / bottomLayoutGuide，11+ 统一迁移到 safeAreaLayoutGuide
+
+ 十二、UIStackView
+ - 沿主轴（axis）自动排列子视图，无需手动添加大量约束
+ - 核心属性：
+   axis            UILayoutConstraintAxisHorizontal / Vertical
+   distribution    Fill / FillEqually / FillProportionally / EqualSpacing / EqualCentering
+   alignment       Fill / Leading / Center / Trailing / FirstBaseline / LastBaseline
+   spacing         子视图间距（可配合 setCustomSpacing:afterView: 单独设置）
+ - 动态增删子视图：addArrangedSubview: / removeArrangedSubview: + removeFromSuperview
+   隐藏子视图（hidden = YES）会自动折叠，不占用空间
+ - 嵌套 StackView：水平+垂直嵌套可替代复杂约束
+ - 注意：arrangedSubviews ≠ subviews，直接 addSubview: 不会参与排列
+
+ 十三、约束冲突与歧义
+ 冲突（Unsatisfiable Constraints）
+ - 两条约束互相矛盾（如 width = 100 且 width = 200）
+ - 运行时会打印 "Unable to simultaneously satisfy constraints"，系统随机 break 一条
+ - 解决：降低其中一条优先级（< 1000）使系统可打破，或检查约束逻辑
+
+ 歧义（Ambiguous Layout）
+ - 约束不足，无法唯一确定视图的位置或尺寸
+ - 调试：view.hasAmbiguousLayout / [view exerciseAmbiguityInLayout]
+   lldb: po [[UIWindow keyWindow] _autolayoutTrace]
+
+ 优先级常量（UILayoutPriority）
+ UILayoutPriorityRequired             = 1000（不可 break，不能用于动画）
+ UILayoutPriorityDefaultHigh          = 750
+ UILayoutPriorityDefaultLow           = 250
+ UILayoutPriorityFittingSizeLevel     = 50
+ 建议动画约束优先级设为 999，避免打断 Required 约束报错
+
+ 十四、UIScrollView + Auto Layout
+ - UIScrollView 的 contentSize 由内部子视图约束自动推算，不能直接写 frame
+ - 正确做法：将所有子视图约束到 ScrollView 的 contentLayoutGuide，
+   同时通过 frameLayoutGuide 约束内容宽度（防止水平滚动）：
+   [contentView.widthAnchor constraintEqualToAnchor:scrollView.frameLayoutGuide.widthAnchor]
+ - iOS 11+ 推荐使用 contentLayoutGuide / frameLayoutGuide，iOS 11 以前需手动设 contentSize
+ - 常见坑：忘记设 translatesAutoresizingMaskIntoConstraints = NO，或内部视图约束不完整导致 contentSize = 0
+
+ ============================================================
+ 十五、常见面试问答
+ ============================================================
+
+ Q：layoutSubviews 和 drawRect: 的区别？
+ A：layoutSubviews 负责计算并设置子视图 frame，由 Auto Layout 引擎或 setNeedsLayout 触发；
+    drawRect: 负责自定义 CoreGraphics 绘制内容，由 setNeedsDisplay 触发。
+    二者触发时机独立，layoutSubviews 先执行，drawRect: 后执行。
+
+ Q：setNeedsLayout 和 layoutIfNeeded 的区别？
+ A：setNeedsLayout 只标记"脏"，等待下个 RunLoop 批量执行；
+    layoutIfNeeded 立即检查标记，有则同步执行 layoutSubviews。
+    动画约束变化时通常写法：[UIView animateWithDuration:0.3 animations:^{ [self.view layoutIfNeeded]; }]
+
+ Q：Auto Layout 和 Frame 性能对比？
+ A：Auto Layout 底层使用 Cassowary 线性规划算法求解约束，约束数量越多求解越慢。
+    简单界面两者性能接近；复杂深层嵌套（如列表 Cell）Auto Layout 可能成为瓶颈。
+    优化：减少约束数量、避免动态增删约束、使用 UIStackView 替代多余约束。
+
+ Q：intrinsicContentSize 的工作原理？
+ A：UILabel/UIButton 等控件根据内容计算"最适合"的尺寸并通过 intrinsicContentSize 返回。
+    Auto Layout 将此尺寸转化为两对约束（宽/高），优先级由 CHCR 控制（抗拉伸默认 250，抗压缩默认 750）。
+    自定义控件重写此方法，内容变更后调用 invalidateIntrinsicContentSize 触发重算。
+
+ Q：Safe Area 与 topLayoutGuide 的区别？
+ A：topLayoutGuide 是 iOS 7 引入的对导航栏/状态栏的适配，iOS 11 废弃。
+    safeAreaLayoutGuide 覆盖所有系统 UI 遮挡区域（刘海、Home Indicator、状态栏、工具栏），
+    且支持 additionalSafeAreaInsets 自定义扩展，更通用，应统一迁移到 safeAreaLayoutGuide。
+
+ Q：UIScrollView 设置 Auto Layout 后 contentSize 为 0 的原因？
+ A：未将子视图四边完整约束到 contentLayoutGuide，导致系统无法推算内容尺寸。
+    另一个常见原因是忘记给内容容器视图约束宽度（与 frameLayoutGuide 宽度相等），
+    导致内容视图宽度歧义，contentSize.width 推算为 0。
 */
 
 - (void)viewDidLoad {

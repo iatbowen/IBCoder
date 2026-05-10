@@ -17,231 +17,250 @@
 @end
 
 /*
- 进程：程序在操作系统中的一次执行实例，是系统进行资源分配的基本单位
- 线程：进程内的执行单元，是 CPU 调度的基本单位
- 
- 线程与进程的区别：
-a. 地址空间与资源
-   进程：独立内存空间，是资源分配的基本单位
-   线程：隶属于进程，同进程的线程共享内存，是 CPU 调度的基本单位
-b. 通信方式
-   进程：相互独立，通信复杂 → 管道、信号、套接字、共享内存、消息队列
-   线程：可直接读写进程数据（如全局变量），但需同步/互斥机制保证数据一致
-c. 调度与切换
-   进程：切换需保存/加载完整上下文，开销大
-   线程：共享进程上下文，切换开销小、速度快
- 
- 一、简介
- 1.什么是GCD(Grand Central Dispatch)
- GCD 是苹果开发的一套底层 C 语言 API，用于管理并发执行任务。它是 iOS/macOS 开发中处理多线程的主要方式。
 
- 2.GCD的优势
- 多核利用：自动利用更多 CPU 内核（双核、四核等）
- 自动管理：自动管理线程的创建、调度、销毁
- 简单易用：只需告诉 GCD 做什么，无需手动管理线程
- 
- 二、任务和队列
- 1.GCD中有2个核心概念
- 任务：执行什么操作
- 队列：用来存放任务
-  
- 三、执行任务
- 1.GCD中有2个用来执行任务的函数
- - 用同步的方式执行任务
- dispatch_sync(dispatch_queue_t queue, dispatch_block_t block);
- - 用异步的方式执行任务
- dispatch_async(dispatch_queue_t queue, dispatch_block_t block);
- 
- 2.同步和异步的区别
- 同步：只能在当前线程中执行任务，不具备开启新线程的能力
- 异步：可以在新的线程中执行任务，具备开启新线程的能力
- 
- 四、队列的类型
- 1.GCD的队列可以分为2大类型
- - 并发队列（Concurrent Dispatch Queue）
- 可以让多个任务并发（同时）执行（自动开启多个线程同时执行任务）
- 并发功能只有在异步（dispatch_async）函数下才有效
- 
- - 串行队列（Serial Dispatch Queue）
- 让任务一个接着一个地执行（一个任务执行完毕后，再执行下一个任务）
- 
- 五、容易混淆的术语
- 同步（sync）：等待任务完成再继续，不开新线程
- 异步（async）：不等待，直接往下执行，开新线程
- 串行（serial）：一个一个按顺序执行，一个线程
- 并发（concurrent）：多个任务同时执行，多个线程
- 
- 六、并发队列
- 1.GCD默认已经提供了全局的并发队列，供整个应用使用，不需要手动创建
- 使用dispatch_get_global_queue函数获得全局的并发队列
- dispatch_queue_t dispatch_get_global_queue(
- dispatch_queue_priority_t priority, // 队列的优先级
- unsigned long flags); // 此参数暂时无用，用0即可
- dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0); // 获得全局并发队列
- 
- 2.全局并发队列的优先级
- #define DISPATCH_QUEUE_PRIORITY_HIGH 2 // 高
- #define DISPATCH_QUEUE_PRIORITY_DEFAULT 0 // 默认（中）
- #define DISPATCH_QUEUE_PRIORITY_LOW (-2) // 低
- #define DISPATCH_QUEUE_PRIORITY_BACKGROUND INT16_MIN // 后台
- 
- 七、串行队列
- 1.GCD中获得串行有2种途径
- - 使用dispatch_queue_create函数创建串行队列
- dispatch_queue_t queue = dispatch_queue_create("队列名称", 队列类型);
- dispatch_queue_t queue = dispatch_queue_create("cn.itcast.queue", DISPATCH_QUEUE_SERIAL); // 创建
- 
- - 使用主队列（跟主线程相关联的串行队列）
- dispatch_queue_t queue = dispatch_get_main_queue();
- 
- 八、各种队列的执行效果
- 注意
- 使用sync函数往当前串行队列中添加任务，会卡住当前的串行队列
- 
- 九、线程间通信示例
- 1.从子线程回到主线程
- dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    // 执行耗时的异步操作...
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // 回到主线程，执行UI刷新操作
-    });
- });
- 2、performSelector: onThread:
- 3、[[NSOperationQueue mainQueue] addOperation: ];
- 
- 十、延时执行
- iOS常见的延时执行有2种方式
- 调用NSObject的方法
- [self performSelector:@selector(run) withObject:nil afterDelay:2.0];
- // 2秒后再调用self的run方法
- 
- 使用GCD函数
- dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
- // 2秒后执行这里的代码... 在哪个线程执行，跟队列类型有关
- 
- });
- 
- 十一、一次性代码
- 使用dispatch_once函数能保证某段代码在程序运行过程中只被执行1次
+ ============================================================
+ iOS 多线程 / GCD / NSOperation 面试题总结
+ ============================================================
+
+
+ ============================================================
+ 一、进程 vs 线程
+ ============================================================
+
+ 进程：程序在操作系统中的一次执行实例，是系统资源分配的基本单位（独立内存空间）
+ 线程：进程内的执行单元，是 CPU 调度的基本单位，同进程内线程共享内存
+
+ 区别：
+ 地址空间   进程独立，互不影响；线程共享进程内存，需要同步机制
+ 通信方式   进程间：管道/信号/套接字/共享内存/消息队列（复杂）
+            线程间：直接读写共享数据（简单但需加锁）
+ 切换开销   进程：需保存/加载完整上下文，开销大
+            线程：共享大部分上下文，切换开销小
+
+
+ ============================================================
+ 二、iOS 多线程方案概览
+ ============================================================
+
+ pthread          C 语言 POSIX 标准，跨平台，需手动管理生命周期，极少直接使用
+ NSThread         OC 封装，面向对象，需手动管理生命周期
+ GCD              苹果 C 语言 API，系统自动管理线程池，推荐首选
+ NSOperation      GCD 的 OC 封装，支持依赖关系、状态监听、取消/暂停
+
+
+ ============================================================
+ 三、GCD 核心概念
+ ============================================================
+
+ 【概念】
+ Grand Central Dispatch：苹果开发的底层 C API，自动利用多核并管理线程池。
+ 核心：任务（做什么）+ 队列（任务存放的地方）
+
+ 【同步 vs 异步】
+ dispatch_sync  ：同步，等待 block 执行完毕才返回，不具备开启新线程的能力
+ dispatch_async ：异步，提交 block 后立即返回，具备开启新线程的能力
+
+ 【串行 vs 并发】
+ 串行队列（Serial）  ：任务按 FIFO 顺序逐一执行，同一时刻只有一个任务在运行
+ 并发队列（Concurrent）：允许多个任务同时执行（并发功能仅在 async 下有效）
+
+ 【四种组合执行效果】
+ async + 并发队列  → 开多线程，任务并发执行（最常用）
+ async + 串行队列  → 开一条线程，任务顺序执行
+ async + 主队列   → 不开新线程，等主线程空闲后在主线程串行执行
+ sync  + 并发队列  → 不开新线程，在当前线程串行执行（并发失效）
+ sync  + 串行队列  → 不开新线程，串行执行；若在当前串行队列中嵌套 sync → 死锁
+ sync  + 主队列   → 在主线程调用时死锁（主线程等 block 完成，block 等主线程空闲）
+
+
+ ============================================================
+ 四、队列类型
+ ============================================================
+
+ 【全局并发队列（系统提供）】
+ dispatch_queue_t q = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0);
+
+ QoS 等级（iOS 8+ 推荐替代旧 PRIORITY 宏）：
+ QOS_CLASS_USER_INTERACTIVE ：UI 交互，最高优先级
+ QOS_CLASS_USER_INITIATED   ：用户发起，需立即结果
+ QOS_CLASS_DEFAULT          ：默认
+ QOS_CLASS_UTILITY          ：耗时操作，用户可感知进度（如下载）
+ QOS_CLASS_BACKGROUND       ：后台，用户不感知（如同步/索引）
+
+ 【自定义队列】
+ dispatch_queue_t serial = dispatch_queue_create("com.xxx", DISPATCH_QUEUE_SERIAL);
+ dispatch_queue_t conc   = dispatch_queue_create("com.xxx", DISPATCH_QUEUE_CONCURRENT);
+
+ 【主队列】
+ dispatch_queue_t main = dispatch_get_main_queue(); // 与主线程绑定的串行队列
+
+
+ ============================================================
+ 五、GCD 常用 API
+ ============================================================
+
+ 【dispatch_after — 延时执行】
+ dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)),
+                dispatch_get_main_queue(), ^{ * 2秒后执行 * });
+ 注意：dispatch_after 只是延时提交 block，并非精准延时执行。
+
+ 【dispatch_once — 一次性代码（线程安全）】
  static dispatch_once_t onceToken;
- dispatch_once(&onceToken, ^{
- // 只执行1次的代码(这里面默认是线程安全的)
- });
- 
- 十二、队列组
- 1.有这么1种需求
- 首先：分别异步执行2个耗时的操作
- 其次：等2个异步操作都执行完毕后，再回到主线程执行操作
- 
- 2.如果想要快速高效地实现上述需求，可以考虑用队列组
- dispatch_group_t group =  dispatch_group_create();
- dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
- // 执行1个耗时的异步操作
- });
- dispatch_group_async(group, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
- // 执行1个耗时的异步操作
- });
- dispatch_group_notify(group, dispatch_get_main_queue(), ^{
- // 等前面的异步操作都执行完毕后，回到主线程...
- });
- 
- 十三、Core Foundation
- Foundation : OC
- Core Foundation : C
- Foundation和Core Foundation可以相互转化
- 
- NSString *str = @"123";
- CFStringRef str2 = (__bridge CFStringRef)str;
- NSString *str3 = (__bridge NSString *)(str2);
- 
- CFArrayRef --- NSArray
- CFDictionaryRef --- NSDirectory
- CFNumberRef --- NSNumber
- 
- 凡是函数名中带有create\copy\retain\new等字眼，都应该再不需要的时候进行release
- GCD的数据类型在ARC环境下不需要release
- CF（Core Foundation）的数据类型在ARC环境下还需要release
- 
- Core Foundation中手动创建的数据类型，需要手动释放
- CFArrayRef array = CFArrayCreate(NULL, NULL, 10, NULL);
- CFRelease(array);
- 
- CGPathRef path = CGPathCreateMutable();
- CGPathRelease(path);
- 
- 十四、线程安全
- 1、资源竞争---->加锁、在串行队列中执行
- 2、线程死锁---->任务之间相互等待
- 
- 十五、怎么判断线程是否结束？
- 1、NSThread创建的线程： 使用performSelector: onThread:方法，给线程添加事件看是否运行
- 2、GCD的group：原理就是利用dispatch_group_async执行完queue会执行dispatch_group_notify回调
- 3、dispatch_barrier_async：一般使用dispatch_barrier_async, 会让barrier之前的线程执行完成之后才会执行barrier后面的操作
- 4、NSOperationQueue：用到addDependency: waitUntilFinished: 方法，如果是YES，必须等到queue中所有Operation执行完毕之后, 才会继续执行。所以会卡住当前线程
- 
- 十六、杀死一个线程
- 1、GCD线程：定义外部变量，用于标记block是否需要取消，如果要取消直接返回return
- 2、dispatch_block_cancel也只能取消尚未执行的任务，对正在执行的任务不起作用
- 
- 十七、performSelector:withObject:afterDelay: 内部大概是怎么实现的，有什么注意事项么？
- 创建一个定时器,时间结束后系统会使用runtime通过方法名称(Selector本质就是方法名称)去方法列表中找到对应的方法实现并调用方法
- 注意事项
- 调用performSelector:withObject:afterDelay:方法时,先判断希望调用的方法是否存在respondsToSelector:
- 这个方法是异步方法,必须在主线程调用,在子线程调用永远不会调用到想调用的方法
- 
- 十八、进程死锁
- 死锁，是指多个进程在运行过程中因争夺资源而照成的一种僵局。当进程处于这种僵持状态时，若无外力作用，它们都将无法再向前推进。
- （1）竞争资源。当系统中供多个进程共享的资源如打印机、公用队列等，其数目不足以满足诸进程的需要时，会引起诸进程对资源的竞争而产生死锁。
- （2）进程间推进顺序非法。进程在运行过程中，请求和释放资源的顺序不当，也同样会产生进程死锁。
- 
- 当然死锁的产生是必须要满足一些特定条件的：
- 1.互斥条件：进程对于所分配到的资源具有排它性，即一个资源只能被一个进程占用，直到被该进程释放
- 2.请求和保持条件：一个进程因请求被占用资源而发生阻塞时，对已获得的资源保持不放。
- 3.不剥夺条件：任何一个资源在没被该进程释放之前，任何其他进程都无法对他剥夺占用
- 4.循环等待条件：当发生死锁时，所等待的进程必定会形成一个环路（类似于死循环），造成永久阻塞。
- 
- 十九、线程经典问题
- 1. 生产者-消费者问题 (Producer-Consumer Problem)
-    问题描述：生产者线程负责生成数据并放入缓冲区，消费者线程则从缓冲区取出数据进行处理。核心挑战是如何让生产者和消费者并行工作，同时避免缓冲区溢出或空读问题。
-    考点：队列/缓冲区、互斥锁 (Mutex)、条件变量 (Condition)、信号量 (Semaphore)。
- 
- 2. 哲学家就餐问题 (Dining Philosophers Problem)
-    问题描述：N个哲学家围坐一圈，每人左右有一个筷子（资源），吃饭时要同时拿起左右两只筷子，如何避免死锁或者饥饿问题？
-    考点：死锁 (Deadlock)、资源分配、信号量、锁顺序。
- 
- 3. 读者-写者问题 (Readers-Writers Problem)
-    问题描述：多个线程需要对同一资源进行读操作和写操作，要求多个读者可以同时读取，但写者写入时，不能有其他读者或写者访问。
-    考点：多读单写锁 (Read-Write Lock)、同步控制、优先级 (读优先/写优先)。
- 
- 4. 信号灯问题 (Semaphore Problem)
-    问题描述：多个线程通过信号灯机制控制并发访问某个资源，典型如有限连接池、停车场限制车数量等。
-    考点：信号量 (Semaphore)、互斥锁、资源计数。
- 
- 5. 唤醒-等待经典模型 (Sleeping Barber Problem)
-    问题描述：理发师和客户，客户到店后如果有空位就等待，否则离开；理发师没客人就休眠，有客人则唤醒。
-    考点：条件变量、队列、信号量。
- 
- 二十、NSOperation 与 GCD 的主要区别？
- 1. 本质，GCD 的核心是 C 语言写的系统服务，执行和操作简单高效，函数式编程
-         NSOperation 对 GCD 的封装，面向对象编程
+ dispatch_once(&onceToken, ^{ * 整个进程生命周期只执行一次 * });
 
- 2. 依赖关系，NSOperation 可以设置两个 NSOperation 之间的依赖，第二个任务依赖于第一个任务完成执行，
-            GCD 无法设置依赖关系，不过可以通过dispatch_barrier_async来实现这种效果；
+ 底层原理：
+ onceToken 本质是 long 型标志位，初始为 0。
+ dispatch_once 用原子操作（atomic compare-and-swap）判断是否已执行，
+ 第一次执行时将 token 置为 ~0（全 1），后续调用直接跳过。
+ 线程安全：若多个线程同时首次调用，只有一个线程执行 block，其余自旋等待。
+ 常见用途：单例、全局资源初始化。
 
- 3. 任务状态监听，NSOperation 和容易判断 Operation 当前的状态(是否执行，是否取消)，对此 GCD 无法通过 KVO 进行判断；
+ 【dispatch_group — 队列组，等待多个任务完成】
 
- 4. 优先级，NSOperation 可以设置自身的优先级，但是优先级高的不一定先执行，
-          GCD 只能设置队列的优先级，无法在执行的 block 设置优先级；
+ 方式一：dispatch_group_async + dispatch_group_notify（推荐，不阻塞线程）
+ dispatch_group_t group = dispatch_group_create();
+ dispatch_group_async(group, queue, ^{ * 耗时任务1 * });
+ dispatch_group_async(group, queue, ^{ * 耗时任务2 * });
+ dispatch_group_notify(group, dispatch_get_main_queue(), ^{ * 全部完成后回主线程 * });
 
- 5. 继承，NSOperation 是一个抽象类，实际开发中常用的两个类是 NSInvocationOperation 和 NSBlockOperation ，同样我们可以自定义 NSOperation，
-        GCD 执行任务可以自由组装，没有继承那么高的代码复用度；
+ 方式二：dispatch_group_enter / dispatch_group_leave（适合异步回调，如网络请求）
+ enter 与 leave 必须严格配对，每次 enter 计数+1，leave 计数-1，归零时触发 notify。
+ dispatch_group_enter(group);
+ [self fetchDataWithCompletion:^{
+     dispatch_group_leave(group); // 必须在异步回调中调用
+ }];
 
- 6. 效率，直接使用 GCD 效率确实会更高效，NSOperation 会多一点开销，
-         但是通过 NSOperation 可以获得依赖，优先级，继承，键值对观察这些优势，相对于多的那么一点开销确实很划算
- 7、任务取消，NSOperation可以设置暂停，挂起，取消等操作。
- 8、最大并发数控制，NSOperationQueue设置简单，GCD 通过 semaphore 模拟
- 
- 二十一：线程和 CPU 的关系：
+ 方式三：dispatch_group_wait（阻塞当前线程直到 group 完成，慎用）
+ dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+
+ 【dispatch_barrier_async — 读写隔离（多读单写）】
+ barrier 之前的所有并发任务完成后，单独执行 barrier block，再继续后续并发任务。
+ 注意：只对【自定义并发队列】有效，对全局并发队列无效。
+ dispatch_queue_t rwQueue = dispatch_queue_create("rw", DISPATCH_QUEUE_CONCURRENT);
+ dispatch_async(rwQueue, ^{ * 读，并发 * });
+ dispatch_barrier_async(rwQueue, ^{ * 写，排他 * });
+ dispatch_async(rwQueue, ^{ * 读，并发 * });
+
+ 【dispatch_semaphore — 信号量】
+ dispatch_semaphore_t sem = dispatch_semaphore_create(N); // 初始值 N
+ dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);     // 值>0 则-1继续，否则阻塞
+ dispatch_semaphore_signal(sem);                          // 值+1，唤醒等待线程
+
+ 三种用途：
+ ① 控制最大并发数：初始值为 N，同时最多 N 个线程进入临界区
+ ② 异步转同步  ：初始值为 0，回调中 signal，主线程 wait 等结果
+ ③ 互斥锁     ：初始值为 1（等效于二值信号量）
+
+ 【dispatch_apply — 并行 for 循环】
+ dispatch_apply(10, queue, ^(size_t i) { * 并行处理索引 i * });
+ 所有迭代完成后才返回，会阻塞当前线程；适合大数据并行处理（如图片批量处理）。
+
+
+ ============================================================
+ 六、线程控制
+ ============================================================
+
+ 【线程间通信（子线程回主线程）】
+ dispatch_async(dispatch_get_main_queue(), ^{ * 更新 UI * });
+ [[NSOperationQueue mainQueue] addOperationWithBlock:^{ }];
+ [self performSelectorOnMainThread:@selector(xxx) withObject:nil waitUntilDone:NO];
+
+ 【终止线程】
+ GCD：dispatch_block_cancel 只能取消尚未执行的 block，无法中止正在执行的。
+      正在执行的 block 需通过 __block BOOL 标志位自行检查退出。
+ NSThread：[thread cancel] 设置 isCancelled 标志，需在 work 方法中主动检测并调用 [NSThread exit]。
+
+ 【performSelector:withObject:afterDelay: 实现原理】
+ 内部创建一个 NSTimer 注册到当前线程的 RunLoop（NSDefaultRunLoopMode），
+ 延时到达后 Runtime 通过 SEL 查找方法列表并调用。
+ 注意：
+ - 子线程默认无 RunLoop，Timer 不会触发（需手动开启 RunLoop）
+ - performSelectorOnMainThread:waitUntilDone:YES 会阻塞当前线程
+
+ 【RunLoop 与线程的关系】
+ 主线程：系统自动创建并运行 RunLoop，App 的事件循环由此驱动
+ 子线程：默认没有 RunLoop，[NSRunLoop currentRunLoop] 调用时懒创建但不自动运行
+ RunLoop 保活线程：[runloop run] 或 [runloop runUntilDate:] 让线程持续存活（常驻线程）
+ 没有 RunLoop 的子线程：任务执行完即销毁
+
+
+ ============================================================
+ 七、线程安全
+ ============================================================
+
+ 资源竞争（Race Condition）：多线程同时读写共享数据，导致结果不确定
+ 解决：加锁（NSLock/@synchronized/dispatch_semaphore）或放入串行队列
+
+ 死锁（Deadlock）：必须同时满足以下四个条件
+ 互斥条件  ：资源一次只能被一个线程占用
+ 请求与保持 ：线程已占有资源，又请求其他资源而被阻塞，但不释放已有资源
+ 不可剥夺  ：已占资源不能被强制剥夺，只能由持有者主动释放
+ 循环等待  ：多个线程形成循环等待资源的链路
+
+ GCD 中的死锁场景：
+ 在当前串行队列中同步（sync）派发任务到同一串行队列 → 循环等待死锁
+ 主线程中 dispatch_sync(dispatch_get_main_queue(), ...) → 主线程等自己，死锁
+
+
+ ============================================================
+ 八、经典并发问题
+ ============================================================
+
+ 生产者-消费者（Producer-Consumer）
+   场景：生产者向缓冲区写，消费者从缓冲区读，需防止溢出和空读
+   方案：信号量（空槽信号量 + 满槽信号量）+ 互斥锁保护缓冲区
+   iOS：dispatch_semaphore_t + NSLock / @synchronized
+
+ 读者-写者（Readers-Writers）
+   场景：多读者可同时读，写者写时互斥
+   方案：dispatch_barrier_async（写时独占）+ dispatch_async（读并发）
+   iOS：pthread_rwlock_t 或 dispatch_barrier_async
+
+ 哲学家就餐（Dining Philosophers）
+   场景：N 个哲学家争用 N 把叉子，需防止死锁和饥饿
+   解法：资源有序分配（编号限制）、仲裁者模式、限制同时进餐人数（信号量）
+
+ 理发师问题（Sleeping Barber）
+   场景：理发师无客则睡，有客则醒；客满则离开
+   方案：信号量（等待席位计数）+ 互斥锁
+
+ 顺序打印（iOS 面试高频）
+   三个线程按 1→2→3 循环顺序打印：使用三个信号量（初始值 1/0/0），
+   每个线程 wait 自己的信号量，打印后 signal 下一个线程的信号量。
+   代码：见下方 test4_2（NSOperation + dispatch_semaphore 实现）
+
+
+ ============================================================
+ 九、NSOperation 与 GCD 对比
+ ============================================================
+
+ GCD
+   本质：C 语言 API，系统级线程池管理
+   依赖：不支持（可用 barrier 模拟）
+   状态查询：不支持（无 isExecuting/isCancelled 等 KVO）
+   取消：dispatch_block_cancel（仅能取消未开始的任务）
+   优先级：队列级别 QoS
+   最大并发数：通过 semaphore 模拟
+   适用场景：简单高性能并发、一次性短任务
+
+ NSOperation
+   本质：GCD 的 OC 封装，面向对象
+   依赖：addDependency: 支持任务间依赖（有向无环图）
+   状态查询：isReady / isExecuting / isFinished / isCancelled（支持 KVO）
+   取消：cancelAllOperations / cancel（正在执行的需自行检测 isCancelled）
+   优先级：queuePriority（任务级别）+ qualityOfService
+   最大并发数：maxConcurrentOperationCount（直接设置）
+   适用场景：复杂依赖关系、需要取消/暂停/状态监控的任务
+
+ 选型建议：
+ 简单并发、无依赖 → GCD（更高效）
+ 有依赖、需取消/KVO、面向对象管理 → NSOperation
+
+
+ ============================================================
+ 十、线程与 CPU 的关系
+ ============================================================
+
  物理限制：
  - CPU 核心数决定真正并行执行的线程数上限
  时间片轮转：
@@ -256,9 +275,59 @@ c. 调度与切换
  - 监控 CPU 使用率
  - 让 GCD 管理线程池
  
- 总结：
- GCD 适合简单、高性能、短生命周期的并发任务；
- NSOperation 更适合有复杂依赖关系、需要取消/暂停/查询状态、面向对象管理任务的场景。
+
+ ============================================================
+ 十一、Core Foundation 与 Foundation 桥接
+ ============================================================
+
+ Foundation（OC）与 Core Foundation（C）可互相转换：
+ NSString → CFStringRef ：(__bridge CFStringRef)str          （不转移所有权）
+ CFStringRef → NSString  ：(__bridge NSString *)cfStr         （不转移所有权）
+ CFStringRef → NSString  ：(__bridge_transfer NSString *)cfStr （CF 所有权转给 ARC）
+ NSString → CFStringRef  ：(__bridge_retained CFStringRef)str  （ARC 所有权转给 CF）
+
+ CF 对象内存管理（ARC 不接管）：
+ 函数名含 create/copy/retain/new → 需要手动 CFRelease()
+ CFArrayRef arr = CFArrayCreate(...); CFRelease(arr);
+ GCD 对象（dispatch_queue_t 等）在 ARC 下无需手动 release。
+
+
+ ============================================================
+ 十二、常见面试问题
+ ============================================================
+
+ Q：dispatch_async 到主队列和 dispatch_sync 到主队列的区别？
+ A：dispatch_async(main_queue)：异步提交，不阻塞当前线程，
+    block 在主线程空闲后执行，不会死锁。
+    dispatch_sync(main_queue)：同步提交，若在主线程调用则死锁——
+    主线程等 block 完成才能继续，而 block 等主线程空闲才能执行，互相等待。
+
+ Q：dispatch_group_enter/leave 与 dispatch_group_async 的区别？
+ A：dispatch_group_async 只能包裹同步代码；若任务内部有异步回调（如网络请求），
+    group 会在 block 执行完毕（而非回调完成）就认为该任务结束，导致 notify 提前触发。
+    dispatch_group_enter/leave 手动控制计数，可在异步回调中调用 leave，
+    确保真正完成后才触发 notify，适合异步嵌套场景。
+
+ Q：dispatch_barrier_async 为什么对全局并发队列无效？
+ A：全局并发队列由系统共享，其他模块也在向该队列提交任务。
+    若 barrier 对全局队列有效，它必须等待全局队列中所有任务（包括其他模块的）完成，
+    这会导致不可预期的性能问题和逻辑错误。
+    因此 Apple 规定 barrier 只对自定义并发队列有效，开发者对该队列有完整控制权。
+
+ Q：dispatch_once 是如何保证线程安全的？
+ A：dispatch_once_t 是一个 long 型原子标志位（初始为 0）。
+    首次调用时通过 atomic compare-and-swap 原子操作将状态置为"执行中"，
+    执行 block 完毕后设置为"已完成"（~0L）。
+    并发调用时，其他线程检测到"执行中"状态会自旋等待，
+    直到状态变为"已完成"才返回（内存屏障保证可见性）。
+    单例最佳实践：结合静态变量保证线程安全且高效。
+
+ Q：NSOperationQueue 如何实现任务依赖？底层怎么实现的？
+ A：调用 [opB addDependency:opA] 后，opB 的 isReady 依赖于 opA 的 isFinished。
+    NSOperationQueue 内部通过 KVO 观察每个 Operation 的 isFinished，
+    当被依赖的 Operation 完成时，依赖它的 Operation 的 isReady 变为 YES，
+    队列才将其提交给底层 GCD 执行。
+    依赖关系构成 DAG（有向无环图），有环则会死锁（队列永久阻塞）。
 
  */
 

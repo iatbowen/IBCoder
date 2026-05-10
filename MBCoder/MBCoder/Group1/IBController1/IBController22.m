@@ -56,6 +56,11 @@
     int a[10] = {3,1,5,7,2,4,9,6,10,8};
     quickSort(a,0,9);
     NSLog(@"haha");
+    
+    NSArray<NSNumber *> *array = @[@38, @27, @43, @3, @9, @82, @10];
+    NSArray<NSNumber *> *sortedArray = [self mergeSort:array];
+    NSLog(@"排序前: %@", array);
+    NSLog(@"排序后: %@", sortedArray);
 }
 
 //https://www.cnblogs.com/onepixel/articles/7674659.html
@@ -148,6 +153,56 @@ void quickSort(int a[], int low, int high){
         quickSort(a,  low,  privotLoc -1);            //递归对低子表递归排序
         quickSort(a,   privotLoc + 1, high);        //递归对高子表递归排序
     }
+}
+
+/*
+ 归并排序采用 分治法：
+ 把数组从中间拆成两半
+ 分别对左右两部分排序
+ 再把两个有序数组合并成一个有序数组
+ */
+- (NSArray<NSNumber *> *)mergeSort:(NSArray<NSNumber *> *)array {
+    if (array.count <= 1) {
+        return array;
+    }
+    
+    NSUInteger mid = array.count / 2;
+    
+    NSArray<NSNumber *> *left = [array subarrayWithRange:NSMakeRange(0, mid)];
+    NSArray<NSNumber *> *right = [array subarrayWithRange:NSMakeRange(mid, array.count - mid)];
+    
+    left = [self mergeSort:left];
+    right = [self mergeSort:right];
+    
+    return [self mergeLeft:left right:right];
+}
+
+- (NSArray<NSNumber *> *)mergeLeft:(NSArray<NSNumber *> *)left right:(NSArray<NSNumber *> *)right {
+    NSMutableArray<NSNumber *> *result = [NSMutableArray array];
+    
+    NSUInteger i = 0, j = 0;
+    
+    while (i < left.count && j < right.count) {
+        if (left[i].integerValue <= right[j].integerValue) {
+            [result addObject:left[i]];
+            i++;
+        } else {
+            [result addObject:right[j]];
+            j++;
+        }
+    }
+    
+    while (i < left.count) {
+        [result addObject:left[i]];
+        i++;
+    }
+    
+    while (j < right.count) {
+        [result addObject:right[j]];
+        j++;
+    }
+    
+    return result;
 }
 
 /**

@@ -112,13 +112,101 @@
  GCD dispatch_source      不依赖 RunLoop，精度更高，适合对时间要求严格的场景
  CADisplayLink            与屏幕刷新率同步（60/120Hz），适合动画、视频渲染
 
- 十一、常见应用场景
+ 十一、RunLoop 退出条件
+
+ 以下任一条件满足，RunLoop 退出当前 Mode 循环：
+ 1. 调用 CFRunLoopStop / [runLoop stop]（只退出当前 Mode，嵌套调用需多次 stop）
+ 2. 超时（运行时指定的 seconds 到期）
+ 3. Mode 为空（无 Source / Timer / Observer 时立即退出）
+ 4. stopAfterHandle = YES（处理完一次事件即退出，用于单次事件等待场景）
+
+ 注意：[runLoop run] 启动的 RunLoop 无法通过外部 stop 终止，
+ 建议改用 [runLoop runMode:beforeDate:] 或条件变量控制退出。
+
+ 十二、NSTimer 循环引用解决方案
+
+ 问题：[NSTimer scheduledTimerWithTimeInterval:target:self ...] 强引用 self，
+       若 self 持有 timer，形成 self → timer → self 循环，self 无法释放。
+
+ 方案一：NSProxy 弱引用中间件（兼容所有 iOS 版本）
+ @interface TimerProxy : NSProxy
+ @property (nonatomic, weak) id target;
+ @end
+ @implementation TimerProxy
+ - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel {
+     return [self.target methodSignatureForSelector:sel];
+ }
+ - (void)forwardInvocation:(NSInvocation *)invocation {
+     [invocation invokeWithTarget:self.target];
+ }
+ @end
+ // 使用：target 传 proxy，proxy 弱引用 self，打破循环
+ TimerProxy *proxy = [TimerProxy alloc];
+ proxy.target = self;
+ self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:proxy ...];
+
+ 方案二：Block-based timer（iOS 10+）
+ self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 repeats:YES block:^(NSTimer *t) {
+     // block 不持有 self，无循环引用；如需访问 self 用 weakSelf
+ }];
+
+ 方案三：及时 invalidate（最简，需确保调用时机正确）
+ 在 viewWillDisappear: 或配对的生命周期方法中调用：
+ [self.timer invalidate]; self.timer = nil;
+ 注意：dealloc 中调用无效，因为循环引用导致 dealloc 永远不会触发。
+
+ 十三、CADisplayLink 循环引用
+
+ CADisplayLink 同样强引用 target（addToRunLoop 后 RunLoop 持有 displayLink）。
+ 解决方案与 NSTimer 相同：
+ - 使用 NSProxy 中间件弱引用 self
+ - iOS 10+ 使用 Block-based（displayLinkWithTarget 暂无 block 版，可用 NSProxy）
+ - 必须在合适时机调用 invalidate（停止后 RunLoop 释放 displayLink，displayLink 释放 proxy）
+
+ 十四、常见应用场景
 
  1. 常驻子线程       添加 Port/Source 后调用 [runLoop run] 保活（见 -work 方法）
  2. 滑动暂停任务     ImageView 加入 DefaultMode，滑动时自动暂停，不干扰 UI
  3. 空闲加载         监听 BeforeWaiting，RunLoop 空闲时分批执行耗时任务
  4. AutoreleasePool  RunLoop 每次循环自动 push/pop，控制对象生命周期
  5. 卡顿检测         注册 Observer 监听 BeforeSources/AfterWaiting，统计两次回调间隔
+
+ ============================================================
+ 十五、常见面试问答
+ ============================================================
+
+ Q：RunLoop 和线程的关系？子线程如何开启 RunLoop？
+ A：一一对应，不能手动创建，首次调用 [NSRunLoop currentRunLoop] 时懒加载创建。
+    主线程 RunLoop 由系统在 UIApplicationMain 中自动启动。
+    子线程默认不启动，需先给 RunLoop 添加至少一个 Source/Timer/Port（否则立即退出），
+    再调用 [runLoop runMode:beforeDate:] 或 [runLoop run]（不推荐后者，无法手动停止）。
+
+ Q：RunLoop 中 CommonModes 是什么？为什么 NSTimer 滑动时会暂停？
+ A：CommonModes 是一个"标记集合"，不是真实 Mode。
+    标记为 Common 的 item（Timer/Source/Observer）会被同步到所有 Common Mode 中。
+    默认 Common Modes 包含 DefaultMode + UITrackingMode。
+    NSTimer 默认加入 DefaultMode，ScrollView 滑动时 RunLoop 切换到 UITrackingMode，
+    DefaultMode 的 Timer 不再被执行，表现为暂停。
+    解决：[runLoop addTimer:timer forMode:NSRunLoopCommonModes]，两种 Mode 均可触发。
+
+ Q：Source0 和 Source1 的区别？
+ A：Source0 是非端口事件，不由内核主动投递，需主动调用 CFRunLoopSourceSignal + CFRunLoopWakeUp 触发。
+    典型：触摸事件分发（IOKit → Source1 → 转发 → Source0）、performSelector 系列。
+    Source1 是基于 Mach Port 的端口事件，由内核主动投递并唤醒线程，无需手动 signal。
+    典型：系统硬件事件原始投递、线程间通信（NSPort）。
+    触摸事件先由 IOKit 以 Source1 送达，再转交 Source0 做 UIKit 层分发。
+
+ Q：NSTimer 的精度问题及解决方案？
+ A：NSTimer 依赖 RunLoop，RunLoop 执行耗时任务时 Timer 回调被延迟，且误差不会补偿（下次仍按原 interval 计算）。
+    可通过 timer.tolerance 设置最大容忍误差，系统在允许范围内合并唤醒，降低功耗。
+    需要高精度定时：改用 GCD dispatch_source_t，底层基于内核计时，不受 RunLoop Mode 影响。
+
+ Q：如何利用 RunLoop 实现常驻子线程？
+ A：核心是给 RunLoop 添加持续存活的 Source，防止 Mode 为空时退出：
+    [[NSRunLoop currentRunLoop] addPort:[NSMachPort port] forMode:NSDefaultRunLoopMode];
+    [[NSRunLoop currentRunLoop] run];
+    run 使 RunLoop 一直保持在 DefaultMode，有事件时处理，无事件时休眠，线程保活。
+    实际任务通过 performSelector:onThread:withObject:waitUntilDone: 投递到此线程执行。
 */
 
 

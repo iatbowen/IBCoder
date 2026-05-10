@@ -17,48 +17,168 @@
 
 /*
 
- 考虑模块拆解
- 难点重点
- 开发项目考虑已存在代码
- 关注性能，主动提出并解决
- 解决线上问题能力
- 加班提升自己技术
- 
- 断点续传：分块，分片。
- 1、断点续传技术就是利用 HTTP1.1 协议的这个特点在 Header 里添加两个参数来实现的。
-    这两个参数分别是客户端请求时发送的 Range 和服务器返回信息时返回的 Content-Range，Range 用于指定第一个字节和最后一个字节的位置
- 2、校验
- 
- YYCache和SDImageCache
- YYCache：这是一个强大的 iOS 缓存库。它支持内存和磁盘两级缓存，并且可以缓存任何类型的对象，如 NSString、NSData、UIImage 等。
- YYCache 提供了线程安全的操作，并且支持设置缓存的过期时间、缓存的最大数量和最大占用空间等。
- 此外，YYCache 还提供了一些高级功能，如 LRU（最近最少使用）算法、自动清理过期和超过最大限制的缓存等。
+ ============================================================
+ UIViewController 生命周期 / 圆角方案 / 缓存机制 / 断点续传 面试题总结
+ ============================================================
 
- SDImageCache：
- 这是 SDWebImage 库中的一个组件，主要用于缓存图片。它也支持内存和磁盘两级缓存，并且提供了线程安全的操作。
- 但是，SDImageCache 的功能相对于 YYCache 来说较为简单，它主要专注于图片的缓存，不支持缓存其他类型的对象。
- SDImageCache 支持设置缓存的过期时间和最大占用空间，但不支持设置缓存的最大数量。
- 此外，SDImageCache 的清理策略也相对简单，它只会在应用进入后台或者收到内存警告时清理过期和超过最大限制的缓存。
 
- 磁盘缓存：作者参考了NSURLCache的实现及其他第三方的实现，采用文件系统结合SQLite的实现方式，
- 实验发现对于20KB以上的数据，文件系统的读写速度高于SQLite，所以当数据大于20KB时直接将数据保存在文件系统中，
- 在数据库中保存元数据，并添加索引，数据小于20KB时直接保存在数据库中，这样，就能够快速统计相关数据来实现淘汰。
- SDWebImage的磁盘缓存使用的只有文件系统。
+ ============================================================
+ 一、UIViewController 生命周期
+ ============================================================
 
- 
- 控制器生命周期
- 按照执行顺序排列：
- 1. initWithCoder：通过nib文件初始化时触发。
- 2. awakeFromNib：nib文件被加载的时候，会发生一个awakeFromNib的消息到nib文件中的每个对象。
- 3. loadView：开始加载视图控制器自带的view。
- 4. viewDidLoad：视图控制器的view被加载完成。
- 5. viewWillAppear：视图控制器的view将要显示在window上。
- 6. updateViewConstraints：视图控制器的view开始更新AutoLayout约束。
- 7. viewWillLayoutSubviews：视图控制器的view将要更新内容视图的位置。
- 8. viewDidLayoutSubviews：视图控制器的view已经更新视图的位置。
- 9. viewDidAppear：视图控制器的view已经展示到window上。
- 10. viewWillDisappear：视图控制器的view将要从window上消失。
- 11. viewDidDisappear：视图控制器的view已经从window上消失。
+ 【完整执行顺序】
+
+ initialize         类第一次被使用时由 runtime 调用（+方法，只调一次）
+ alloc/init         对象内存分配与初始化
+ initWithNibName    通过 Nib 初始化时调用（或 initWithCoder 通过 Storyboard）
+ awakeFromNib       Nib/Storyboard 反序列化完成后，所有 outlet 已连接
+ loadView           加载或创建根视图（不要手动调用，不要调 super 后再赋值）
+ viewDidLoad        视图层级加载完毕，只调用一次，适合做一次性初始化
+ viewWillAppear     视图即将出现（每次切换到该页面都会触发）
+ updateViewConstraints  Auto Layout 约束更新（可在此修改约束）
+ viewWillLayoutSubviews 子视图即将布局（frame 尚未最终确定）
+ viewDidLayoutSubviews  子视图布局完成（frame 已确定，适合依赖 frame 的操作）
+ viewDidAppear      视图已完全显示（适合启动动画、开始采集数据）
+ viewWillDisappear  视图即将消失（适合暂停播放、保存草稿）
+ viewDidDisappear   视图已消失（适合停止网络请求、释放资源）
+ dealloc            对象释放（ARC 下自动触发）
+
+ 【关键方法说明】
+
+ loadView
+   系统默认从 Nib/Storyboard 加载根视图。
+   纯代码时可重写以手动创建根视图，但不能调用 self.view（会触发递归）。
+   重写时不要调 [super loadView]，直接赋值 self.view = myView。
+
+ viewDidLoad vs viewWillAppear
+   viewDidLoad：只调用一次，适合初始化数据、创建子视图、注册通知。
+   viewWillAppear：每次页面出现都调用，适合刷新 UI 状态（如导航栏样式）。
+
+ self.view = nil 的陷阱
+   在 viewDidLoad 中将 self.view 置为 nil 会触发循环调用：
+   访问 self.view → view 为空 → 调用 loadView → 调用 viewDidLoad → 再次置空...
+
+ 【两个 VC 切换时的完整生命周期顺序（push 为例）】
+ A.viewWillDisappear → B.viewWillAppear → B.viewDidAppear → A.viewDidDisappear
+
+
+ ============================================================
+ 二、圆角实现方案对比（对应下方 test1~test4）
+ ============================================================
+
+ 【方案一：cornerRadius + masksToBounds（test1）】
+ 实现：layer.cornerRadius = r; layer.masksToBounds = YES;
+ 离屏渲染：
+   - 纯色背景 + 圆角（iOS 9+）：不触发，系统优化处理
+   - 图片/渐变/多层叠加 + masksToBounds：触发离屏渲染
+ 优点：代码简单
+ 缺点：复合图层场景下触发离屏渲染，频繁滚动时 GPU 压力大
+
+ 【方案二：Core Graphics + UIBezierPath（test2）】
+ 实现：开启 UIGraphicsContext → 设置裁剪路径 → 绘制图片 → 获取结果图
+ 离屏渲染：不触发（CPU 完成，直接输出位图结果）
+ 优点：彻底避免离屏渲染，适合静态图片
+ 缺点：CPU 绘制耗时，每次图片变化都需重新绘制，不适合频繁更新场景
+
+ 【方案三：CAShapeLayer + UIBezierPath 作为 mask（test3）】
+ 实现：创建 CAShapeLayer 设置圆角路径，赋给 layer.mask
+ 离屏渲染：触发（layer.mask 本质触发离屏合成）
+ 优点：灵活，可实现任意形状（只裁剪某几个角）
+ 缺点：仍触发离屏渲染，内存占用较高（mask 层额外占用）
+
+ 【方案四：预渲染（推荐方案）】
+ 实现：图片加载完成后，在子线程用 Core Graphics 绘制圆角，主线程赋值
+ 离屏渲染：不触发
+ 优点：GPU 零负担，滑动流畅，适合大量 cell 中的图片圆角
+ 缺点：需要异步处理，实现稍复杂（可用 YYImage/SDWebImage 的 processor 实现）
+
+ 【最佳实践】
+ 静态少量圆角：方案一（纯色背景）或方案二（图片）
+ 列表滚动大量圆角图片：方案四（异步预渲染），配合 SDWebImage thumbnailPixelSize 或 transformer
+
+
+ ============================================================
+ 三、缓存机制：YYCache vs SDImageCache
+ ============================================================
+
+ 【架构对比】
+
+ YYCache
+   定位：通用对象缓存（NSString/NSData/UIImage/自定义对象均可）
+   内存缓存：YYMemoryCache，使用双向链表 + 字典实现 LRU，线程安全（pthread_mutex）
+   磁盘缓存：YYDiskCache，文件系统 + SQLite 混合存储
+     数据 > 20KB → 文件系统存储（读写速度更快）
+     数据 ≤ 20KB → SQLite 存储（便于快速统计、排序、LRU 淘汰）
+   淘汰策略：LRU（最近最少使用），支持按数量/大小/时间三个维度限制
+
+ SDImageCache（SDWebImage 内置）
+   定位：专用图片缓存
+   内存缓存：NSCache 封装，系统内存紧张时自动清理（无精细控制）
+   磁盘缓存：纯文件系统（MD5 文件名），无 SQLite
+   淘汰策略：按过期时间（默认 7 天）+ 最大容量，仅在 App 进入后台/收到内存警告时触发
+   局限：不支持自定义对象、不支持按数量限制、淘汰时机不够精细
+
+ 【YYCache 内存缓存 LRU 实现】
+ 数据结构：双向链表（维护访问顺序）+ NSDictionary（O(1) 查找）
+ 访问时：将节点移到链表头部（最近使用）
+ 淘汰时：从链表尾部移除（最久未使用）
+ 线程安全：pthread_mutex 保证多线程读写安全
+
+ 【选型建议】
+ 纯图片缓存，已用 SDWebImage → SDImageCache（内置无需额外依赖）
+ 需缓存任意对象、精细控制淘汰策略 → YYCache
+ 对内存占用敏感的图片列表 → YYCache（LRU 更精准，可设最大数量）
+
+
+ ============================================================
+ 四、断点续传
+ ============================================================
+
+ 【HTTP Range 请求机制（HTTP/1.1）】
+ 客户端请求头：Range: bytes=1024-2047   （请求第 1025~2048 字节）
+               Range: bytes=1024-      （请求从第 1025 字节到末尾）
+ 服务器响应：
+   成功：状态码 206 Partial Content
+         响应头 Content-Range: bytes 1024-2047/10240（当前范围/总大小）
+   不支持：状态码 200，返回完整内容
+
+ 【iOS 实现要点】
+ 1. 首次请求：正常发起，记录已下载字节数和文件总大小（从 Content-Length 获取）
+ 2. 中断恢复：读取本地已下载文件的大小，构造 Range 请求头，追加写入文件
+ 3. 数据完整性校验：下载完成后用 MD5/SHA256 与服务器提供的 ETag 或 checksum 比对
+ 4. NSURLSessionDownloadTask：系统级断点续传，通过 resumeData 恢复
+    URLSession:task:didCompleteWithError: 中保存 resumeData
+    [session downloadTaskWithResumeData:resumeData] 恢复下载
+
+ 【NSURLSessionDownloadTask 断点续传注意事项】
+ resumeData 中包含临时文件路径，App 被杀死后临时文件可能被清除，resumeData 失效。
+ 可靠方案：手动管理分片，将已下载数据写入固定路径，恢复时从该路径续传。
+
+
+ ============================================================
+ 五、常见面试问题
+ ============================================================
+
+ Q：viewDidLoad 和 viewWillAppear 分别适合做什么操作？
+ A：viewDidLoad 只调用一次，适合一次性初始化：创建子视图、注册通知、初始化数据源。
+    viewWillAppear 每次页面出现都调用，适合每次显示时需要刷新的操作：
+    更新导航栏样式、刷新列表数据、恢复播放状态等。
+    避免在 viewWillAppear 中做耗时操作（网络请求、大量计算）影响转场流畅性。
+
+ Q：为什么大量圆角图片会导致列表滚动卡顿？如何解决？
+ A：cornerRadius + masksToBounds 在图片/渐变场景下触发离屏渲染：
+    GPU 需要先在屏幕外单独合成圆角效果，再拷贝回帧缓冲区，增加 GPU 负担。
+    列表快速滚动时大量圆角触发，导致 GPU 无法在 16.7ms 内完成渲染，帧率下降。
+    解决方案：预渲染（在子线程用 Core Graphics 绘制好圆角图片再赋值），
+    SDWebImage 的 SDImageRoundCornerTransformer 可开箱即用。
+
+ Q：YYCache 为什么对大小数据选择不同的存储方式？
+ A：实验表明，对于 20KB 以上的数据，文件系统的顺序读写速度优于 SQLite，
+    因为文件系统直接操作块设备，而 SQLite 有 B-Tree 索引维护开销。
+    对于 20KB 以下的小数据，SQLite 的优势在于：
+    可以用 SQL 快速统计总大小、按 LRU 时间排序找到待淘汰项，实现更精细的淘汰控制。
+    纯文件系统（如 SDImageCache）要做 LRU 淘汰，需要遍历目录读取文件修改时间，效率较低。
+
  */
 
 @implementation IBController1

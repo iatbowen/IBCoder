@@ -1,0 +1,38 @@
+MBCoder/MBCoder/IBTool/Concurrency/IBDiningPhilosophers.m
+  s_c90e3004d3a71e::t_18460fa2c18e39 1-67
+MBCoder/MBCoder/IBTool/Concurrency/IBSleepingBarber.m
+  s_c90e3004d3a71e::t_a41b4432b3a3cf 6,22-26,28,30,36,41,47,49-50,53,56-57,59,75,77-78,82-83,98,102-110
+  s_c90e3004d3a71e::t_b9bcf3e6cab7b9 88-91
+  s_c90e3004d3a71e::t_81941ff1fc98fa 1-5,7-21,27,29,31-35,37-40,42-46,48,51-52,54-55,58,60-74,76,79-81,84-87,92-97,99-101,111-113
+MBCoder/MBCoder/IBTool/Concurrency/IBProducerConsumer.m
+  s_c90e3004d3a71e::t_49cb52076b9b23 22
+  s_c90e3004d3a71e::t_f0cf6be648f55d 24-29
+  s_c90e3004d3a71e::t_e287546be50fde 1-21,23,30-108
+MBCoder/MBCoder/IBTool/Concurrency/IBReadersWriters.m
+  s_c90e3004d3a71e::t_77ca3101b46aa7 1-98
+MBCoder/MBCoder/IBTool/Concurrency/IBProducerConsumer.h
+  s_c90e3004d3a71e::t_cc4906df8e718b 1-19,21-24
+  s_c90e3004d3a71e::t_b49ce24e156483 20
+MBCoder/MBCoder/Group1/IBController/IBController3.m
+  s_c90e3004d3a71e::t_6a6df1767a352f 10-14,232-234
+  s_c90e3004d3a71e::t_83994d07f2d579 348-360
+  s_c90e3004d3a71e::t_c79902ce8b5276 346-347
+MBCoder/MBCoder/IBTool/Concurrency/IBSleepingBarberCV.m
+  s_c90e3004d3a71e::t_88d02c598352fc 1-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.4",
+  "base_commit_sha": "8ec7111fd3a2028b424024282a37e142891fa3da",
+  "prompts": {},
+  "sessions": {
+    "s_c90e3004d3a71e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "f6e74158-37b9-41bf-8043-12dcbc8c01e2",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "正北飞 <1214569257@qq.com>"
+    }
+  }
+}

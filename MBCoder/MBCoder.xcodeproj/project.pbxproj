@@ -310,6 +310,11 @@
 		4AF2134E2399F31600EFB85D /* TPExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134C2399F31600EFB85D /* TPExpandIcon.png */; };
 		4AF2134F2399F31600EFB85D /* TPNOExpandIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */; };
 		4AF2B56F24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */; };
+		5401C87F2FB0B45C00364D06 /* IBSleepingBarberCV.m in Sources */ = {isa = PBXBuildFile; fileRef = 5401C87D2FB0B45C00364D06 /* IBSleepingBarberCV.m */; };
+		5401C8802FB0B45C00364D06 /* IBSleepingBarber.m in Sources */ = {isa = PBXBuildFile; fileRef = 5401C87B2FB0B45C00364D06 /* IBSleepingBarber.m */; };
+		5401C8812FB0B45C00364D06 /* IBProducerConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5401C8772FB0B45C00364D06 /* IBProducerConsumer.m */; };
+		5401C8822FB0B45C00364D06 /* IBReadersWriters.m in Sources */ = {isa = PBXBuildFile; fileRef = 5401C8792FB0B45C00364D06 /* IBReadersWriters.m */; };
+		5401C8832FB0B45C00364D06 /* IBDiningPhilosophers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5401C8752FB0B45C00364D06 /* IBDiningPhilosophers.m */; };
 		540459BD2D799D2F009CBCE8 /* math.c in Sources */ = {isa = PBXBuildFile; fileRef = 540459BC2D799D2F009CBCE8 /* math.c */; };
 		540459C02D799DF5009CBCE8 /* math.js in Resources */ = {isa = PBXBuildFile; fileRef = 540459BE2D799DF5009CBCE8 /* math.js */; };
 		540459C12D799DF5009CBCE8 /* math.wasm in Resources */ = {isa = PBXBuildFile; fileRef = 540459BF2D799DF5009CBCE8 /* math.wasm */; };
@@ -1075,6 +1080,16 @@
 		4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPNOExpandIcon.png; sourceTree = "<group>"; };
 		4AF2B56D24ADB0ED00ADFB12 /* IBFlashChatTransitionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBFlashChatTransitionView.h; sourceTree = "<group>"; };
 		4AF2B56E24ADB0EE00ADFB12 /* IBFlashChatTransitionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBFlashChatTransitionView.m; sourceTree = "<group>"; };
+		5401C8742FB0B45C00364D06 /* IBDiningPhilosophers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBDiningPhilosophers.h; sourceTree = "<group>"; };
+		5401C8752FB0B45C00364D06 /* IBDiningPhilosophers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBDiningPhilosophers.m; sourceTree = "<group>"; };
+		5401C8762FB0B45C00364D06 /* IBProducerConsumer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBProducerConsumer.h; sourceTree = "<group>"; };
+		5401C8772FB0B45C00364D06 /* IBProducerConsumer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBProducerConsumer.m; sourceTree = "<group>"; };
+		5401C8782FB0B45C00364D06 /* IBReadersWriters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBReadersWriters.h; sourceTree = "<group>"; };
+		5401C8792FB0B45C00364D06 /* IBReadersWriters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBReadersWriters.m; sourceTree = "<group>"; };
+		5401C87A2FB0B45C00364D06 /* IBSleepingBarber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBSleepingBarber.h; sourceTree = "<group>"; };
+		5401C87B2FB0B45C00364D06 /* IBSleepingBarber.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBSleepingBarber.m; sourceTree = "<group>"; };
+		5401C87C2FB0B45C00364D06 /* IBSleepingBarberCV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBSleepingBarberCV.h; sourceTree = "<group>"; };
+		5401C87D2FB0B45C00364D06 /* IBSleepingBarberCV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBSleepingBarberCV.m; sourceTree = "<group>"; };
 		540459BB2D799D2F009CBCE8 /* math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
 		540459BC2D799D2F009CBCE8 /* math.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = math.c; sourceTree = "<group>"; };
 		540459BE2D799DF5009CBCE8 /* math.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = math.js; sourceTree = "<group>"; };
@@ -2223,6 +2238,7 @@
 		4ACBB8012341FA0D002D7955 /* IBModule */ = {
 			isa = PBXGroup;
 			children = (
+				5401C87E2FB0B45C00364D06 /* Concurrency */,
 				540F2B3B2D7F09B000C0679F /* hermes */,
 				54EAECA92D3FA2BF00D893D3 /* JSPatch */,
 				54E43B9D2CE30D8B005BE78A /* flatbuffers */,
@@ -2484,6 +2500,23 @@
 				4AF2134D2399F31600EFB85D /* TPNOExpandIcon.png */,
 			);
 			path = icon;
+			sourceTree = "<group>";
+		};
+		5401C87E2FB0B45C00364D06 /* Concurrency */ = {
+			isa = PBXGroup;
+			children = (
+				5401C8742FB0B45C00364D06 /* IBDiningPhilosophers.h */,
+				5401C8752FB0B45C00364D06 /* IBDiningPhilosophers.m */,
+				5401C8762FB0B45C00364D06 /* IBProducerConsumer.h */,
+				5401C8772FB0B45C00364D06 /* IBProducerConsumer.m */,
+				5401C8782FB0B45C00364D06 /* IBReadersWriters.h */,
+				5401C8792FB0B45C00364D06 /* IBReadersWriters.m */,
+				5401C87A2FB0B45C00364D06 /* IBSleepingBarber.h */,
+				5401C87B2FB0B45C00364D06 /* IBSleepingBarber.m */,
+				5401C87C2FB0B45C00364D06 /* IBSleepingBarberCV.h */,
+				5401C87D2FB0B45C00364D06 /* IBSleepingBarberCV.m */,
+			);
+			path = Concurrency;
 			sourceTree = "<group>";
 		};
 		540459BA2D799D14009CBCE8 /* wasm */ = {
@@ -3357,6 +3390,11 @@
 			files = (
 				4ACBB9542342068A002D7955 /* RACTestScheduler.m in Sources */,
 				4ACBB86A2341FA0D002D7955 /* IBController27.m in Sources */,
+				5401C87F2FB0B45C00364D06 /* IBSleepingBarberCV.m in Sources */,
+				5401C8802FB0B45C00364D06 /* IBSleepingBarber.m in Sources */,
+				5401C8812FB0B45C00364D06 /* IBProducerConsumer.m in Sources */,
+				5401C8822FB0B45C00364D06 /* IBReadersWriters.m in Sources */,
+				5401C8832FB0B45C00364D06 /* IBDiningPhilosophers.m in Sources */,
 				549D07252D71905E0096BED6 /* IBGroup3Controller12.m in Sources */,
 				4AF213442399F2E800EFB85D /* UIWindow+CallRecordShake.m in Sources */,
 				4ACBB89C2341FA0D002D7955 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */,

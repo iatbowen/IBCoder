@@ -7,6 +7,11 @@
 //
 
 #import "IBController3.h"
+#import "IBProducerConsumer.h"
+#import "IBReadersWriters.h"
+#import "IBDiningPhilosophers.h"
+#import "IBSleepingBarber.h"
+#import "IBSleepingBarberCV.h"
 
 @interface IBController3 ()
 
@@ -224,10 +229,9 @@
    场景：理发师无客则睡，有客则醒；客满则离开
    方案：信号量（等待席位计数）+ 互斥锁
 
- 顺序打印（iOS 面试高频）
-   三个线程按 1→2→3 循环顺序打印：使用三个信号量（初始值 1/0/0），
-   每个线程 wait 自己的信号量，打印后 signal 下一个线程的信号量。
-   代码：见下方 test4_2（NSOperation + dispatch_semaphore 实现）
+ 唤醒-等待经典模型 (Sleeping Barber Problem)
+    问题描述：理发师和客户，客户到店后如果有空位就等待，否则离开；理发师没客人就休眠，有客人则唤醒。
+    考点：条件变量、队列、信号量。
 
 
  ============================================================
@@ -339,6 +343,21 @@
     self.filmTickets = 100;
     self.lock = [[NSLock alloc] init];
 
+    // 1. 生产者-消费者：2 个生产者，2 个消费者，缓冲区大小 5，每个生产者生产 5 个 item
+    [IBProducerConsumer runDemoWithProducers:2 consumers:2 bufferSize:5 itemsEach:5];
+
+    // 2. 读者-写者（两种方案）
+//    [IBReadersWriters runDemoBarrier];
+//    [IBReadersWriters runDemoPthreadRWLock];
+
+    // 3. 哲学家就餐：5 位哲学家
+//    [IBDiningPhilosophers runDemoWithPhilosophers:5];
+
+    // 4. 理发师问题（信号量方案）：3 个座位，8 位顾客
+//    [IBSleepingBarber runDemoWithChairs:3 customers:8];
+
+    // 5. 理发师问题（NSCondition 方案）：3 个座位，8 位顾客
+//    [IBSleepingBarberCV runDemoWithChairs:3 customers:8];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

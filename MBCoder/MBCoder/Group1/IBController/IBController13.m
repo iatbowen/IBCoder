@@ -456,8 +456,8 @@
 /*
  // isMemberOfClass 和 isKindOfClass 类方法和实例方法实现逻辑
  
- - isMemberOfClass: 仅检查直接类关系，不遍历继承链
- - isKindOfClass: 检查类关系并遍历完整继承链
+ - isMemberOfClass: 仅检查直接类关系
+ - isKindOfClass: 当前类 + 所有父类
  - 实例方法: 操作对象的类（isa指向的类）
  - 类方法: 操作类的元类（类对象的isa指向的元类）
 

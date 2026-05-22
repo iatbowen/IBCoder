@@ -335,18 +335,11 @@
  
  4. autoreleasepool 和 RunLoop 的关系？（⭐⭐⭐ 高频）
  标准答案：
- 主线程的 RunLoop 在每次循环开始时会 push 一个 autoreleasepool
- 在循环即将休眠前 pop 这个 pool
- 在循环结束后再次 pop（两次 pop 机制）
- ┌───────────────────────────┐
- │ RunLoop 启动                           │
- ├───────────────────────────┤
- │ 1. push autoreleasepool            │ ← Entry
- │ 2. 处理 Timer/Source/Observer │
- │ 3. 即将休眠前：pop + push       │ ← BeforeWaiting
- │ 4. 唤醒后继续处理事件               │
- │ 5. 即将退出：pop                       │ ← Exit
- └───────────────────────────┘
+ iOS在主线程的Runloop中注册了2个Observer
+ 第1个Observer监听了kCFRunLoopEntry事件，会调用objc_autoreleasePoolPush()
+ 第2个Observer
+ 监听了kCFRunLoopBeforeWaiting事件，会调用objc_autoreleasePoolPop()、objc_autoreleasePoolPush()
+ 监听了kCFRunLoopBeforeExit事件，会调用objc_autoreleasePoolPop()
  
  5. 什么情况下必须使用 @autoreleasepool？（⭐⭐⭐ 必考）
  场景 1：循环中创建大量临时对象
@@ -603,12 +596,4 @@ extern uintptr_t _objc_rootRetainCount(id obj); // ARC获取对象的引用计�
 
  添加新的对象和销毁自动释放池这两个操作。正好满足双向列表的特性，故使用双向列表。
  
- 三、Runloop和AutoreleasePool
- iOS在主线程的Runloop中注册了2个Observer
- 第1个Observer监听了kCFRunLoopEntry事件，会调用objc_autoreleasePoolPush()
- 第2个Observer
- 监听了kCFRunLoopBeforeWaiting事件，会调用objc_autoreleasePoolPop()、objc_autoreleasePoolPush()
- 监听了kCFRunLoopBeforeExit事件，会调用objc_autoreleasePoolPop()
-
-
 */

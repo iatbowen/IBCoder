@@ -343,8 +343,8 @@
     self.filmTickets = 100;
     self.lock = [[NSLock alloc] init];
 
-    // 1. 生产者-消费者：2 个生产者，2 个消费者，缓冲区大小 5，每个生产者生产 5 个 item
-    [IBProducerConsumer runDemoWithProducers:2 consumers:2 bufferSize:5 itemsEach:5];
+    // 1. 生产者-消费者：2 个生产者，2 个消费者，缓冲区大小 5
+    [IBProducerConsumer runDemoWithProducers:2 consumers:2 bufferSize:5];
 
     // 2. 读者-写者（两种方案）
 //    [IBReadersWriters runDemoBarrier];

@@ -1,0 +1,19 @@
+MBCoder/MBCoder/Group1/IBController2/IBController32.m
+  s_10c650ae4023b0::t_26fcf4257fff80 11-190
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "9e942b1eb6d7de5ed41e214100162d974c1be000",
+  "prompts": {},
+  "sessions": {
+    "s_10c650ae4023b0": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "d068a140-266d-4d39-8968-41d8dfac144e",
+        "model": "default"
+      },
+      "human_author": "正北飞 <1214569257@qq.com>"
+    }
+  }
+}

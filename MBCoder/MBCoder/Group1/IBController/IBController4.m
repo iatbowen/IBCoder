@@ -138,6 +138,7 @@
  2. Block 作为函数返回值
  3. Block 被强引用（strong/copy 属性持有，或赋给 __strong 变量）
  4. 调用系统 API 时参数中含有 usingBlock 的方法（如 enumerateObjectsUsingBlock:）
+ 5. GCD 函数
 
  ARC 下编译器会自动在适当时机插入 copy，大多数情况无需手动调用。
  MRC 下必须手动 [block copy]，否则栈 Block 随作用域销毁后访问会崩溃。

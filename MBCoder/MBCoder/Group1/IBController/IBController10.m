@@ -87,13 +87,14 @@
 
  2. Runtime 层：全局 weak 表（SideTable → weak_table_t）
 
-   // 全局 SideTable 数组（64 个），以对象地址哈希分桶
+   // iOS 采用 64 张 SideTable 的方案，通过对象地址哈希分散到 64 个桶，每个桶有独立的锁。
+   // 优点：本质是选锁，把全局锁竞争分散到 64 个桶，大幅提升多线程性能
    struct SideTable {
        spinlock_t slock;
-       RefcountMap refcnts;    // 引用计数表
-       weak_table_t weak_table;
+       RefcountMap refcnts;     // 引用计数表
+       weak_table_t weak_table; // weak 引用表
    };
-
+   
    struct weak_table_t {
        weak_entry_t *weak_entries; // 哈希数组
        size_t num_entries;
@@ -105,14 +106,59 @@
        union { objc_object **referrers; struct { ... } inline_referrers; };
    };
 
-   查找路径：
-     SideTablesMap → SideTable（对象地址哈希）→ weak_table_t → weak_entry_t → weak 指针地址列表
+ 3. 查找路径：SideTablesMap → SideTable（对象地址哈希）→ weak_table_t(对象地址) → weak_entry_t → weak 指针地址列表
+ 
+ 4. weak对象销毁完整流程的锁视角：
+ 第一次定位 SideTable 不需要锁,因为 SideTables 是程序启动时分配的固定大小静态数组,运行期间结构完全不变,定位操作仅仅是位运算 + 数组下标访问,没有任何数据读写。
+ 锁只保护 SideTable 内部会被多线程修改的 weak_table 和 refcnts 数据。
+ 这正是分段锁(Stripe Locking)的精髓:让"选锁"的过程本身无锁,才能真正发挥多桶分散竞争的优势。
 
- 3. 自动置 nil 流程（对象 dealloc 时）
-   ① objc_object::rootDealloc → weak_clear_no_lock
-   ② 以对象地址为 key，在 weak_table 中找到 weak_entry_t
-   ③ 遍历所有 weak 指针地址，逐一置 *ptr = nil
-   ④ 从 weak_table 中移除该 entry
+ clearDeallocating_slow()
+        ↓
+ ┌──────────────────────────────────────────┐
+ │ SideTable& table = SideTables()[this]    │  ← 🔓 无锁
+ │   (静态数组取地址,纯计算)                    │
+ └──────────────────────────────────────────┘
+        ↓
+ table.lock()  ← 🔒 加锁(只锁这个桶)
+        ↓
+ ┌──────────────────────────────────────────┐
+ │ weak_clear_no_lock(&table.weak_table)    │  ← 🔒 锁保护下操作
+ │   (修改 weak_entry_t、置 nil 等)           │
+ └──────────────────────────────────────────┘
+        ↓
+ table.unlock()  ← 🔓 解锁
+ 
+ 
+ 6. storeWeak 核心调度
+ 
+ __weak id w = obj
+        ↓
+ objc_initWeak(&w, obj)
+        ↓
+ storeWeak(&w, obj)
+        ├── ① 哈希定位 newTable = SideTables()[obj]  ← 用对象地址
+        ├── ② lockTwo(加锁)
+        ├── ③ 检查对象是否 deallocating
+        ├── ④ 确保类已初始化
+        ├── ⑤ 解除旧 weak (weak_unregister_no_lock)
+        ├── ⑥ 注册新 weak (weak_register_no_lock)
+        │      ├── 查 weak_entry_t (hash 对象地址)
+        │      ├── 找到 → append_referrer(追加 &w)
+        │      │           ├── inline 数组未满 → 直接插
+        │      │           ├── inline 数组满了 → 转 outline
+        │      │           └── outline 75% 满 → grow_refs
+        │      └── 没找到 → weak_entry_insert(新建)
+        ├── ⑦ setWeaklyReferenced(标记 isa 位)
+        ├── ⑧ *location = newObj(weak 指针指向对象)
+        └── ⑨ unlockTwo(解锁)
+ 
+ weak 存储分三层:
+ 第一层 用对象地址哈希到 64 张 SideTable 之一(选锁);
+ 第二层 在该表的 weak_table 中用对象地址哈希查找 weak_entry_t;
+ 第三层 把 weak 指针的地址(&weakVar)追加到 entry 的 referrers 数组中——4 个以内用内联数组,超过则转为堆上动态哈希数组。
+ 
+ 同时会设置对象 isa 的 weakly_referenced 位,以便 dealloc 时快速判断需要清理。整个过程在 os_unfair_lock 保护下完成,并有 retry 机制保证多线程一致性。
 
  五、weak 与关联对象对比
 

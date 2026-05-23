@@ -74,7 +74,8 @@
     重写 -pointInside:withEvent:，在 bounds 外围扩展判定区域（见 IBViewD）
 
  2. 子 view 超出父 view bounds 仍可响应
-    父 view 重写 hitTest:withEvent:，手动检测超出区域的子 view
+    子视图超出父视图后无法响应,根本原因是父视图的 pointInside: 返回 NO,导致 hitTest 在父视图就终止。
+    解决办法是重写父视图的 pointInside: 或 hitTest:,把点转换到子视图坐标系判断,若子视图能命中则返回 YES 或返回子视图,从而打通事件传递链
 
  3. ScrollView 留边分页滑动
     父 view 重写 hitTest:withEvent:，将留边区域的触摸事件也返回 scrollView，

@@ -168,10 +168,14 @@
  视图树（View Tree）↔ 图层树（Layer Tree）
 
  【为何分离为 UIView + CALayer 两套体系】
- 职责分离：UIView 负责事件响应（触摸、手势）；CALayer 负责内容呈现与动画。
- 跨平台复用：Mac 端用 NSView + CALayer，iOS 端用 UIView + CALayer，
- CALayer 代码在两端完全复用，只需替换事件处理层。
+ 职责分离：UIView  = 事件响应(继承 UIResponder) + 布局管理 + 对 CALayer 的封装；CALayer = 内容显示 + 动画渲染 + 视觉呈现
+ 跨平台复用：Mac 端用 NSView + CALayer，iOS 端用 UIView + CALayer，CALayer 代码在两端完全复用，只需替换事件处理层。
+ 
  实际上共有四棵树：视图树、图层树、呈现树（Presentation Tree）、渲染树（Render Tree）。
+ 视图树   → 开发者操作的 UIView 层级，管事件和布局
+ 图层树   → CALayer 层级，存属性的最终目标值（模型值）
+ 呈现树   → 图层树的镜像，存动画当前帧的实时值，只读
+ 渲染树   → 系统私有，GPU 实际渲染用，开发者不可见
 
  【CALayer 为何能显示内容】
  CALayer 基本等同于一块 GPU 纹理（Texture）。

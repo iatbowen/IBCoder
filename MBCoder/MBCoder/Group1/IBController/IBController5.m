@@ -196,4 +196,33 @@
  最佳实践：
  - NSString   → copy   修饰（防止被可变字符串污染）
  - NSMutable  → strong 修饰 + 赋值时手动 mutableCopy（保证独立可变副本）
+ 
+ 
+ NSArray、NSSet、NSDictionary 对比
+ 
+ 特性       NSArray       NSSet          NSDictionary
+ 有序       ✅ 有序        ❌ 无序        ❌ 无序
+ 重复       ✅ 允许        ❌ 自动去重     key不重复/value可重复
+ 访问方式    索引 arr[i]    只能遍历/has    key dict[key]
+ 查找值      O(n)          O(1)均摊       O(1)均摊
+ 底层       环形缓冲区       哈希表         哈希表
+ 存储内容    单值           单值           键值对
+ 
+ 环形缓冲区的核心思想：环形缓冲区 = 固定连续内存 + head/tail 两个指针 + 取模运算
+
+ 物理内存：  [_][_][_][_][_][_][_][_]
+              0  1  2  3  4  5  6  7
+
+ 逻辑上看成一个"环"：
+
+         0
+     7       1
+   6           2
+     5       3
+         4
+
+ head 和 tail 在环上移动
+
+ head/tail重合就扩容，避免覆盖
+ 
  */

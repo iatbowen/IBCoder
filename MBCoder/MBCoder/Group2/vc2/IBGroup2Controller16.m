@@ -212,11 +212,34 @@
    但是不同于UIWebView，新的函数只能拦截自定义的Scheme(SchemeRegistry.cpp)，对使用最多的HTTP/HTTPS依然不能有效的拦截。
  
  2、白屏
- 通常WKWebView白屏的原因主要分两种：
- 一种是由于Web的进程Crash（多见于内部进程通信）；
- 一种就是WebView渲染时的错误（Debug一切正常只是没有对应的内容）。
- 对于白屏的检测，前者在iOS9之后系统提供了对应Crash的回调函数，同时业界也有通过判断URL/Title是否为空的方式作为辅助；
- 后者业界通过视图树对比，判断SubView是否包含WKCompsitingView，以及通过随机点截图等方式作为白屏判断的依据。
+ 低版本 Safari JS 不兼容                 例如可选链、空值合并、ES 新语法没转译
+ 核心 JS 加载失败                           CDN、缓存、弱网导致
+ 内存崩溃                                        图片太大、Canvas 太大、DOM 太多
+ WKWebView 缓存异常                 App 内嵌 H5 常见
+ Promise 异常未捕获                    接口失败后页面没兜底
+ 路由懒加载 chunk 失败               在切换到某个页面时，需要加载该页面对应的 JS 文件，但这个 JS 文件因为发版、缓存、网络、CDN 等原因加载失败，导致页面无法渲染，甚至白屏
+ 
+ 白屏监控：JS Error，Promise Error，资源加载失败，接口失败，chunk 加载失败，DOM 采样检测，框架渲染成功标记
+ 
+ H5 和 WebView 能力对比表
+ 问题类型                            H5 自己检测                  WebView 检测
+ JS 运行时报错                   强                                  弱，需要 H5 转发
+ Promise 异常                     强                                  弱
+ Vue / React 渲染失败         强                                 弱，需要 H5 标记
+ DOM 白屏                         强，前提 JS 运行          中，可 evaluate JS 或截图
+ 主 HTML 加载失败            弱/不能                          强
+ DNS / SSL / 网络失败       弱/不能                          强
+ HTTP 404 / 500                弱/部分                          强
+ 核心 JS 加载失败            部分，需内联监控          弱/中，子资源不一定好拿
+ 路由 chunk 加载失败      强                                    弱
+ 接口失败                         强                                   中，除非 App 代理网络
+ CDN 资源异常                强，前提监控运行           中
+ WebView 进程崩溃        不能                                 强
+ iOS 内存杀 WebView     不能                                 强
+ App 切后台恢复白屏      弱                                     强
+ 用户行为路径                 强                                     弱
+ 页面性能指标                 强                                     中
+ 业务空数据                    强                                     弱
 
  3、其他WKWebView的系统级问题如Cookie、POST参数、异步Javascript等等一系列的问题，可以通过业务逻辑的调整重新适配
 

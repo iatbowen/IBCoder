@@ -1,0 +1,43 @@
+MBCoder/MBCoder/Group3/vc1/IBGroup3Controller18.m
+  s_10c650ae4023b0::t_baa6f7dfd034a5 11-33,45-52,57-81,90-199,201-202,334-392,407-420
+  s_10c650ae4023b0::t_e7a763284e62d5 313-316
+  s_10c650ae4023b0::t_f373eff2e7333e 34-44
+  s_10c650ae4023b0::t_2ccc1138314629 402-406
+  s_10c650ae4023b0::t_f3ceb78396fbc8 200,203-225,229-255,261-274,277-312,317-333
+  s_10c650ae4023b0::t_d45e0b297e53c1 226-228
+  s_10c650ae4023b0::t_b7fbdac089ca50 256-260
+  s_10c650ae4023b0::t_902838cb90ab12 82-89
+  s_10c650ae4023b0::t_8815b149ca364d 275-276
+  s_10c650ae4023b0::t_bcd580fd4f958b 393-401
+  s_aad3ef23a12f5a::t_6f9e20cb7c53dc 422
+  s_10c650ae4023b0::t_1f8cefe5dbda3f 53-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.2",
+  "base_commit_sha": "5802c68cad0c22784af7235ba99d816eb6490aa9",
+  "prompts": {},
+  "humans": {
+    "h_67c9d9773e1b48": {
+      "author": "正北飞 <1214569257@qq.com>"
+    }
+  },
+  "sessions": {
+    "s_10c650ae4023b0": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "d068a140-266d-4d39-8968-41d8dfac144e",
+        "model": "default"
+      },
+      "human_author": "正北飞 <1214569257@qq.com>"
+    },
+    "s_aad3ef23a12f5a": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "c54f9389-4be5-4044-8392-87ab8e151341",
+        "model": "gpt-5-mini"
+      },
+      "human_author": "正北飞 <1214569257@qq.com>"
+    }
+  }
+}

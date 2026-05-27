@@ -346,6 +346,7 @@
 		549D07252D71905E0096BED6 /* IBGroup3Controller12.m in Sources */ = {isa = PBXBuildFile; fileRef = 549D07242D71905E0096BED6 /* IBGroup3Controller12.m */; };
 		54A0FC562D0BE76D00623965 /* IBGroup2Controller34.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */; };
 		54B1DB0B2F3A19EE000E7079 /* IBGroup3Controller16.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B1DB0A2F3A19EE000E7079 /* IBGroup3Controller16.m */; };
+		54B213132FC5D2F4009DEF56 /* IBGroup3Controller18.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B213122FC5D2F4009DEF56 /* IBGroup3Controller18.m */; };
 		54B935112D27978D005D6A5E /* IBGroup3Controller2.m in Sources */ = {isa = PBXBuildFile; fileRef = 54B935102D27978D005D6A5E /* IBGroup3Controller2.m */; };
 		54B935142D27BD40005D6A5E /* arm64-ios.meson in Resources */ = {isa = PBXBuildFile; fileRef = 54B935122D27BD40005D6A5E /* arm64-ios.meson */; };
 		54B935152D27BD40005D6A5E /* x86_64-ios.meson in Resources */ = {isa = PBXBuildFile; fileRef = 54B935132D27BD40005D6A5E /* x86_64-ios.meson */; };
@@ -1211,6 +1212,8 @@
 		54A0FC552D0BE76D00623965 /* IBGroup2Controller34.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup2Controller34.m; sourceTree = "<group>"; };
 		54B1DB092F3A19EE000E7079 /* IBGroup3Controller16.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller16.h; sourceTree = "<group>"; };
 		54B1DB0A2F3A19EE000E7079 /* IBGroup3Controller16.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller16.m; sourceTree = "<group>"; };
+		54B213112FC5D2F4009DEF56 /* IBGroup3Controller18.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller18.h; sourceTree = "<group>"; };
+		54B213122FC5D2F4009DEF56 /* IBGroup3Controller18.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller18.m; sourceTree = "<group>"; };
 		54B9350F2D27978D005D6A5E /* IBGroup3Controller2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IBGroup3Controller2.h; sourceTree = "<group>"; };
 		54B935102D27978D005D6A5E /* IBGroup3Controller2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBGroup3Controller2.m; sourceTree = "<group>"; };
 		54B935122D27BD40005D6A5E /* arm64-ios.meson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arm64-ios.meson"; sourceTree = "<group>"; };
@@ -2791,6 +2794,8 @@
 				54B1DB0A2F3A19EE000E7079 /* IBGroup3Controller16.m */,
 				5477FFBD2F5FC85600A261E0 /* IBGroup3Controller17.h */,
 				5477FFBE2F5FC85600A261E0 /* IBGroup3Controller17.m */,
+				54B213112FC5D2F4009DEF56 /* IBGroup3Controller18.h */,
+				54B213122FC5D2F4009DEF56 /* IBGroup3Controller18.m */,
 			);
 			path = vc1;
 			sourceTree = "<group>";
@@ -3742,6 +3747,7 @@
 				4ACBB8DA2341FA0D002D7955 /* RACCompoundDisposable.m in Sources */,
 				4ACBB90F2341FA0D002D7955 /* SDAnimatedImageRep.m in Sources */,
 				4ACBB8D82341FA0D002D7955 /* RACEagerSequence.m in Sources */,
+				54B213132FC5D2F4009DEF56 /* IBGroup3Controller18.m in Sources */,
 				54E43BA02CE30D8B005BE78A /* reflection.cpp in Sources */,
 				4ACBB8932341FA0D002D7955 /* MASViewConstraint.m in Sources */,
 				4ACBB92B2341FA0D002D7955 /* BProxy.m in Sources */,

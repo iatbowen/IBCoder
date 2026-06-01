@@ -145,8 +145,8 @@
 
 - (void)test1 {
     
-    NSString *temp = @"bowen";
-    NSMutableString *mutablestr = @"wenzheng".mutableCopy;
+    NSString *temp = @"bowenzheng";
+    NSMutableString *mutablestr = @"bowenzheng".mutableCopy;
     //浅拷贝(不可变=不可变）
     self.nameCopy1 = temp;
     NSLog(@"%p---%p",temp, self.nameCopy1);//指针复制
@@ -160,7 +160,7 @@
     NSLog(@"%p---%p",temp, self.mutableNameCopy2);
     
     //深拷贝(可变 = 可变)
-    self.mutableNameCopy2 = mutablestr;
+    self.mutableNameCopy2 = mutablestr; // mutableNameCopy2 是不可变对象
     NSLog(@"%p---%p",mutablestr, self.mutableNameCopy2);
     
     //浅拷贝（不可变 = 可变）(strong 会被外界修改)
@@ -196,7 +196,7 @@
  最佳实践：
  - NSString   → copy   修饰（防止被可变字符串污染）
  - NSMutable  → strong 修饰 + 赋值时手动 mutableCopy（保证独立可变副本）
- 
+ - copy 属性通过 setter 中的 [value copy] 操作，强制将外部传入的对象转为一个不可变的副本，从而实现“值语义”般的封装，是防止可变状态意外共享的关键机制。
  
  NSArray、NSSet、NSDictionary 对比
  

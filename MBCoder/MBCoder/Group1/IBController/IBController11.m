@@ -10,82 +10,139 @@
 #import "UIView+Ext.h"
 
 /*
- 一、响应者链（Responder Chain）
- 是 iOS 中用于处理事件响应和事件传递的一种机制，由一系列继承自 UIResponder 的对象组成链表结构，用于确定事件的传递路径和响应者的顺序。
+ ============================================================
+ 事件传递与响应 面试题总结
+ ============================================================
 
- 所有继承自 UIResponder 的对象都可以是响应者：UIView、UIViewController、UIWindow、UIApplication、AppDelegate
- 每个响应者都有 nextResponder，形成一条链：UIView → 父 View（逐级）→ UIViewController → UIWindow → UIApplication → AppDelegate → nil
 
- 二、事件分发完整流程
+ 一、核心概念
 
- 硬件触摸
-   → IOKit 捕获，封装为 IOHIDEvent
-   → SpringBoard/WindowServer 分发到前台 App（Mach Port）
-   → App 主线程 RunLoop source1 唤醒
-   → UIApplication -sendEvent: → UIWindow -sendEvent:
-   → Hit-Testing 找到 First Responder（最合适的 view）
-   → 触发 touchesBegan:withEvent: 等回调
-   → 若未处理 → 沿 Responder Chain 向上传递
-   → UIApplication 兜底，仍未处理则丢弃
+ UIResponder：UIView / UIViewController / UIWindow / UIApplication / AppDelegate
 
- 为何用队列管理事件而非栈：队列先进先出，保证先产生的事件先处理。
+ 响应者链：nextResponder 串成的单向链表，事件向上冒泡时使用
+ View → superview → (root view 则 VC) → … → Window → Application → AppDelegate → nil
 
- 三、Hit-Testing：hitTest:withEvent:
+ First Responder：
+ - 触摸 FR：Hit-Test 命中的最深层 view
+ - 键盘 FR：becomeFirstResponder 成功对象（如 UITextField），与触摸 FR 可不同
 
- 目的：自顶向下找到触摸点所在的最深层可响应 view（First Responder）
+ 两个方向（必考）：
+ - 事件传递：自顶向下 Hit-Testing，touch 开始时只一次，定「谁收」
+ - 事件响应：自底向上沿响应者链冒泡，定「不处理时交给谁」，通过在 touches 四个方法里调 [super] 手动驱动的，调则冒泡，不调则截断
 
- 步骤（每个 view 递归执行）：
-   ① 前置检查（任一不满足返回 nil）
-      userInteractionEnabled == YES
-      hidden == NO
-      alpha > 0.01
-   ② pointInside:withEvent: 判断触摸点是否在自身 bounds 内，不在则返回 nil
-   ③ 倒序遍历子视图（后添加的显示在前，优先检测）
-      将触摸点转换到子视图坐标系，递归调用子视图的 hitTest:withEvent:
-      有子视图返回非 nil → 直接返回该子视图
-   ④ 所有子视图均返回 nil → 返回 self（自己就是最合适的响应者）
+ 二、完整事件流程（从硬件到回调）
 
- 四、响应者链事件传递规则
+ 触摸屏 → IOKit → WindowServer(Mach Port) → 主线程 RunLoop Source1 唤醒
+ → UIApplication sendEvent: → UIWindow sendEvent:
+ → Hit-Testing（自顶向下 hitTest:）→ 得到 hitView
+ → 并行分发同一 UIEvent：
+     ① hitView 及父链上的 UIGestureRecognizer 识别
+     ② hitView 的 touchesBegan / Moved / Ended（可被 delaysTouchesBegan 推迟）
+ → touches 调 super → 沿响应者链向上冒泡
 
- 事件从 First Responder 开始，沿 nextResponder 向上传递，直到被处理或丢弃：
 
-   First Responder（最深层 view）
-     ↓ 不处理（未重写 touches 方法，或调用了 [super touches...]）
-   UIViewController（若该 view 由 VC 管理）
-     ↓ 不处理
-   父 View（逐级向上）
-     ↓ 不处理
-   UIWindow
-     ↓ 不处理
-   UIApplication
-     ↓ 不处理
-   AppDelegate
-     ↓ 不处理
-   事件丢弃
+ 三、Hit-Testing（hitTest:withEvent:）
 
- 注意：
- - 若 view 没有对应的 UIViewController，nextResponder 直接是父 view
- - 重写 touches 方法但不调用 super，事件在此中断，不再向上传递
- - 只调用 [super touches...]，事件继续向上传递
+ ① 前置：userInteractionEnabled && !hidden && alpha>0.01，否则 nil
+ ② pointInside:withEvent:（默认 bounds 内；IBViewD 可扩大热区）
+ ③ 倒序遍历 subviews，convertPoint:toView: 后递归子 view hitTest
+ ④ 子 view 均 nil → return self
+
+ 四、四种事件处理路径（关系总览）
+
+ 四者不是独立模块，是同一次 touch 的四个阶段/分支。
+ Hit-Test 决定事件交给谁；后三者围绕 hitView 并行展开。
+
+        手指按下
+            ↓
+     Hit-Test（向下，一次）→ hitView
+            ↓ 同一 UIEvent 并行分发
+     ┌──────┼──────────┐
+     ↓      ↓          ↓
+  touches  GestureRecognizer  UIControl
+  原始流    识别序列语义      内部 tracking
+  可冒泡    不冒泡           不冒泡
+
+ Hit-Test：系统自顶向下调 hitTest:，找最深的 view，无业务回调，手势成功后不再重新 Hit-Test。
+
+ touches：原始坐标流，每相位（Began/Moved/Ended）发给 hitView；
+   调 [super touches...] 才向上冒泡；只有坐标，无语义。
+
+ GestureRecognizer：与 touches 并行识别序列语义（单击/滑动）；
+   识别成功调 action（参数 GestureRecognizer*），不走响应者链；
+   cancelsTouchesInView=YES（默认）→ hitView 收 touchesCancelled，无 Ended。
+
+ UIControl：hitView 是 UIControl 时走此路；内部 beginTracking→endTracking→发 ControlEvent；
+   不走你的 touchesBegan；superview 重写 touchesBegan 收不到 Button 点击。
+
+ 三种场景时序
+ · 普通 UIView（无手势）：  按下→Hit-Test→touchesBegan→[super冒泡]→touchesEnded
+ · UIView 挂 Tap 手势：    按下→Hit-Test→Tap:Possible+touchesBegan→识别成功→onTap:+touchesCancelled
+ · UIButton：              按下→Hit-Test→TouchDown→TouchUpInside→onClick
+
+ 关键属性（手势影响 touches）
+ · cancelsTouchesInView=YES — 手势成功 cancel touches（默认）
+ · cancelsTouchesInView=NO  — 两者共存，ScrollView 内按钮常设此项
+ · delaysTouchesBegan       — 推迟 touchesBegan，优先让手势判定
+
+ UIButton vs UIGestureRecognizer 优先级与冲突
+ 手势优先级更高，但结果取决于手势挂在哪里。
+
+ 典型冲突：手势挂在 Button 的 superview 上
+   Hit-Test → hitView = UIButton
+   并行：SuperView.TapGesture Possible + UIButton TouchDown
+   手指抬起 → TapGesture 识别成功 → onTap: 触发
+   cancelsTouchesInView=YES → UIButton 收 touchesCancelled → TouchUpInside 不触发
+
+ 解决方法：
+ ① cancelsTouchesInView=NO — 手势与 Button 都触发，需自行处理重复响应
+ ② delegate shouldReceiveTouch:（推荐）— 点到 UIControl 时让手势放行：
+      - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gr shouldReceiveTouch:(UITouch *)touch {
+          return ![touch.view isKindOfClass:[UIControl class]];
+      }
+
 
  五、常见应用场景
 
- 1. 扩大点击热区
-    重写 -pointInside:withEvent:，在 bounds 外围扩展判定区域（见 IBViewD）
+ 1. 扩大热区 — IBViewD 重写 pointInside:
+ 2. 子 view 超出父 bounds — 父 view 重写 pointInside/hitTest，或 clipsToBounds=NO
+ 3. ScrollView 留边分页 — 父 view hitTest 把留边交给 scrollView
+ 4. 事件穿透 — hitTest 某区域 return nil
+ 5. 全局监听 — 子类 UIApplication 重写 sendEvent:
+ 6. 调试链 — IBViewD touchesBegan 遍历 nextResponder
 
- 2. 子 view 超出父 view bounds 仍可响应
-    子视图超出父视图后无法响应,根本原因是父视图的 pointInside: 返回 NO,导致 hitTest 在父视图就终止。
-    解决办法是重写父视图的 pointInside: 或 hitTest:,把点转换到子视图坐标系判断,若子视图能命中则返回 YES 或返回子视图,从而打通事件传递链
 
- 3. ScrollView 留边分页滑动
-    父 view 重写 hitTest:withEvent:，将留边区域的触摸事件也返回 scrollView，
-    同时设置 scrollView.clipsToBounds = NO 展示侧边内容
+ 六、常见面试问答
 
- 4. 事件穿透（透明区域不响应）
-    重写 hitTest:withEvent:，特定区域返回 nil，让事件穿透到下层视图
+ Q：Hit-Testing 和响应者链方向？
+ A：Hit-Test 向下找 FR；响应者链从 FR 向上 nextResponder 冒泡。
 
- 5. 全局事件监听
-    子类化 UIApplication，重写 sendEvent: 拦截所有事件（如统计点击、防重复点击）
+ Q：Hit-Test、touches、手势、Target-Action 关系？
+ A：Hit-Test 定 hitView → 并行：手势识别+手势 target-action / touches 回调+可选 super 冒泡；
+    UIControl 走内部 tracking→TouchUpInside→控件 target-action。
+
+ Q：手势识别后还向下传吗？
+ A：不会。不再 Hit-Test；默认 cancel hitView 的 touches，手势不走响应者链。
+
+ Q：superview userInteractionEnabled=NO？
+ A：不参与 hitTest，整棵子树收不到触摸。
+
+ Q：touchesEnded 没来？
+ A：手势 cancel、ScrollView pan、view 被 remove 等。
+
+ Q：UIButton vs UIView touchesBegan？
+ A：Button 走 UIControl；UIView 走 touches 或挂手势。
+
+ Q：A→B→C，手势加在 B（或 C）上，C 是 UIControl，点击后 TouchUpInside 为何不触发？如何解决？
+ A：Hit-Test 与手势无关，照常递归到 C（hitView = C）。
+    但手势优先级高于 UIControl：C 先收到 TouchDown，手势识别成功后系统强制给 C 发 touchesCancelled，
+    UIControl tracking 被打断，TouchUpInside 不触发（有 Began 无 Ended）——无论手势挂在 B 还是 C 结论相同。
+    解决：
+    · 手势在父 view → delegate shouldReceiveTouch: 判断 touch.view isKindOfClass:[UIControl class] 让手势放行
+    · 手势在 C 自身 → cancelsTouchesInView=NO，或直接不加手势（UIControl 自带事件已够用）
+
+ Q：两种 FR 区别？
+ A：触摸 FR 由 Hit-Test 定；键盘 FR 由 becomeFirstResponder 定。
  */
 @interface IBViewA : UIView
 

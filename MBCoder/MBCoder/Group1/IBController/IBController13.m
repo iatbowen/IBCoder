@@ -91,7 +91,7 @@
  五、应用
  总结起来，iOS中的RunTime的作用有以下几点：
  1.发送消息(objc_msgSend)
- 2.方法交换(method_exchangeImplementations)
+ 2.方法交换(method_exchangeImplementations)：小窗，控制哪些页面要关小窗，哪些页面要静音播放器，哪些页面要隐藏/显示浮层
  3.消息转发
  4.动态添加方法
  5.给分类添加属性
@@ -99,6 +99,9 @@
  7.动态添加类
  8.解档与归档
  9.字典转模型
+ 10.动态类查找 NSClassFromString
+ 11. NSProxy+performSelector
+ 12. KVO 和 KVC
   
  六、runtime如何通过selector找到对应的IMP地址？
 

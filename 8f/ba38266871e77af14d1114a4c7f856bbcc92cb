@@ -1,0 +1,22 @@
+MBCoder/MBCoder/Group2/vc2/IBGroup2Controller16.m
+  s_f85e99e30e48bb::t_74c45bb6b8af7a 81-104,106,109-111,113-116,118-203
+  s_f85e99e30e48bb::t_379d80b7197abf 205-283,285-290,300-349
+  s_f85e99e30e48bb::t_8b24305322bb25 351-411
+  s_f85e99e30e48bb::t_5f5c5a8f61ba04 284,291-299
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.3",
+  "base_commit_sha": "8fba38266871e77af14d1114a4c7f856bbcc92cb",
+  "prompts": {},
+  "sessions": {
+    "s_f85e99e30e48bb": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "903c623e-2b82-49de-b2db-715e78cdce8b",
+        "model": "default"
+      },
+      "human_author": "正北飞 <1214569257@qq.com>"
+    }
+  }
+}

@@ -842,6 +842,12 @@
  3. 质量分层（Quality/SNR Scalability）：应用最少
  通过画质（量化参数）分层
  
+ SVC 的"现实困境"：
+ 困境 1：编码端支持差（硬件编码器几乎不支持 SVC）
+ 困境 2：推流工具不支持 ，只有 WebRTC 生态部分支持（VP9 SVC、AV1 SVC）
+ 困境 3：观众端解码兼容性差
+ 困境 4：协议生态绑定，SVC 主要存活在 WebRTC 生态：
+ 
  */
 
 @interface IBGroup3Controller18 ()

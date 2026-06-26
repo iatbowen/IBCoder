@@ -6,34 +6,12 @@
 //  Copyright © 2018年 BowenCoder. All rights reserved.
 //
 
-/*
- 
- NSLayoutAttributeLeft 和 NSLayoutAttributeRight 代表从左右进行布局
- NSLayoutAttributeLeading和 NSLayoutAttributeTrailing 代表从前后进行布局
- 
- UIScrollView ContentSize 无效
- 使用Masonry进行自动布局，虽然开始已经设置了scrollView的contentSize，但是实际上在自动布局的情况下，
- contentSize的大小并不是原先设置的那样，而是由内容约束来定义的(leading,trailing)，后执行的Masonry布局代码重定义了contentSize。
- 因此，自动布局的情况下去定义contentSize是无效的。 而mas_leading,mas_trailing是根据contentSize来确定的具体位置，
- 而不是根据scrollview的frame来确定。 因此布局得到的并不是想要得到的结果。（其间相互依赖，导致结果异常）
-
- 个人经验：
- UIScrollView的约束基于父视图，设置frame
- UIScrollView的子视图约束基于本身，撑起contentSize
- 
- UICollectionView
- minimumLineSpacing ：跟滚动方向一致的间距，例如垂直滚动，就是上下的间距，水平滚动就是，就是左右的间距。
- minimumInteritemSpacing ：跟滚动方向垂直的间距，例如垂直滚动，就是左右的间距，水平滚动就是，就是上下的间距。
- 
- */
 
 #import "IBController31.h"
 #import "UIView+Ext.h"
 #import "Masonry.h"
 
-@interface IBController31 ()<UIScrollViewDelegate>
-
-@property (nonatomic, strong) UIImageView *imgView;
+@interface IBController31 ()
 
 @end
 
@@ -42,55 +20,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor orangeColor];
-    self.title = @"UIScrollView";
-    [self setupUI];
 }
-
-- (void)setupUI {
-    UIScrollView *scroll = [[UIScrollView alloc] init];
-    scroll.backgroundColor = [UIColor lightGrayColor];
-    scroll.delegate = self;
-    scroll.contentSize = CGSizeMake(self.view.width, self.view.height * 2);
-    [self.view addSubview:scroll];
-    [scroll mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    
-//    self.imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AppIcon"]];
-//    self.imgView.center = self.view.center;
-//    [scroll addSubview:self.imgView];
-//    scroll.contentSize = self.imgView.image.size;
-//    scroll.maximumZoomScale = 5.0;
-//    scroll.minimumZoomScale = 1.0;
-    
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor redColor];
-    [scroll addSubview:view];
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(scroll);
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(100);
-    }];
-
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"%@",NSStringFromCGPoint(scrollView.contentOffset));
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-//    NSLog(@"%@",NSStringFromCGPoint(scrollView.contentOffset));
-//    self.imgView.center = scrollView.contentOffset;
-}
-
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-//    self.imgView.center = self.view.center;
-
-    return self.imgView;
-}
-
-
-
-
 
 @end
+
+/*
+ 
+ 抖音品质建设 - iOS启动优化《原理篇》
+ https://juejin.cn/post/6887741815529832456?searchId=20260625215429F18BA3AB0F268FB18D6C
+ 
+ 抖音品质建设 - iOS启动优化《实战篇》
+ https://juejin.cn/post/6921508850684133390
+ 
+ */
